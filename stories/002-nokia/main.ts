@@ -1,8 +1,10 @@
 import {
   Mixer, Stage, Camera, fillGradient, tearWipe, ramp, vignette, grain, circlePoly,
-  instrument, note, triad, drawProps, drawRidge, type Paper, type RidgeSpec, type Stereo,
+  instrument, note, triad, drawProps, drawRidge, drawSky, nightSky, blink, flora, scatter, noise1,
+  type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
-import { createCitySkyline } from '../shared/environment';
+import { createCitySkyline, createGrassland, meadowWind } from '../shared/environment';
+import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
 
 const W = 1920, H = 1080, SCENE_SECONDS = 10, DURATION = 100;
 const TITLES = [
@@ -28,6 +30,22 @@ const PALETTES: [string,string][] = [
   ['#d8eadc','#8eb6a0'],['#d9d7c9','#8b9aa4'],['#342d38','#d27c50'],['#c9d8e4','#7d9bb3'],
   ['#d6d2ca','#818c9c'],['#e8dfd0','#aab7ad'],
 ];
+
+
+function title3D(paper: Paper, value: string, x: number, y: number, size: number): void {
+  const font = `900 ${size}px "DejaVu Sans"`;
+  // Consistent block extrusion: several hard-offset paper layers, then a bright face.
+  for (let d = 9; d >= 2; d -= 1) {
+    paper.text(value, { x: x + d, y: y + d }, {
+      font, color: d > 5 ? '#17232d' : '#34495a',
+      sheet: { shadow: 0, texture: 0, edge: false },
+    });
+  }
+  paper.text(value, { x, y }, {
+    font, color: '#fff8e9',
+    sheet: { shadow: 13, rim: { color: '#ffffff', width: 2.5 }, shade: { color: 'rgba(20,28,38,0.5)', width: 4 }, texture: 0.16 },
+  });
+}
 
 function rounded(paper: Paper, x: number, y: number, w: number, h: number, r: number, fill: string, stroke?: string): void {
   const ctx = paper.context;
@@ -80,6 +98,10 @@ export class NokiaPilotScene extends Stage {
   private readonly skyline: ReturnType<typeof createCitySkyline>;
   private readonly ridges: RidgeSpec[];
   private readonly camera: Camera;
+  private readonly cat: Cat;
+  private readonly clouds: ReturnType<typeof createGrassland>;
+  private readonly stars = nightSky(8100, { x: 960, y: 620 });
+  private lastScene = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas,{duration:DURATION,preroll:0.5,fps:30});
@@ -87,8 +109,16 @@ export class NokiaPilotScene extends Stage {
     this.paper.edgeColor='rgba(255,246,232,0.28)';
     this.paper.shadowColor='rgba(24,18,24,0.34)';
     this.world.ground=()=>890;
+    this.world.wind=meadowWind(8101,0.22);
+    this.cat=new Cat(this.world,470,890,SIGNATURE_CAT_LOOK);
+    this.clouds=createGrassland(8102,-1600,6200,()=>890,{
+      sky:'#9fc5dc',cloud:'#fff8ec',cloudShade:'#d6e4e8',farHill:'#91a9a0',midHill:'#748f7c',nearHill:'#526c58',ground:'#465b42',
+      grass:[['#435b3d','#7d9556'],['#536d43','#9eaa63']],treeTrunk:'#6a503e',treeLeaves:['#607b4d','#7f995c','#a2ad69'],treeLight:'#f6d9a1',
+      flowers:['#fff4df','#f3d8a4','#e6a56e'],rock:['#a99a82','#8f8779'],
+    });
     this.camera=new Camera(W/2,{width:W,height:H,stiffness:4,damping:4,handheld:0});
-    this.camera.cut({x:W/2,y:H/2,zoom:1,handheld:0});
+    this.camera.zoom=1.15;
+    this.camera.cut({x:W/2,y:H/2,zoom:1.15,handheld:0});
     this.skyline=createCitySkyline(5100,-700,2700,{
       far:['#aab4b0','#a0aca8'],mid:['#788b88','#82918c'],near:['#53696b','#5e7472'],
       farWindow:'#e8d4a7',midWindow:'#e8c78b',nearWindow:'#f0d49a',
@@ -97,8 +127,19 @@ export class NokiaPilotScene extends Stage {
     this.ridges=earth.map((color,i)=>({seed:6200+i,base:835,amp:32,freq:0.0018+i*0.00003,color,tear:3,shadow:8}));
   }
 
-  protected update(_t:number,_dt:number):void {
-    // The Nokia pilot is a visual-history montage; its motion comes from paper layers and transitions.
+  protected update(t:number,dt:number):void {
+    const scene=Math.min(9,Math.floor(t/SCENE_SECONDS));
+    Object.assign(this.cat.intent,CAT_REST,{speed:scene===9?26:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+220,y:560}});
+    if(scene!==this.lastScene){
+      if(!this.cat.airborne)this.cat.jump({x:this.cat.x+265,y:890},145);
+      this.lastScene=scene;
+    }
+    if(scene===9){this.cat.intent.speed=0;this.cat.intent.sit=ramp(t,92,95);this.cat.intent.look={x:this.cat.x+180,y:250};}
+    this.cat.update(dt);
+  }
+
+  protected lateUpdate(t:number,dt:number):void {
+    this.camera.update(this.cat.x+500,dt,t,610);
   }
 
   probe():Record<string,unknown>{
@@ -121,6 +162,12 @@ export class NokiaPilotScene extends Stage {
   private drawScene(index:number,t:number):void {
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     fillGradient(ctx,[[0,top],[1,bottom]]);
+    if(index===0){
+      drawSky(ctx,this.stars,{t,turn:t*0.0015,twinkle:0.38});
+      this.drawMoon(1500,250);
+    } else {
+      this.camera.layer(paper,0.045,v=>drawProps(paper,this.clouds.clouds,v.from,v.to,()=>0,t));
+    }
     const paper=this.paper;
     paper.piece([{x:0,y:850},{x:W,y:850},{x:W,y:H+80},{x:0,y:H+80}],index===3?'#d8d7d2':'#d6c8b5',{seed:6300+index,tear:3,shadow:0,texture:0.35});
     this.camera.layer(paper,0.14,v=>drawProps(paper,this.skyline.far,v.from,v.to,()=>0,t));
@@ -129,8 +176,8 @@ export class NokiaPilotScene extends Stage {
     this.camera.layer(paper,1,v=>drawRidge(paper,this.ridges[index],v.from,v.to,1120));
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
-    paper.text(TITLES[index],{x:110,y:150},{font:'800 62px Montserrat',color:'#26313a',sheet:{shadow:3,texture:0.3}});
-    paper.text(SUBTITLES[index],{x:114,y:208},{font:'500 32px Montserrat',color:'rgba(38,49,58,0.82)',sheet:{shadow:2,texture:0.22}});
+    title3D(paper,TITLES[index],110,150,58);
+    paper.text(SUBTITLES[index],{x:114,y:214},{font:'700 30px "DejaVu Sans"',color:'#fff8e9',sheet:{shadow:8,rim:{color:'#ffffff',width:1.5},shade:{color:'rgba(20,28,38,0.48)',width:3},texture:0.12}});
 
     if(index===0){
       for(let row=0;row<2;row++){rounded(paper,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
@@ -173,8 +220,18 @@ export class NokiaPilotScene extends Stage {
     } else {
       rounded(paper,850,355,900,440,28,'#e9e4d9','#8c938b');
       for(let i=0;i<4;i++)phone(paper,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
-      ctx.fillStyle='#465c61';ctx.font='bold 48px Arial';ctx.fillText('A PART OF OUR HISTORY',950,850);
+      title3D(paper,'A PART OF OUR HISTORY',950,850,36);
     }
+    this.camera.layer(paper,1,()=>this.cat.draw(paper));
+  }
+
+  private drawMoon(x:number,y:number):void {
+    const ctx=this.ctx;
+    const glow=ctx.createRadialGradient(x,y,70,x,y,390);
+    glow.addColorStop(0,'rgba(238,232,205,0.30)');glow.addColorStop(1,'rgba(238,232,205,0)');
+    ctx.fillStyle=glow;ctx.fillRect(x-410,y-410,820,820);
+    this.paper.piece(circlePoly({x,y},98,44),'#fbf2d9',{seed:900,tear:2.5,shadow:0,texture:0.18});
+    [[-28,-18,17],[25,20,22],[-8,42,12],[38,-32,9]].forEach(([dx,dy,r],i)=>this.paper.piece(circlePoly({x:x+dx,y:y+dy},r,16),'#e8dfc5',{seed:910+i,tear:1.1,shadow:0,edge:false}));
   }
 
   soundtrack(sampleRate:number):Stereo{
