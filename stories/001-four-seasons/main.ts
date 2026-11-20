@@ -1,5 +1,5 @@
 import {
-  type RidgeSpec, Camera, Mixer, Stage, degree, drawProps, drawRidge, drawShafts, drawSnow, drawSward,
+  Camera, Mixer, Stage, degree, drawProps, drawRidge, drawShafts, drawSnow, drawSward,
   fillGradient, instrument, note, noise1, ramp, tearWipe, triad, voice, type Stereo,
 } from '../../src';
 import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
@@ -7,7 +7,7 @@ import { createGrassland, meadowWind, type GrasslandPalette } from '../shared/en
 import { createWinter, snowfall } from '../shared/environment';
 import type { View } from '../../src/camera/Camera';
 
-const W = 1920, DURATION = 20, SEASON_LENGTH = 5;
+const W = 1920, H = 1080, DURATION = 20, SEASON_LENGTH = 5;
 type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
 const ground = (x: number) => 862 + Math.sin(x * 0.0022) * 9 + noise1(x * 0.001, 81) * 8;
