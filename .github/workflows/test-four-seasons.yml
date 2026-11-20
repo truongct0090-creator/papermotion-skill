@@ -1,6 +1,14 @@
 name: Test four seasons film
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'stories/001-four-seasons/**'
+      - 'stories/shared/environment/**'
+      - 'examples/rooftops/Cat.ts'
+      - 'examples/catalog.ts'
+      - '.github/workflows/test-four-seasons.yml'
   workflow_dispatch:
     inputs:
       quality:
