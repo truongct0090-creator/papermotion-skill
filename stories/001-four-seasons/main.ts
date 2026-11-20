@@ -44,6 +44,7 @@ export class FourSeasonsScene extends Stage {
   private readonly winter = createWinter(410, -1800, 6200, ground);
   private readonly winterSnow = snowfall(420, 0.95, 24);
   private nextFootstep = 310;
+  private readonly seasonJumps = [false, false, false];
   private readonly wind = meadowWind(125, 0.9);
 
   constructor(canvas: HTMLCanvasElement) {
@@ -57,10 +58,23 @@ export class FourSeasonsScene extends Stage {
   protected start(): void { this.cam.snap(this.cat.x + 250, this.cat.root.y - 270); }
 
   protected update(t: number, dt: number): void {
+    // Copy the Rooftops demo's ballistic leap: crouch, spring across the paper-cut transition,
+    // then land before continuing the walk into the next season.
+    for (let i = 0; i < this.seasonJumps.length; i++) {
+      const takeoff = (i + 1) * SEASON_LENGTH - 0.48;
+      if (!this.seasonJumps[i] && t >= takeoff) {
+        const landingX = this.cat.x + 155;
+        this.cat.jump({ x: landingX, y: ground(landingX) }, 125);
+        this.seasonJumps[i] = true;
+        this.cue('season-leap', { gain: 0.55, pan: Math.max(-0.8, Math.min(0.8, (this.cat.x - 1400) / 2200)) });
+      }
+    }
+    const airborne = this.cat.airborne;
     Object.assign(this.cat.intent, CAT_REST, {
-      speed: t < 0.35 ? 165 * ramp(t, 0, 0.35) : 165, facing: 1,
+      speed: airborne ? 0 : t < 0.35 ? 165 * ramp(t, 0, 0.35) : 165, facing: 1,
+      crouch: airborne ? 0 : 0,
       // Let the tail gently rise and fall; the existing Strand physics adds a soft trailing swish.
-      tail: 0.72 + Math.sin(t * 2.6) * 0.16, blink: 1,
+      tail: airborne ? 0.3 : 0.72 + Math.sin(t * 2.6) * 0.16, blink: 1,
     });
     this.cat.update(dt);
     while (this.cat.x >= this.nextFootstep) {
