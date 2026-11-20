@@ -1,4 +1,4 @@
-import { type PropMaker, type PropSet, type RidgeSpec, flora, pick, ridgeHeight, scatter, within } from '../../../src';
+import { type PropMaker, type PropSet, type RidgeSpec, building, flora, pick, ridgeHeight, scatter, within } from '../../../src';
 import type { Paper } from '../../../src';
 
 /** Reusable snow-covered conifer maker, generalized from the snow demo's tiered paper pines. */
@@ -37,6 +37,6 @@ export function createWinter(seed: number, from: number, to: number, ground: (x:
   const far = scatter({ seed: seed + 4, from, to, spacing: [26, 70], ground: x => ridgeHeight(ridges[1], x) + 6,
     makers: [{ make: snowyPine({ height: [70, 120], width: [40, 60], colors: ['#65709e', '#5c6794'], snow: '#c9d1ec' }), weight: 1 }] });
   const village = scatter({ seed: seed + 5, from, to, spacing: [110, 150], ground: x => ground(x) + 10,
-    makers: [{ make: flora.building ? flora.building : snowyPine({ height: [45, 70], width: [70, 120], colors: ['#6d6a95'], snow: '#dfe4f6' }), weight: 1 }] });
+    makers: [{ make: building({ width: [70, 120], height: [45, 70], colors: ['#6d6a95', '#7a7098', '#636390'], window: '#ffcf7a', lit: 0.35 }), weight: 1 }] });
   return { ridges, far, village };
 }
