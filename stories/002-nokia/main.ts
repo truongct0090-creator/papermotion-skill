@@ -51,20 +51,29 @@ function rounded(paper: Paper, x: number, y: number, w: number, h: number, r: nu
   }
 }
 function phone(paper: Paper, x: number, y: number, scale: number, color: string, smart=false): void {
-  const ctx = paper.context;
-  ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
-  ctx.shadowColor='rgba(25,30,38,0.25)'; ctx.shadowBlur=24; ctx.shadowOffsetY=16;
-  rounded(paper,0,0,220,390,30,color,'#30343a'); ctx.shadowColor='transparent';
-  rounded(paper,18,38,184,smart?270:190,12,smart?'#263b50':'#b8d1c1');
-  if (smart) {
-    const colors=['#e7a45d','#8bb5a0','#d17b67','#7b91b8','#d7bd76','#9d86a8'];
-    for(let i=0;i<6;i++) rounded(paper,31+(i%3)*55,55+Math.floor(i/3)*76,42,58,7,colors[i]);
-  } else {
-    ctx.fillStyle='#263d35'; ctx.font='bold 31px monospace'; ctx.textAlign='center';
-    ctx.fillText('NOKIA',110,125); ctx.font='23px monospace'; ctx.fillText('12:08',110,165);
-    for(let i=0;i<3;i++) for(let j=0;j<3;j++) paper.piece(circlePoly({x:62+j*48,y:270+i*35},12,14),'#d8d8d0',{seed:8100+i*3+j,tear:1.2,shadow:2});
-  }
-  rounded(paper,78,smart?330:250,64,18,9,'#d6d8d6'); ctx.restore();
+  paper.sheet({
+    shadow: 12,
+    rim: { color: 'rgba(255,244,224,0.8)', width: 2.5 },
+    shade: { color: 'rgba(22,26,30,0.32)', width: 4 },
+    texture: 0.5,
+  }, () => {
+    const ctx = paper.context;
+    ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
+    rounded(paper,0,0,220,390,30,color,'#30343a');
+    rounded(paper,18,38,184,smart?270:190,12,smart?'#263b50':'#b8d1c1');
+    if (smart) {
+      const colors=['#e7a45d','#8bb5a0','#d17b67','#7b91b8','#d7bd76','#9d86a8'];
+      for(let i=0;i<6;i++) rounded(paper,31+(i%3)*55,55+Math.floor(i/3)*76,42,58,7,colors[i]);
+    } else {
+      ctx.fillStyle='#263d35'; ctx.font='bold 31px monospace'; ctx.textAlign='center';
+      ctx.fillText('NOKIA',110,125); ctx.font='23px monospace'; ctx.fillText('12:08',110,165);
+      for(let i=0;i<3;i++) for(let j=0;j<3;j++) paper.piece(
+        circlePoly({x:62+j*48,y:270+i*35},12,14),'#d8d8d0',{seed:8100+i*3+j,tear:1.2,shadow:2},
+      );
+    }
+    rounded(paper,78,smart?330:250,64,18,9,'#d6d8d6');
+    ctx.restore();
+  });
 }
 
 export class NokiaPilotScene extends Stage {
