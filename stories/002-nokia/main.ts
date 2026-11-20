@@ -35,7 +35,7 @@ const PALETTES: [string,string][] = [
 function title3D(paper: Paper, value: string, x: number, y: number, size: number): void {
   const font = `900 ${size}px "DejaVu Sans"`;
   // Consistent block extrusion: several hard-offset paper layers, then a bright face.
-  for (let d = 9; d >= 2; d -= 1) {
+  for (let d = 7; d >= 1; d -= 3) {
     paper.text(value, { x: x + d, y: y + d }, {
       font, color: d > 5 ? '#17232d' : '#34495a',
       sheet: { shadow: 0, texture: 0, edge: false },
