@@ -87,7 +87,7 @@ jobs:
         with:
           name: nokia-10-scenes-final
           path: |
-            out/nokia-pilot-10-scenes.mp4
+            out/nokia-pilot-final.mp4
             out/nokia-pilot-probe.json
           if-no-files-found: error
           retention-days: 7
