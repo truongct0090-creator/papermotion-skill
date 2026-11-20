@@ -83,8 +83,8 @@ export class NokiaPilotScene extends Stage {
   private drawScene(index:number,t:number):void {
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     fillGradient(ctx,[[0,top],[1,bottom]]);
-    ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='rgba(35,48,56,0.08)';ctx.fillRect(0,870,W,210);
+    ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+    ctx.fillStyle='rgba(35,48,56,0.08)';ctx.fillRect(0,870,W,H-870);
     ctx.textAlign='left';ctx.fillStyle='#26313a';ctx.font='bold 62px Arial';
     ctx.fillText(TITLES[index],110,150,1680);
     ctx.fillStyle='rgba(38,49,58,0.78)';ctx.font='32px Arial';ctx.fillText(SUBTITLES[index],114,208,1640);
