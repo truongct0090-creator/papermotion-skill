@@ -134,3 +134,8 @@ mistake, the fix, and why it worked.
 - [ ] Contacts are real: feet on the floor, bodies touching what they touch, no floating props.
 - [ ] Cuts happen on action. Close-ups keep line weights thin (scale rim, shade and lines by zoom).
 - [ ] Deterministic: the same frame renders the same image twice. Typecheck and tests pass.
+
+
+## Shared historical-story environment kit
+
+For original stories in `stories/`, read `stories/shared/environment/README.md` before building a set. Prefer its parameterized recipes (`createGrassland`, `createUnderwater`, `createWinter`, `createCitySkyline`, `snowfall`, `rainfall`, `nightSky`) and compose them with the public engine primitives. Use the engine's `Fire`, `drawShafts`, `drawProps`, `drawSward`, `drawRain`, `drawSnow`, `drawRipples`, `drawDrips`, `Camera.layer`, paper materials and finishing effects where appropriate. Pass character contact points as pushers so grass and props react to movement. Keep the original continuous one-shot camera and simulation; do not replace or reimplement the engine's transition, camera, physics or paper-rendering systems. New story-specific objects remain in that story's folder. If a genuinely reusable behavior is missing, add a generic parameterized primitive to `src/`, export it from `src/index.ts`, and test it.
