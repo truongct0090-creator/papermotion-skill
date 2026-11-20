@@ -27,3 +27,7 @@ examples with our original stories.
 
 No original story has been added yet. The first GitHub Actions run uses the existing `demo`
 scene as a smoke test of the headless rendering pipeline. It does not require an AI API.
+
+## Shared environment kit
+
+Before implementing a story scene, read [the shared environment kit](shared/environment/README.md). It contains reusable, parameterized recipes for meadow, underwater, winter, city, weather and night-sky environments, mapped to the original PaperMotion demos and public engine APIs. The original `examples/` remain untouched reference scenes.
