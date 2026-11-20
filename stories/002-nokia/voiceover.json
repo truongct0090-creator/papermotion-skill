@@ -6,49 +6,50 @@
       "text": "Có một thời, cứ nhắc đến điện thoại di động là người ta nghĩ ngay đến Nokia. Nhưng rồi, người khổng lồ ấy đã đánh mất vị trí dẫn đầu như thế nào?"
     },
     {
-      "start_sec": 10.4,
+      "start_sec": 9.6,
       "speaker": "my_duyen",
       "text": "Ngày trước, nhà nào có Nokia là quý lắm! Pin bền, rơi xuống đất vẫn dùng. Sao một thương hiệu được yêu thích như vậy lại có ngày thất thế?"
     },
     {
-      "start_sec": 20.4,
+      "start_sec": 18.8,
       "speaker": "adam",
       "text": "Đầu những năm hai nghìn, Nokia phủ khắp thế giới. Năm 2007, hãng công bố bán khoảng 437 triệu thiết bị di động, chiếm gần 38 phần trăm thị trường."
     },
     {
-      "start_sec": 30.4,
+      "start_sec": 28,
       "speaker": "adam",
       "text": "Rồi iPhone xuất hiện năm 2007. Màn hình cảm ứng và trải nghiệm ứng dụng khiến điện thoại bắt đầu thay đổi tận gốc."
     },
     {
-      "start_sec": 40.4,
+      "start_sec": 37.2,
       "speaker": "adam",
       "text": "Android nhanh chóng mở rộng sang nhiều hãng. Cuộc đua không còn chỉ là ai làm điện thoại đẹp hơn, mà là ai xây được hệ sinh thái tốt hơn."
     },
     {
-      "start_sec": 50.4,
+      "start_sec": 46.4,
       "speaker": "adam",
       "text": "Nokia vẫn dựa vào Symbian, nền tảng từng rất thành công. Nhưng phần mềm ngày càng khó phát triển, cập nhật và thu hút lập trình viên."
     },
     {
-      "start_sec": 60.4,
+      "start_sec": 55.6,
       "speaker": "my_duyen",
       "text": "Nokia đã có công nghệ riêng rồi, tại sao lại đổi hướng? Liệu đặt cược vào một hệ điều hành khác có cứu được họ không?"
     },
     {
-      "start_sec": 70.4,
+      "start_sec": 64.8,
       "speaker": "adam",
       "text": "Năm 2011, Nokia chọn Windows Phone làm nền tảng smartphone chính, còn Symbian và MeeGo dần rời khỏi trung tâm chiến lược."
     },
     {
-      "start_sec": 80.4,
+      "start_sec": 74,
       "speaker": "adam",
       "text": "Lumia có thiết kế đẹp, nhưng Windows Phone thiếu ứng dụng và sức hút của một hệ sinh thái lớn. Cuộc đua ngày càng khó."
     },
     {
-      "start_sec": 90.4,
+      "start_sec": 83.2,
       "speaker": "adam",
       "text": "Năm 2014, Microsoft hoàn tất mua lại mảng thiết bị và dịch vụ của Nokia. Nokia không biến mất, nhưng một thời đại điện thoại đã khép lại."
     }
-  ]
+  ],
+  "inter_line_gap_sec": 0.32
 }
