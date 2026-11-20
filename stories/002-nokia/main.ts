@@ -55,20 +55,20 @@ function phone(paper: Paper, x: number, y: number, scale: number, color: string,
   ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
   ctx.shadowColor='rgba(25,30,38,0.25)'; ctx.shadowBlur=24; ctx.shadowOffsetY=16;
   rounded(paper,0,0,220,390,30,color,'#30343a'); ctx.shadowColor='transparent';
-  rounded(this.paper,18,38,184,smart?270:190,12,smart?'#263b50':'#b8d1c1');
+  rounded(paper,18,38,184,smart?270:190,12,smart?'#263b50':'#b8d1c1');
   if (smart) {
     const colors=['#e7a45d','#8bb5a0','#d17b67','#7b91b8','#d7bd76','#9d86a8'];
-    for(let i=0;i<6;i++) rounded(ctx,31+(i%3)*55,55+Math.floor(i/3)*76,42,58,7,colors[i]);
+    for(let i=0;i<6;i++) rounded(paper,31+(i%3)*55,55+Math.floor(i/3)*76,42,58,7,colors[i]);
   } else {
     ctx.fillStyle='#263d35'; ctx.font='bold 31px monospace'; ctx.textAlign='center';
     ctx.fillText('NOKIA',110,125); ctx.font='23px monospace'; ctx.fillText('12:08',110,165);
     for(let i=0;i<3;i++) for(let j=0;j<3;j++){ctx.beginPath();ctx.arc(62+j*48,270+i*35,12,0,Math.PI*2);ctx.fillStyle='#d8d8d0';ctx.fill();}
   }
-  rounded(ctx,78,smart?330:250,64,18,9,'#d6d8d6'); ctx.restore();
+  rounded(paper,78,smart?330:250,64,18,9,'#d6d8d6'); ctx.restore();
 }
 
 export class NokiaPilotScene extends Stage {
-  private readonly skyline;
+  private readonly skyline: ReturnType<typeof createCitySkyline>;
   private readonly ridges: RidgeSpec[];
 
   constructor(canvas: HTMLCanvasElement) {
@@ -85,9 +85,8 @@ export class NokiaPilotScene extends Stage {
     this.ridges=earth.map((color,i)=>({seed:6200+i,base:835,amp:32,freq:0.0018+i*0.00003,color,tear:3,shadow:8}));
   }
 
-  protected update(t:number,dt:number):void {
-    Object.assign(this.cat.intent,CAT_REST,{speed:0,facing:1,tail:0.68+Math.sin(t*2.1)*0.13,blink:1});
-    this.cat.update(dt);
+  protected update(_t:number,_dt:number):void {
+    // The Nokia pilot is a visual-history montage; its motion comes from paper layers and transitions.
   }
 
   probe():Record<string,unknown>{
@@ -123,46 +122,46 @@ export class NokiaPilotScene extends Stage {
     ctx.fillStyle='rgba(38,49,58,0.78)';ctx.font='32px Arial';ctx.fillText(SUBTITLES[index],114,208,1640);
 
     if(index===0){
-      for(let row=0;row<2;row++){rounded(ctx,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
-      rounded(ctx,780,825,1000,25,8,'#765b45');
+      for(let row=0;row<2;row++){rounded(paper,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
+      rounded(paper,780,825,1000,25,8,'#765b45');
     } else if(index===1){
-      rounded(ctx,870,650,780,36,12,'#8b6046');rounded(ctx,930,680,34,190,8,'#76513e');rounded(ctx,1550,680,34,190,8,'#76513e');
-      phone(ctx,1080,275,1.18,'#263b42');rounded(ctx,1370,350,250,180,18,'#263d35');
+      rounded(paper,870,650,780,36,12,'#8b6046');rounded(paper,930,680,34,190,8,'#76513e');rounded(paper,1550,680,34,190,8,'#76513e');
+      phone(paper,1080,275,1.18,'#263b42');rounded(paper,1370,350,250,180,18,'#263d35');
       ctx.fillStyle='#9bcf82';ctx.font='bold 38px monospace';ctx.fillText('SNAKE',1420,420);
-      for(let i=0;i<7;i++)rounded(ctx,1410+i*24,460+Math.sin(i*0.8)*18,18,18,4,'#9bcf82');
+      for(let i=0;i<7;i++)rounded(paper,1410+i*24,460+Math.sin(i*0.8)*18,18,18,4,'#9bcf82');
     } else if(index===2){
-      rounded(ctx,820,360,900,450,24,'#e9e4d8','#7c8985');
-      for(let i=0;i<5;i++){rounded(ctx,875+i*155,430,110,260,12,['#4b5d65','#788b82','#465b75','#9a8e7d','#536b60'][i]);rounded(ctx,895+i*155,455,70,120,7,'#b9d1c7');}
-      for(let i=0;i<4;i++){rounded(ctx,900+i*190,760,150,80,8,'#b98d62');ctx.fillStyle='#5a4638';ctx.font='bold 22px Arial';ctx.fillText('NOKIA',930+i*190,808);}
+      rounded(paper,820,360,900,450,24,'#e9e4d8','#7c8985');
+      for(let i=0;i<5;i++){rounded(paper,875+i*155,430,110,260,12,['#4b5d65','#788b82','#465b75','#9a8e7d','#536b60'][i]);rounded(paper,895+i*155,455,70,120,7,'#b9d1c7');}
+      for(let i=0;i<4;i++){rounded(paper,900+i*190,760,150,80,8,'#b98d62');ctx.fillStyle='#5a4638';ctx.font='bold 22px Arial';ctx.fillText('NOKIA',930+i*190,808);}
     } else if(index===3){
-      ctx.fillStyle='#f8f5ed';ctx.fillRect(0,820,W,260);rounded(ctx,1180,300,390,550,54,'#17191e','#747d8a');
-      rounded(ctx,1204,340,342,455,28,'#8db1c4');ctx.fillStyle='#e8f3f5';ctx.font='bold 52px Arial';ctx.fillText('hello',1290,580);
+      ctx.fillStyle='#f8f5ed';ctx.fillRect(0,820,W,260);rounded(paper,1180,300,390,550,54,'#17191e','#747d8a');
+      rounded(paper,1204,340,342,455,28,'#8db1c4');ctx.fillStyle='#e8f3f5';ctx.font='bold 52px Arial';ctx.fillText('hello',1290,580);
       ctx.fillStyle='#f1f2f0';ctx.beginPath();ctx.arc(1375,820,18,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 30px Arial';ctx.fillText('2007',1330,900);
     } else if(index===4){
       const colors=['#7da98a','#d39a59','#7896b6','#b67d72','#8f82a8','#c3ad6d','#6d9c98','#b18d72','#8295a9'];
-      for(let i=0;i<9;i++){rounded(ctx,900+(i%3)*205,310+Math.floor(i/3)*175,165,140,18,colors[i]);ctx.fillStyle='rgba(255,255,255,0.8)';ctx.beginPath();ctx.arc(982+(i%3)*205,380+Math.floor(i/3)*175,25,0,Math.PI*2);ctx.fill();}
+      for(let i=0;i<9;i++){rounded(paper,900+(i%3)*205,310+Math.floor(i/3)*175,165,140,18,colors[i]);ctx.fillStyle='rgba(255,255,255,0.8)';ctx.beginPath();ctx.arc(982+(i%3)*205,380+Math.floor(i/3)*175,25,0,Math.PI*2);ctx.fill();}
       ctx.fillStyle='#416e4d';ctx.font='bold 70px Arial';ctx.fillText('ANDROID',1070,900);
     } else if(index===5){
-      phone(ctx,1180,285,1.2,'#4c555a');rounded(ctx,1225,345,270,310,8,'#d4ddd5');
-      for(let i=0;i<7;i++)rounded(ctx,1245,365+i*39,230,29,5,i%2?'#a7b6b1':'#8ea69d');
+      phone(paper,1180,285,1.2,'#4c555a');rounded(paper,1225,345,270,310,8,'#d4ddd5');
+      for(let i=0;i<7;i++)rounded(paper,1245,365+i*39,230,29,5,i%2?'#a7b6b1':'#8ea69d');
       ctx.strokeStyle='#c16d4e';ctx.lineWidth=12;ctx.beginPath();ctx.moveTo(890,320);ctx.bezierCurveTo(1110,190,1050,780,1560,680);ctx.stroke();
       ctx.fillStyle='#9a4e42';ctx.font='bold 48px Arial';ctx.fillText('TOO COMPLEX?',900,820);
     } else if(index===6){
-      rounded(ctx,860,380,850,380,26,'#423e43');for(let i=0;i<5;i++)rounded(ctx,920+i*145,500,110,170,10,'#d1c9b9');
+      rounded(paper,860,380,850,380,26,'#423e43');for(let i=0;i<5;i++)rounded(paper,920+i*145,500,110,170,10,'#d1c9b9');
       ctx.fillStyle='#f2a45f';ctx.beginPath();ctx.moveTo(1020,380);ctx.lineTo(1130,140);ctx.lineTo(1240,380);ctx.fill();
       ctx.fillStyle='#fff1d5';ctx.font='bold 56px Arial';ctx.fillText('2011',1270,285);
       ctx.fillStyle='#f7d2a3';ctx.font='bold 42px Arial';ctx.fillText('BURNING PLATFORM',1030,840);
     } else if(index===7){
-      phone(ctx,1020,280,1.18,'#4b5d69',true);phone(ctx,1370,340,0.95,'#263f54',true);
-      ctx.fillStyle='#344f64';ctx.font='bold 58px Arial';ctx.fillText('LUMIA',1160,900);rounded(ctx,870,790,760,18,8,'#657d8a');
+      phone(paper,1020,280,1.18,'#4b5d69',true);phone(paper,1370,340,0.95,'#263f54',true);
+      ctx.fillStyle='#344f64';ctx.font='bold 58px Arial';ctx.fillText('LUMIA',1160,900);rounded(paper,870,790,760,18,8,'#657d8a');
     } else if(index===8){
-      rounded(ctx,900,330,360,440,20,'#d8dedb','#667a82');rounded(ctx,1320,330,360,440,20,'#d8dedb','#667a82');
+      rounded(paper,900,330,360,440,20,'#d8dedb','#667a82');rounded(paper,1320,330,360,440,20,'#d8dedb','#667a82');
       ctx.fillStyle='#526b79';ctx.font='bold 54px Arial';ctx.fillText('NOKIA',980,490);ctx.fillStyle='#2f67a1';ctx.fillText('MICROSOFT',1350,490);
       ctx.strokeStyle='#8a684e';ctx.lineWidth=34;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(1170,610);ctx.lineTo(1380,610);ctx.stroke();
       ctx.fillStyle='#354b5b';ctx.font='bold 40px Arial';ctx.fillText('2014',1190,850);
     } else {
-      rounded(ctx,850,355,900,440,28,'#e9e4d9','#8c938b');
-      for(let i=0;i<4;i++)phone(ctx,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
+      rounded(paper,850,355,900,440,28,'#e9e4d9','#8c938b');
+      for(let i=0;i<4;i++)phone(paper,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
       ctx.fillStyle='#465c61';ctx.font='bold 48px Arial';ctx.fillText('A PART OF OUR HISTORY',950,850);
     }
   }
