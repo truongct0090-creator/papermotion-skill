@@ -1,4 +1,4 @@
-import { type PropMaker, type PropSet, type RidgeSpec, building, flora, pick, ridgeHeight, scatter, within } from '../../../src';
+import { type PropMaker, type PropSet, type RidgeSpec, building, pick, ridgeHeight, scatter, within } from '../../../src';
 import type { Paper } from '../../../src';
 
 /** Reusable snow-covered conifer maker, generalized from the snow demo's tiered paper pines. */
