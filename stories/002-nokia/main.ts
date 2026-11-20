@@ -194,42 +194,42 @@ export class NokiaPilotScene extends Stage {
     } else if(index===1){
       rounded(paper,870,650,780,36,12,'#8b6046');rounded(paper,930,680,34,190,8,'#76513e');rounded(paper,1550,680,34,190,8,'#76513e');
       phone(paper,1080,275,1.18,'#263b42');rounded(paper,1370,350,250,180,18,'#263d35');
-      title3D(paper,'SNAKE',1420,420,34);
+      outlinedText(paper,'SNAKE',1420,420,34);
       for(let i=0;i<7;i++)rounded(paper,1410+i*24,460+Math.sin(i*0.8)*18,18,18,4,'#9bcf82');
     } else if(index===2){
       rounded(paper,820,360,900,450,24,'#e9e4d8','#7c8985');
       for(let i=0;i<5;i++){rounded(paper,875+i*155,430,110,260,12,['#4b5d65','#788b82','#465b75','#9a8e7d','#536b60'][i]);rounded(paper,895+i*155,455,70,120,7,'#b9d1c7');}
-      for(let i=0;i<4;i++){rounded(paper,900+i*190,760,150,80,8,'#b98d62');title3D(paper,'NOKIA',930+i*190,808,20);}
+      for(let i=0;i<4;i++){rounded(paper,900+i*190,760,150,80,8,'#b98d62');outlinedText(paper,'NOKIA',930+i*190,808,20);}
     } else if(index===3){
       paper.piece([{x:0,y:820},{x:W,y:820},{x:W,y:1080},{x:0,y:1080}],'#f8f5ed',{seed:8403,tear:2.5,shadow:0,texture:0.35});rounded(paper,1180,300,390,550,54,'#17191e','#747d8a');
-      rounded(paper,1204,340,342,455,28,'#8db1c4');title3D(paper,'hello',1290,580,44);
-      paper.piece(circlePoly({x:1375,y:820},18,18),'#f1f2f0',{seed:8203,tear:1.4,shadow:3});title3D(paper,'2007',1330,900,28);
+      rounded(paper,1204,340,342,455,28,'#8db1c4');outlinedText(paper,'hello',1290,580,44);
+      paper.piece(circlePoly({x:1375,y:820},18,18),'#f1f2f0',{seed:8203,tear:1.4,shadow:3});outlinedText(paper,'2007',1330,900,28);
     } else if(index===4){
       const colors=['#7da98a','#d39a59','#7896b6','#b67d72','#8f82a8','#c3ad6d','#6d9c98','#b18d72','#8295a9'];
       for(let i=0;i<9;i++){rounded(paper,900+(i%3)*205,310+Math.floor(i/3)*175,165,140,18,colors[i]);paper.piece(circlePoly({x:982+(i%3)*205,y:380+Math.floor(i/3)*175},25,18),'rgba(255,255,255,0.8)',{seed:8300+i,tear:1.2,shadow:2});}
-      title3D(paper,'ANDROID',1070,900,58);
+      outlinedText(paper,'ANDROID',1070,900,58);
     } else if(index===5){
       phone(paper,1180,285,1.2,'#4c555a');rounded(paper,1225,345,270,310,8,'#d4ddd5');
       for(let i=0;i<7;i++)rounded(paper,1245,365+i*39,230,29,5,i%2?'#a7b6b1':'#8ea69d');
       ctx.strokeStyle='#c16d4e';ctx.lineWidth=12;ctx.beginPath();ctx.moveTo(890,320);ctx.bezierCurveTo(1110,190,1050,780,1560,680);ctx.stroke();
-      title3D(paper,'TOO COMPLEX?',900,820,40);
+      outlinedText(paper,'TOO COMPLEX?',900,820,40);
     } else if(index===6){
       rounded(paper,860,380,850,380,26,'#423e43');for(let i=0;i<5;i++)rounded(paper,920+i*145,500,110,170,10,'#d1c9b9');
       paper.piece([{x:1020,y:380},{x:1130,y:140},{x:1240,y:380}],'#f2a45f',{seed:8406,tear:3,shadow:9,texture:0.4});
-      title3D(paper,'2011',1270,285,48);
-      title3D(paper,'BURNING PLATFORM',1030,840,34);
+      outlinedText(paper,'2011',1270,285,48);
+      outlinedText(paper,'BURNING PLATFORM',1030,840,34);
     } else if(index===7){
       phone(paper,1020,280,1.18,'#4b5d69',true);phone(paper,1370,340,0.95,'#263f54',true);
-      title3D(paper,'LUMIA',1160,900,52);rounded(paper,870,790,760,18,8,'#657d8a');
+      outlinedText(paper,'LUMIA',1160,900,52);rounded(paper,870,790,760,18,8,'#657d8a');
     } else if(index===8){
       rounded(paper,900,330,360,440,20,'#d8dedb','#667a82');rounded(paper,1320,330,360,440,20,'#d8dedb','#667a82');
-      title3D(paper,'NOKIA',980,490,46);title3D(paper,'MICROSOFT',1350,490,38);
+      outlinedText(paper,'NOKIA',980,490,46);outlinedText(paper,'MICROSOFT',1350,490,38);
       ctx.strokeStyle='#8a684e';ctx.lineWidth=34;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(1170,610);ctx.lineTo(1380,610);ctx.stroke();
-      title3D(paper,'2014',1190,850,36);
+      outlinedText(paper,'2014',1190,850,36);
     } else {
       rounded(paper,850,355,900,440,28,'#e9e4d9','#8c938b');
       for(let i=0;i<4;i++)phone(paper,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
-      title3D(paper,'A PART OF OUR HISTORY',950,850,36);
+      outlinedText(paper,'A PART OF OUR HISTORY',950,850,36);
     }
     this.camera.layer(paper,1,()=>this.cat.draw(paper));
   }
