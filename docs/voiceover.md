@@ -34,3 +34,5 @@ The renderer accepts an optional `voiceover_manifest` path. When supplied, the w
 Run from **Actions → Render PaperMotion video**, set the manifest path (for example `stories/002-my-story/voiceover.json`), and choose full quality for final output.
 
 The repository includes a GitHub Actions smoke test that synthesizes both presets and uploads short WAV samples for review.
+
+Workflow setup uses the runner's local pip cache only when a dependency manifest is present.
