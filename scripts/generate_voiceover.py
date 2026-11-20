@@ -10,6 +10,14 @@ from vieneu import Vieneu
 
 VOICES = {"adam": "Adam", "my_duyen": "Mỹ Duyên"}
 
+def media_duration(path: Path) -> float:
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
+        check=True, capture_output=True, text=True
+    )
+    return float(probe.stdout.strip())
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
@@ -52,15 +60,26 @@ def main():
             next_audio_index = 2
         filters = []
         mix_labels = []
+        voice_ends = []
         for i, line in enumerate(lines):
             clip = temp / f"line_{i:03d}.wav"
             audio = tts.infer(line["text"], voice=VOICES[line["speaker"]])
             tts.save(audio, str(clip))
             inputs += ["-i", str(clip)]
-            delay = round(float(line["start_sec"]) * 1000)
+            start_sec = float(line["start_sec"])
+            voice_ends.append(start_sec + media_duration(clip))
+            delay = round(start_sec * 1000)
             label = f"vo{i}"
             filters.append(f"[{next_audio_index+i}:a]adelay={delay}|{delay},volume=1.0[{label}]")
             mix_labels.append(f"[{label}]")
+
+        required_duration = max(duration, max(voice_ends) + 1.25)
+        extension = required_duration - duration
+        if extension > 0.01:
+            filters.append(f"[0:v]tpad=stop_mode=clone:stop_duration={extension:.3f}[vout]")
+            video_map = "[vout]"
+        else:
+            video_map = "0:v:0"
 
         filters.append(
             f"[{base_audio_index}:a]{''.join(mix_labels)}amix=inputs={len(lines)+1}:duration=longest:"
@@ -70,11 +89,11 @@ def main():
         output.parent.mkdir(parents=True, exist_ok=True)
         cmd = ["ffmpeg", "-v", "error", "-y", *inputs,
                "-filter_complex", ";".join(filters),
-               "-map", "0:v:0", "-map", "[aout]", "-t", str(duration),
+               "-map", video_map, "-map", "[aout]", "-t", f"{required_duration:.3f}",
                "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
                "-movflags", "+faststart", str(output)]
         subprocess.run(cmd, check=True)
-    print(f"Voiceover mixed into {args.output} ({len(lines)} lines).")
+    print(f"Voiceover mixed into {args.output} ({len(lines)} lines, final duration {required_duration:.2f}s; speech is never clipped).")
 
 if __name__ == "__main__":
     main()
