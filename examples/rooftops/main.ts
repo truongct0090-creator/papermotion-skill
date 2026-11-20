@@ -38,7 +38,7 @@ const LAYERS = {
 
 // ── Cast ───────────────────────────────────────────────────
 const TOM: CatLook = {
-  fur: '#2a2633', furNear: '#342f3f', furBack: '#1c1924', light: '#dddaf0', lightShade: '#b3b0cc', lightBack: '#8d8aa8', rim: '#b5bfff',
+  fur: '#B08088', furNear: '#C3979E', furBack: '#865E66', light: '#dddaf0', lightShade: '#b3b0cc', lightBack: '#8d8aa8', rim: '#b5bfff',
   eye: '#d9e866', eyeDeep: '#8ea23a', ink: '#141220', nose: '#d88c9c', noseDeep: '#8e4f5e', innerEar: '#9a6a82', innerEarDeep: '#6e4459',
 };
 const DOVE: PigeonLook = {
