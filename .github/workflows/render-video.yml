@@ -18,6 +18,10 @@ on:
           - rain
           - kite
           - hands
+      voiceover_manifest:
+        description: Optional story voiceover JSON manifest path
+        required: false
+        type: string
       quality:
         description: Draft is faster; full is higher quality
         required: true
@@ -83,6 +87,27 @@ jobs:
             ffmpeg -v error -y -i "$file" -vf "scale=2560:1440:flags=lanczos" -c:v libx264 -crf 15 -preset slow -pix_fmt yuv420p -c:a copy -movflags +faststart "$temp"
             mv "$temp" "$file"
           done
+      - name: Set up Python for optional Vietnamese voiceover
+        if: inputs.voiceover_manifest != ''
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install VieNeu-TTS (CPU, free and open-source)
+        if: inputs.voiceover_manifest != ''
+        run: python -m pip install --upgrade pip vieneu
+
+      - name: Generate and mix Vietnamese voiceover
+        if: inputs.voiceover_manifest != ''
+        shell: bash
+        run: |
+          suffix=""
+          if [ "${{ inputs.quality }}" = "draft" ]; then suffix="_draft"; fi
+          input="out/${{ inputs.example }}${suffix}.mp4"
+          output="out/${{ inputs.example }}${suffix}_voice.mp4"
+          python scripts/generate_voiceover.py --manifest "${{ inputs.voiceover_manifest }}" --input "$input" --output "$output"
+          mv "$output" "$input"
+
       - name: Upload rendered video
         uses: actions/upload-artifact@v4
         with:
