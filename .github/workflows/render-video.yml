@@ -1,0 +1,85 @@
+name: Render PaperMotion video
+
+on:
+  workflow_dispatch:
+    inputs:
+      example:
+        description: Demo scene to render
+        required: true
+        type: choice
+        default: demo
+        options:
+          - demo
+          - snow
+          - sea
+          - rooftops
+          - light
+          - embers
+          - rain
+          - kite
+          - hands
+      quality:
+        description: Draft is faster; full is higher quality
+        required: true
+        type: choice
+        default: draft
+        options:
+          - draft
+          - full
+
+permissions:
+  contents: read
+
+concurrency:
+  group: papermotion-render-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.3
+          run_install: false
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Render video
+        shell: bash
+        run: |
+          if [ "${{ inputs.quality }}" = "draft" ]; then
+            pnpm render "${{ inputs.example }}" --draft --jobs 1
+          else
+            pnpm render "${{ inputs.example }}" --jobs 1
+          fi
+
+      - name: Upload rendered video
+        uses: actions/upload-artifact@v4
+        with:
+          name: papermotion-${{ inputs.example }}-${{ inputs.quality }}
+          path: |
+            out/*.mp4
+            out/*.wav
+            out/*_audio.png
+          if-no-files-found: error
+          retention-days: 7
