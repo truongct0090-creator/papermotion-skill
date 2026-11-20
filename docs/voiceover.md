@@ -36,3 +36,5 @@ Run from **Actions → Render PaperMotion video**, set the manifest path (for ex
 The repository includes a GitHub Actions smoke test that synthesizes both presets and uploads short WAV samples for review.
 
 Workflow setup uses the runner's local pip cache only when a dependency manifest is present.
+
+The voice test also checks the generated WAV metadata with FFmpeg/ffprobe.
