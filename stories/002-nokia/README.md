@@ -1,25 +1,26 @@
 # Tập 01 — Nokia: Từ ông vua điện thoại đến kẻ tụt lại
 
 ## Trạng thái sản xuất
-- Pilot 10 cảnh, 120 giây, 30 fps, 16:9; render draft 960×540.
+- Pilot 10 cảnh, 100 giây, 30 fps, 16:9; render draft 960×540.
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
-- Mèo mauve theo đúng thiết kế và chuyển động chuẩn từ Rooftops.
+- Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
+- Không tái sử dụng cast/đạo cụ riêng từ phim demo khác; nhân vật và đạo cụ lịch sử được thiết kế riêng cho Nokia.
 - Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7.
 
 ## Pilot 10 cảnh
 
 | Cảnh | Thời gian | Hình ảnh | Giọng |
 |---:|---:|---|---|
-| 1 | 00:00–00:12 | Cửa hàng điện thoại, nhiều mẫu Nokia; mở bằng nghịch lý Nokia từng thống trị nhưng mất vị trí dẫn đầu | Adam |
-| 2 | 00:12–00:24 | Nokia trong ký ức gia đình Việt Nam, Snake và điện thoại bền bỉ | Mỹ Duyên |
-| 3 | 00:24–00:36 | Nhà máy, sản phẩm và quy mô Nokia năm 2007 | Adam |
-| 4 | 00:36–00:48 | iPhone đầu tiên xuất hiện, mở ra cách tương tác mới | Adam |
-| 5 | 00:48–01:00 | Android mở rộng, cuộc cạnh tranh chuyển sang hệ sinh thái | Adam |
-| 6 | 01:00–01:12 | Symbian và độ phức tạp phần mềm | Adam |
-| 7 | 01:12–01:24 | Phòng họp, Nokia đứng trước lựa chọn chiến lược | Mỹ Duyên |
-| 8 | 01:24–01:36 | Quyết định chọn Windows Phone và sự xuất hiện của Lumia | Adam |
-| 9 | 01:36–01:48 | Thương vụ Microsoft mua mảng thiết bị và dịch vụ | Adam |
-| 10 | 01:48–02:00 | Những chiếc Nokia cũ như ký ức; Nokia tiếp tục tồn tại trong lĩnh vực khác | Adam |
+| 1 | 00:00–00:10 | Cửa hàng điện thoại, nhiều mẫu Nokia; mở bằng nghịch lý Nokia từng thống trị nhưng mất vị trí dẫn đầu | Adam |
+| 2 | 00:10–00:20 | Nokia trong ký ức gia đình Việt Nam, Snake và điện thoại bền bỉ | Mỹ Duyên |
+| 3 | 00:20–00:30 | Nhà máy, sản phẩm và quy mô Nokia năm 2007 | Adam |
+| 4 | 00:30–00:40 | iPhone đầu tiên xuất hiện, mở ra cách tương tác mới | Adam |
+| 5 | 00:40–00:50 | Android mở rộng, cuộc cạnh tranh chuyển sang hệ sinh thái | Adam |
+| 6 | 00:50–01:00 | Symbian và độ phức tạp phần mềm | Adam |
+| 7 | 01:00–01:10 | Phòng họp, Nokia đứng trước lựa chọn chiến lược | Mỹ Duyên |
+| 8 | 01:10–01:20 | Quyết định chọn Windows Phone và sự xuất hiện của Lumia | Adam |
+| 9 | 01:20–01:30 | Thương vụ Microsoft mua mảng thiết bị và dịch vụ | Adam |
+| 10 | 01:30–01:40 | Những chiếc Nokia cũ như ký ức; Nokia tiếp tục tồn tại trong lĩnh vực khác | Adam |
 
 Lời thoại và mốc thu âm chính xác nằm trong [voiceover.json](./voiceover.json).
 
