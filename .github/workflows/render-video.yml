@@ -73,6 +73,16 @@ jobs:
             pnpm render "${{ inputs.example }}" --jobs 1
           fi
 
+      - name: Export full-quality video in 2K QHD
+        if: inputs.quality == 'full'
+        shell: bash
+        run: |
+          for file in out/*.mp4; do
+            [ -f "$file" ] || continue
+            temp="${file%.mp4}_2k.mp4"
+            ffmpeg -v error -y -i "$file" -vf "scale=2560:1440:flags=lanczos" -c:v libx264 -crf 15 -preset slow -pix_fmt yuv420p -c:a copy -movflags +faststart "$temp"
+            mv "$temp" "$file"
+          done
       - name: Upload rendered video
         uses: actions/upload-artifact@v4
         with:
