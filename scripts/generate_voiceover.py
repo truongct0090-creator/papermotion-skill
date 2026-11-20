@@ -61,13 +61,18 @@ def main():
         filters = []
         mix_labels = []
         voice_ends = []
+        previous_end = 0.0
+        inter_line_gap = float(data.get('inter_line_gap_sec', 0.32))
         for i, line in enumerate(lines):
             clip = temp / f"line_{i:03d}.wav"
             audio = tts.infer(line["text"], voice=VOICES[line["speaker"]])
             tts.save(audio, str(clip))
             inputs += ["-i", str(clip)]
-            start_sec = float(line["start_sec"])
-            voice_ends.append(start_sec + media_duration(clip))
+            requested_start = float(line["start_sec"])
+            start_sec = requested_start if i == 0 else max(requested_start, previous_end + inter_line_gap)
+            clip_duration = media_duration(clip)
+            previous_end = start_sec + clip_duration
+            voice_ends.append(previous_end)
             delay = round(start_sec * 1000)
             label = f"vo{i}"
             filters.append(f"[{next_audio_index+i}:a]adelay={delay}|{delay},volume=1.0[{label}]")
