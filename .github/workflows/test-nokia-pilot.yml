@@ -72,7 +72,7 @@ jobs:
           streams=p['streams']
           video=next(s for s in streams if s.get('codec_type')=='video')
           audio=any(s.get('codec_type')=='audio' for s in streams)
-          assert 119.5 <= duration <= 120.5, f'unexpected duration: {duration}'
+          assert 99.5 <= duration <= 100.5, f'unexpected duration: {duration}'
           assert (video.get('width'),video.get('height'))==(960,540), video
           assert video.get('r_frame_rate')=='30/1', video
           assert audio, 'missing audio stream'
@@ -82,7 +82,7 @@ jobs:
       - name: Upload Nokia pilot artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nokia-10-scenes-2min-draft
+          name: nokia-10-scenes-100s-draft
           path: |
             out/nokia-pilot-10-scenes.mp4
             out/nokia-pilot_draft.mp4
