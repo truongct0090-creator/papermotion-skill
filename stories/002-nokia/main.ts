@@ -129,9 +129,8 @@ export class NokiaPilotScene extends Stage {
     this.camera.layer(paper,1,v=>drawRidge(paper,this.ridges[index],v.from,v.to,1120));
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
-    ctx.textAlign='left';ctx.fillStyle='#26313a';ctx.font='bold 62px Arial';
-    ctx.fillText(TITLES[index],110,150,1680);
-    ctx.fillStyle='rgba(38,49,58,0.78)';ctx.font='32px Arial';ctx.fillText(SUBTITLES[index],114,208,1640);
+    paper.text(TITLES[index],{x:110,y:150},{font:'800 62px Montserrat',color:'#26313a',sheet:{shadow:3,texture:0.3}});
+    paper.text(SUBTITLES[index],{x:114,y:208},{font:'500 32px Montserrat',color:'rgba(38,49,58,0.82)',sheet:{shadow:2,texture:0.22}});
 
     if(index===0){
       for(let row=0;row<2;row++){rounded(paper,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
