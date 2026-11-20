@@ -78,8 +78,10 @@ def main():
         if extension > 0.01:
             filters.append(f"[0:v]tpad=stop_mode=clone:stop_duration={extension:.3f}[vout]")
             video_map = "[vout]"
+            video_codec = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "18"]
         else:
             video_map = "0:v:0"
+            video_codec = ["-c:v", "copy"]
 
         filters.append(
             f"[{base_audio_index}:a]{''.join(mix_labels)}amix=inputs={len(lines)+1}:duration=longest:"
@@ -90,7 +92,7 @@ def main():
         cmd = ["ffmpeg", "-v", "error", "-y", *inputs,
                "-filter_complex", ";".join(filters),
                "-map", video_map, "-map", "[aout]", "-t", f"{required_duration:.3f}",
-               "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
+               *video_codec, "-c:a", "aac", "-b:a", "192k",
                "-movflags", "+faststart", str(output)]
         subprocess.run(cmd, check=True)
     print(f"Voiceover mixed into {args.output} ({len(lines)} lines, final duration {required_duration:.2f}s; speech is never clipped).")
