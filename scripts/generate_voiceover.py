@@ -31,9 +31,25 @@ def main():
             raise SystemExit(f"Line {i}: text is required.")
 
     tts = Vieneu()  # Open-source v3 Turbo; automatically uses CPU/ONNX when no CUDA GPU exists.
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
+         "-show_entries", "format=duration", "-of", "json", args.input],
+        check=True, capture_output=True, text=True
+    )
+    probe_data = json.loads(probe.stdout)
+    has_audio = any(s.get("codec_type") == "audio" for s in probe_data.get("streams", []))
+    duration = float(probe_data["format"]["duration"])
+
     with tempfile.TemporaryDirectory(prefix="papermotion-voice-") as tmp:
         temp = Path(tmp)
         inputs = ["-i", args.input]
+        base_audio_index = 0
+        next_audio_index = 1
+        if not has_audio:
+            inputs += ["-f", "lavfi", "-t", str(duration), "-i",
+                       "anullsrc=sample_rate=48000:channel_layout=stereo"]
+            base_audio_index = 1
+            next_audio_index = 2
         filters = []
         mix_labels = []
         for i, line in enumerate(lines):
@@ -43,18 +59,18 @@ def main():
             inputs += ["-i", str(clip)]
             delay = round(float(line["start_sec"]) * 1000)
             label = f"vo{i}"
-            filters.append(f"[{i+1}:a]adelay={delay}|{delay},volume=1.0[{label}]")
+            filters.append(f"[{next_audio_index+i}:a]adelay={delay}|{delay},volume=1.0[{label}]")
             mix_labels.append(f"[{label}]")
 
         filters.append(
-            f"[0:a]{''.join(mix_labels)}amix=inputs={len(lines)+1}:duration=longest:"
+            f"[{base_audio_index}:a]{''.join(mix_labels)}amix=inputs={len(lines)+1}:duration=longest:"
             "dropout_transition=0:normalize=0[aout]"
         )
         output = Path(args.output)
         output.parent.mkdir(parents=True, exist_ok=True)
         cmd = ["ffmpeg", "-v", "error", "-y", *inputs,
                "-filter_complex", ";".join(filters),
-               "-map", "0:v:0", "-map", "[aout]",
+               "-map", "0:v:0", "-map", "[aout]", "-t", str(duration),
                "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
                "-movflags", "+faststart", str(output)]
         subprocess.run(cmd, check=True)
