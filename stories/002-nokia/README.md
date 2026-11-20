@@ -9,6 +9,8 @@
 
 ## Pilot 10 cảnh
 
+Mỗi cảnh có nhịp nền khoảng 10 giây; chuyển cảnh không được cắt lời. Script đo độ dài giọng đọc thực tế và giữ hình cuối thêm thời gian cần thiết để câu cuối kết thúc trọn vẹn.
+
 | Cảnh | Thời gian | Hình ảnh | Giọng |
 |---:|---:|---|---|
 | 1 | 00:00–00:10 | Cửa hàng điện thoại, nhiều mẫu Nokia; mở bằng nghịch lý Nokia từng thống trị nhưng mất vị trí dẫn đầu | Adam |
