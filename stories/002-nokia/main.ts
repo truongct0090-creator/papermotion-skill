@@ -1,9 +1,9 @@
 import {
   Mixer, Stage, Camera, fillGradient, tearWipe, ramp, vignette, grain, circlePoly,
-  instrument, note, triad, drawProps, drawRidge, drawSky, nightSky, blink,
+  instrument, note, triad, drawProps, drawRidge, drawSky, blink,
   type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
-import { createCitySkyline, createGrassland, meadowWind } from '../shared/environment';
+import { createCitySkyline, createGrassland, meadowWind, nightSky } from '../shared/environment';
 import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
 
 const W = 1920, H = 1080, SCENE_SECONDS = 10, DURATION = 100;
