@@ -25,8 +25,10 @@ examples with our original stories.
 
 ## Current status
 
-No original story has been added yet. The first GitHub Actions run uses the existing `demo`
-scene as a smoke test of the headless rendering pipeline. It does not require an AI API.
+- `002-nokia`: first episode in development. A 10-scene, 2-minute draft is rendered by the dedicated `Test Nokia 10-scene pilot` workflow before the full 26-scene episode is approved.
+- `001-four-seasons`: reusable animation and environment test story.
+
+The Nokia pilot uses the shared open-source VieNeu-TTS voices and the PaperMotion renderer.
 
 ## Shared environment kit
 
