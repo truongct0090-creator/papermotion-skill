@@ -1,6 +1,6 @@
 import {
   Mixer, Stage, Camera, fillGradient, tearWipe, ramp, vignette, grain, circlePoly,
-  instrument, note, triad, drawProps, drawRidge, drawSky, nightSky, blink, flora, scatter, noise1,
+  instrument, note, triad, drawProps, drawRidge, drawSky, nightSky, blink,
   type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
 import { createCitySkyline, createGrassland, meadowWind } from '../shared/environment';
