@@ -58,7 +58,9 @@ export class FourSeasonsScene extends Stage {
 
   protected update(t: number, dt: number): void {
     Object.assign(this.cat.intent, CAT_REST, {
-      speed: t < 0.35 ? 165 * ramp(t, 0, 0.35) : 165, facing: 1, tail: 0.82, blink: 1,
+      speed: t < 0.35 ? 165 * ramp(t, 0, 0.35) : 165, facing: 1,
+      // Let the tail gently rise and fall; the existing Strand physics adds a soft trailing swish.
+      tail: 0.72 + Math.sin(t * 2.6) * 0.16, blink: 1,
     });
     this.cat.update(dt);
     while (this.cat.x >= this.nextFootstep) {
