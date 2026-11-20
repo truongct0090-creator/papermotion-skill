@@ -8,7 +8,7 @@ export type MakeStage = (canvas: HTMLCanvasElement, params: URLSearchParams) => 
  * (the player, the render script) without pulling in the scenes themselves.
  */
 export const EXAMPLES: Record<string, () => Promise<MakeStage>> = {
-  hands: async () => {
+  seasons20: async () => {\n    const { FourSeasonsScene } = await import('../stories/001-four-seasons/main');\n    return canvas => new FourSeasonsScene(canvas);\n  },\n  hands: async () => {
     const { HandsScene } = await import('./hands/main');
     return canvas => new HandsScene(canvas);
   },
