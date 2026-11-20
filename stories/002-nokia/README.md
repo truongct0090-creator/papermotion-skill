@@ -1,11 +1,12 @@
 # Tập 01 — Nokia: Từ ông vua điện thoại đến kẻ tụt lại
 
 ## Trạng thái sản xuất
-- Pilot 10 cảnh, 100 giây, 30 fps, 16:9; render draft 960×540.
+- Pilot 10 cảnh, tối thiểu 100 giây, 30 fps, 16:9; render thẳng bản cuối 1920×1080, không tạo draft. Cảnh cuối tự kéo dài nếu lời thoại cần thêm thời gian.
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
 - Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
-- Không tái sử dụng cast/đạo cụ riêng từ phim demo khác; nhân vật và đạo cụ lịch sử được thiết kế riêng cho Nokia.
+- Mèo mauve là mascot dẫn chuyện xuyên suốt, dùng rig và chuyển động chuẩn từ Rooftops; các đạo cụ lịch sử riêng của Nokia được thiết kế theo bối cảnh từng cảnh.
 - Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7.
+- Cảnh đêm dùng bầu trời sao và mặt trăng theo demo Rooftops; cảnh ban ngày dùng mây và môi trường giấy từ shared environment.
 
 ## Pilot 10 cảnh
 
