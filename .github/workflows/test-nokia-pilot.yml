@@ -34,8 +34,8 @@ jobs:
           version: 11.1.3
           run_install: false
 
-      - name: Check FFmpeg on GitHub runner
-        run: ffmpeg -version
+      - name: Install FFmpeg
+        run: sudo apt-get install -y ffmpeg
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
