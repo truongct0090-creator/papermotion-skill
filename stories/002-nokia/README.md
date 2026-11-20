@@ -5,7 +5,7 @@
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
 - Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
 - Mèo mauve là mascot dẫn chuyện xuyên suốt, dùng rig và chuyển động chuẩn từ Rooftops; các đạo cụ lịch sử riêng của Nokia được thiết kế theo bối cảnh từng cảnh.
-- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D.
+- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề tự xuống dòng theo bề rộng an toàn ở góc trái, tránh vùng đạo cụ chính để không bị điện thoại, nhà cửa hoặc nhân vật che khuất.
 - Lời thoại giữ khoảng nghỉ mục tiêu 0,32 giây giữa câu; cue được tự lùi nếu câu trước dài để không chồng tiếng.
 - Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7.
 - Cảnh đêm dùng bầu trời sao và mặt trăng theo demo Rooftops; cảnh ban ngày dùng mây và môi trường giấy từ shared environment.
