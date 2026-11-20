@@ -32,8 +32,29 @@ const PALETTES: [string,string][] = [
 ];
 
 
-function outlinedText(paper: Paper, value: string, x: number, y: number, size: number, subtitle = false): void {
+function wrapText(paper: Paper, value: string, size: number, maxWidth: number): string[] {
   const ctx = paper.context;
+  ctx.save();
+  ctx.font = `800 ${size}px "Be Vietnam Pro", sans-serif`;
+  const words = value.split(/\\s+/);
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const candidate = line ? `${line} ${word}` : word;
+    if (line && ctx.measureText(candidate).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else line = candidate;
+  }
+  if (line) lines.push(line);
+  ctx.restore();
+  return lines;
+}
+
+function outlinedText(paper: Paper, value: string, x: number, y: number, size: number, subtitle = false, maxWidth = 650): number {
+  const ctx = paper.context;
+  const lines = wrapText(paper, value, size, maxWidth);
+  const lineHeight = Math.round(size * (subtitle ? 1.38 : 1.22));
   ctx.save();
   ctx.font = `800 ${size}px "Be Vietnam Pro", sans-serif`;
   ctx.textAlign = 'left';
@@ -42,10 +63,14 @@ function outlinedText(paper: Paper, value: string, x: number, y: number, size: n
   ctx.lineCap = 'round';
   ctx.lineWidth = subtitle ? 4.5 : 7;
   ctx.strokeStyle = '#17151a';
-  ctx.strokeText(value, x, y);
   ctx.fillStyle = '#fff9ed';
-  ctx.fillText(value, x, y);
+  lines.forEach((line, i) => {
+    const baseline = y + i * lineHeight;
+    ctx.strokeText(line, x, baseline);
+    ctx.fillText(line, x, baseline);
+  });
   ctx.restore();
+  return lines.length;
 }
 
 function rounded(paper: Paper, x: number, y: number, w: number, h: number, r: number, fill: string, stroke?: string): void {
@@ -185,8 +210,8 @@ export class NokiaPilotScene extends Stage {
     this.camera.layer(paper,1,v=>drawRidge(paper,this.ridges[index],v.from,v.to,1120));
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
-    outlinedText(paper,TITLES[index],110,150,58);
-    outlinedText(paper,SUBTITLES[index],114,214,30,true);
+    const titleLines = outlinedText(paper,TITLES[index],110,142,52,false,650);
+    outlinedText(paper,SUBTITLES[index],114,142+titleLines*64+10,27,true,650);
 
     if(index===0){
       for(let row=0;row<2;row++){rounded(paper,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
