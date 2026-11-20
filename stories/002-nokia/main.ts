@@ -1,10 +1,10 @@
 import {
   Mixer, Stage, fillGradient, tearWipe, ramp, vignette, grain,
-  instrument, note, triad, type Stereo,
+  instrument, note, triad, drawProps, drawRidge, type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
-import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
+import { createCitySkyline } from '../shared/environment';
 
-const W = 1920, H = 1080, SCENE_SECONDS = 12, DURATION = 120;
+const W = 1920, H = 1080, SCENE_SECONDS = 10, DURATION = 100;
 const TITLES = [
   'MỘT THỜI NOKIA THỐNG TRỊ','CHIẾC ĐIỆN THOẠI QUỐC DÂN','NGƯỜI KHỔNG LỒ TRÊN ĐỈNH CAO',
   'RỒI IPHONE XUẤT HIỆN','ANDROID THAY ĐỔI CUỘC CHƠI','SYMBIAN BẮT ĐẦU CHẬM LẠI',
@@ -29,15 +29,33 @@ const PALETTES: [string,string][] = [
   ['#d6d2ca','#818c9c'],['#e8dfd0','#aab7ad'],
 ];
 
-function rounded(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number, fill: string, stroke?: string): void {
-  ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fillStyle=fill; ctx.fill();
-  if (stroke) { ctx.lineWidth=5; ctx.strokeStyle=stroke; ctx.stroke(); }
+function rounded(paper: Paper, x: number, y: number, w: number, h: number, r: number, fill: string, stroke?: string): void {
+  const ctx = paper.context;
+  const rr = Math.min(r, w / 2, h / 2), pts: { x: number; y: number }[] = [];
+  const corners = [
+    { x: x + w - rr, y: y + rr, a: -Math.PI / 2 },
+    { x: x + w - rr, y: y + h - rr, a: 0 },
+    { x: x + rr, y: y + h - rr, a: Math.PI / 2 },
+    { x: x + rr, y: y + rr, a: Math.PI },
+  ];
+  for (const c of corners) for (let i = 0; i <= 4; i++) {
+    const a = c.a + i / 4 * Math.PI / 2;
+    pts.push({ x: c.x + Math.cos(a) * rr, y: c.y + Math.sin(a) * rr });
+  }
+  const seed = Math.abs(Math.round(x * 13 + y * 7 + w * 3 + h * 5)) + 1;
+  paper.piece(pts, fill, { seed, tear: 2.4, shadow: 7, texture: 0.42 });
+  if (stroke) {
+    ctx.save(); ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.closePath(); ctx.lineWidth = 3; ctx.strokeStyle = stroke; ctx.stroke(); ctx.restore();
+  }
 }
-function phone(ctx: CanvasRenderingContext2D, x: number, y: number, scale: number, color: string, smart=false): void {
+function phone(paper: Paper, x: number, y: number, scale: number, color: string, smart=false): void {
+  const ctx = paper.context;
   ctx.save(); ctx.translate(x,y); ctx.scale(scale,scale);
   ctx.shadowColor='rgba(25,30,38,0.25)'; ctx.shadowBlur=24; ctx.shadowOffsetY=16;
-  rounded(ctx,0,0,220,390,30,color,'#30343a'); ctx.shadowColor='transparent';
-  rounded(ctx,18,38,184,smart?270:190,12,smart?'#263b50':'#b8d1c1');
+  rounded(paper,0,0,220,390,30,color,'#30343a'); ctx.shadowColor='transparent';
+  rounded(this.paper,18,38,184,smart?270:190,12,smart?'#263b50':'#b8d1c1');
   if (smart) {
     const colors=['#e7a45d','#8bb5a0','#d17b67','#7b91b8','#d7bd76','#9d86a8'];
     for(let i=0;i<6;i++) rounded(ctx,31+(i%3)*55,55+Math.floor(i/3)*76,42,58,7,colors[i]);
@@ -50,12 +68,21 @@ function phone(ctx: CanvasRenderingContext2D, x: number, y: number, scale: numbe
 }
 
 export class NokiaPilotScene extends Stage {
-  private readonly cat: Cat;
+  private readonly skyline;
+  private readonly ridges: RidgeSpec[];
+
   constructor(canvas: HTMLCanvasElement) {
     super(canvas,{duration:DURATION,preroll:0.5,fps:30});
     this.paper.light={x:-0.6,y:0.8};
+    this.paper.edgeColor='rgba(255,246,232,0.28)';
+    this.paper.shadowColor='rgba(24,18,24,0.34)';
     this.world.ground=()=>890;
-    this.cat=new Cat(this.world,390,890,SIGNATURE_CAT_LOOK);
+    this.skyline=createCitySkyline(5100,-700,2700,{
+      far:['#aab4b0','#a0aca8'],mid:['#788b88','#82918c'],near:['#53696b','#5e7472'],
+      farWindow:'#e8d4a7',midWindow:'#e8c78b',nearWindow:'#f0d49a',
+    });
+    const earth=['#b7a38a','#b9a18a','#9ca9a0','#29374b','#8eaa9a','#a9aaa0','#9d8270','#8fa7b8','#9da7a5','#b5a58f'];
+    this.ridges=earth.map((color,i)=>({seed:6200+i,base:835,amp:32,freq:0.0018+i*0.00003,color,tear:3,shadow:8}));
   }
 
   protected update(t:number,dt:number):void {
@@ -83,14 +110,20 @@ export class NokiaPilotScene extends Stage {
   private drawScene(index:number,t:number):void {
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     fillGradient(ctx,[[0,top],[1,bottom]]);
+    const paper=this.paper;
+    paper.piece([{x:0,y:850},{x:W,y:850},{x:W,y:H+80},{x:0,y:H+80}],index===3?'#d8d7d2':'#d6c8b5',{seed:6300+index,tear:3,shadow:0,texture:0.35});
+    drawRidge(paper,this.ridges[index],-500,2450,1120);
+    drawProps(paper,this.skyline.far,-500,2450,()=>0,t);
+    drawProps(paper,this.skyline.mid,-500,2450,()=>0,t);
+    drawProps(paper,this.skyline.near,-500,2450,()=>0,t);
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
-    ctx.fillStyle='rgba(35,48,56,0.08)';ctx.fillRect(0,870,W,H-870);
+    paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
     ctx.textAlign='left';ctx.fillStyle='#26313a';ctx.font='bold 62px Arial';
     ctx.fillText(TITLES[index],110,150,1680);
     ctx.fillStyle='rgba(38,49,58,0.78)';ctx.font='32px Arial';ctx.fillText(SUBTITLES[index],114,208,1640);
 
     if(index===0){
-      for(let row=0;row<2;row++){rounded(ctx,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(ctx,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
+      for(let row=0;row<2;row++){rounded(ctx,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
       rounded(ctx,780,825,1000,25,8,'#765b45');
     } else if(index===1){
       rounded(ctx,870,650,780,36,12,'#8b6046');rounded(ctx,930,680,34,190,8,'#76513e');rounded(ctx,1550,680,34,190,8,'#76513e');
@@ -132,13 +165,12 @@ export class NokiaPilotScene extends Stage {
       for(let i=0;i<4;i++)phone(ctx,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
       ctx.fillStyle='#465c61';ctx.font='bold 48px Arial';ctx.fillText('A PART OF OUR HISTORY',950,850);
     }
-    this.cat.draw(this.paper);
   }
 
   soundtrack(sampleRate:number):Stereo{
     const mix=new Mixer(this.videoLength,sampleRate)
       .bus('music',{gain:0.55,reverb:0.28})
-      .bus('ambience',{gain:0.18,reverb:0.12});
+      .bus('ambience',{gain:0.22,reverb:0.16});
     const roots=[note('C4'),note('A3'),note('F3'),note('G3')];
     for(let s=0;s<10;s++){
       const root=roots[Math.floor(s/3)%roots.length];
@@ -147,8 +179,10 @@ export class NokiaPilotScene extends Stage {
           seed:2400+s*7+i,cutoff:s>=6?560:920,attack:0.9,release:1.1,
         }),{gain:0.12,pan:(i-1)*0.32});
       }
-      mix.add('music',s*SCENE_SECONDS+1.1,instrument.harp(root+12,sampleRate,{seed:2600+s,decay:0.85}),{gain:0.12,pan:s%2?0.25:-0.25});
-      if(s===0||s===3||s===6||s===9)mix.add('ambience',s*SCENE_SECONDS+0.2,instrument.chime(root+24,sampleRate),{gain:0.12,pan:0.2});
+      mix.add('music',s*SCENE_SECONDS+0.7,instrument.harp(root+12,sampleRate,{seed:2600+s,decay:1.05}),{gain:0.11,pan:s%2?0.25:-0.25});
+      mix.add('music',s*SCENE_SECONDS+4.2,instrument.harp(root+19,sampleRate,{seed:2700+s,decay:0.72}),{gain:0.065,pan:s%2?-0.2:0.2});
+      mix.add('ambience',s*SCENE_SECONDS,instrument.pad(root-24,SCENE_SECONDS,sampleRate,{seed:2800+s,cutoff:420,attack:0.8,release:0.8}),{gain:0.075});
+      if(s===0||s===1||s===3||s===6||s===7||s===9)mix.add('ambience',s*SCENE_SECONDS+0.18,instrument.chime(root+24,sampleRate),{gain:0.09,pan:0.2});
     }
     return mix.render({reverb:{room:0.58,damp:0.62},master:-2,ceiling:-1,fadeIn:0.8,fadeOut:1.5});
   }
