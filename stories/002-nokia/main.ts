@@ -1,5 +1,5 @@
 import {
-  Mixer, Stage, fillGradient, tearWipe, ramp, vignette, grain,
+  Mixer, Stage, Camera, fillGradient, tearWipe, ramp, vignette, grain, circlePoly,
   instrument, note, triad, drawProps, drawRidge, type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
 import { createCitySkyline } from '../shared/environment';
@@ -62,7 +62,7 @@ function phone(paper: Paper, x: number, y: number, scale: number, color: string,
   } else {
     ctx.fillStyle='#263d35'; ctx.font='bold 31px monospace'; ctx.textAlign='center';
     ctx.fillText('NOKIA',110,125); ctx.font='23px monospace'; ctx.fillText('12:08',110,165);
-    for(let i=0;i<3;i++) for(let j=0;j<3;j++){ctx.beginPath();ctx.arc(62+j*48,270+i*35,12,0,Math.PI*2);ctx.fillStyle='#d8d8d0';ctx.fill();}
+    for(let i=0;i<3;i++) for(let j=0;j<3;j++) paper.piece(circlePoly({x:62+j*48,y:270+i*35},12,14),'#d8d8d0',{seed:8100+i*3+j,tear:1.2,shadow:2});
   }
   rounded(paper,78,smart?330:250,64,18,9,'#d6d8d6'); ctx.restore();
 }
@@ -70,6 +70,7 @@ function phone(paper: Paper, x: number, y: number, scale: number, color: string,
 export class NokiaPilotScene extends Stage {
   private readonly skyline: ReturnType<typeof createCitySkyline>;
   private readonly ridges: RidgeSpec[];
+  private readonly camera: Camera;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas,{duration:DURATION,preroll:0.5,fps:30});
@@ -77,6 +78,8 @@ export class NokiaPilotScene extends Stage {
     this.paper.edgeColor='rgba(255,246,232,0.28)';
     this.paper.shadowColor='rgba(24,18,24,0.34)';
     this.world.ground=()=>890;
+    this.camera=new Camera(W/2,{width:W,height:H,stiffness:4,damping:4,handheld:0});
+    this.camera.cut({x:W/2,y:H/2,zoom:1,handheld:0});
     this.skyline=createCitySkyline(5100,-700,2700,{
       far:['#aab4b0','#a0aca8'],mid:['#788b88','#82918c'],near:['#53696b','#5e7472'],
       farWindow:'#e8d4a7',midWindow:'#e8c78b',nearWindow:'#f0d49a',
@@ -111,10 +114,10 @@ export class NokiaPilotScene extends Stage {
     fillGradient(ctx,[[0,top],[1,bottom]]);
     const paper=this.paper;
     paper.piece([{x:0,y:850},{x:W,y:850},{x:W,y:H+80},{x:0,y:H+80}],index===3?'#d8d7d2':'#d6c8b5',{seed:6300+index,tear:3,shadow:0,texture:0.35});
-    drawRidge(paper,this.ridges[index],-500,2450,1120);
-    drawProps(paper,this.skyline.far,-500,2450,()=>0,t);
-    drawProps(paper,this.skyline.mid,-500,2450,()=>0,t);
-    drawProps(paper,this.skyline.near,-500,2450,()=>0,t);
+    this.camera.layer(paper,0.14,v=>drawProps(paper,this.skyline.far,v.from,v.to,()=>0,t));
+    this.camera.layer(paper,0.4,v=>drawProps(paper,this.skyline.mid,v.from,v.to,()=>0,t));
+    this.camera.layer(paper,0.8,v=>drawProps(paper,this.skyline.near,v.from,v.to,()=>0,t));
+    this.camera.layer(paper,1,v=>drawRidge(paper,this.ridges[index],v.from,v.to,1120));
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
     ctx.textAlign='left';ctx.fillStyle='#26313a';ctx.font='bold 62px Arial';
@@ -134,12 +137,12 @@ export class NokiaPilotScene extends Stage {
       for(let i=0;i<5;i++){rounded(paper,875+i*155,430,110,260,12,['#4b5d65','#788b82','#465b75','#9a8e7d','#536b60'][i]);rounded(paper,895+i*155,455,70,120,7,'#b9d1c7');}
       for(let i=0;i<4;i++){rounded(paper,900+i*190,760,150,80,8,'#b98d62');ctx.fillStyle='#5a4638';ctx.font='bold 22px Arial';ctx.fillText('NOKIA',930+i*190,808);}
     } else if(index===3){
-      ctx.fillStyle='#f8f5ed';ctx.fillRect(0,820,W,260);rounded(paper,1180,300,390,550,54,'#17191e','#747d8a');
+      paper.piece([{x:0,y:820},{x:W,y:820},{x:W,y:1080},{x:0,y:1080}],'#f8f5ed',{seed:8403,tear:2.5,shadow:0,texture:0.35});rounded(paper,1180,300,390,550,54,'#17191e','#747d8a');
       rounded(paper,1204,340,342,455,28,'#8db1c4');ctx.fillStyle='#e8f3f5';ctx.font='bold 52px Arial';ctx.fillText('hello',1290,580);
-      ctx.fillStyle='#f1f2f0';ctx.beginPath();ctx.arc(1375,820,18,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 30px Arial';ctx.fillText('2007',1330,900);
+      paper.piece(circlePoly({x:1375,y:820},18,18),'#f1f2f0',{seed:8203,tear:1.4,shadow:3});ctx.fillStyle='#fff';ctx.font='bold 30px Arial';ctx.fillText('2007',1330,900);
     } else if(index===4){
       const colors=['#7da98a','#d39a59','#7896b6','#b67d72','#8f82a8','#c3ad6d','#6d9c98','#b18d72','#8295a9'];
-      for(let i=0;i<9;i++){rounded(paper,900+(i%3)*205,310+Math.floor(i/3)*175,165,140,18,colors[i]);ctx.fillStyle='rgba(255,255,255,0.8)';ctx.beginPath();ctx.arc(982+(i%3)*205,380+Math.floor(i/3)*175,25,0,Math.PI*2);ctx.fill();}
+      for(let i=0;i<9;i++){rounded(paper,900+(i%3)*205,310+Math.floor(i/3)*175,165,140,18,colors[i]);paper.piece(circlePoly({x:982+(i%3)*205,y:380+Math.floor(i/3)*175},25,18),'rgba(255,255,255,0.8)',{seed:8300+i,tear:1.2,shadow:2});}
       ctx.fillStyle='#416e4d';ctx.font='bold 70px Arial';ctx.fillText('ANDROID',1070,900);
     } else if(index===5){
       phone(paper,1180,285,1.2,'#4c555a');rounded(paper,1225,345,270,310,8,'#d4ddd5');
@@ -148,7 +151,7 @@ export class NokiaPilotScene extends Stage {
       ctx.fillStyle='#9a4e42';ctx.font='bold 48px Arial';ctx.fillText('TOO COMPLEX?',900,820);
     } else if(index===6){
       rounded(paper,860,380,850,380,26,'#423e43');for(let i=0;i<5;i++)rounded(paper,920+i*145,500,110,170,10,'#d1c9b9');
-      ctx.fillStyle='#f2a45f';ctx.beginPath();ctx.moveTo(1020,380);ctx.lineTo(1130,140);ctx.lineTo(1240,380);ctx.fill();
+      paper.piece([{x:1020,y:380},{x:1130,y:140},{x:1240,y:380}],'#f2a45f',{seed:8406,tear:3,shadow:9,texture:0.4});
       ctx.fillStyle='#fff1d5';ctx.font='bold 56px Arial';ctx.fillText('2011',1270,285);
       ctx.fillStyle='#f7d2a3';ctx.font='bold 42px Arial';ctx.fillText('BURNING PLATFORM',1030,840);
     } else if(index===7){
