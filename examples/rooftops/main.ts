@@ -6,7 +6,7 @@ import {
   type V, Beats, Camera, Stage, blink, building, circlePoly, drawProps, envelope, fillGradient, flora, lerp, noise1,
   ramp, rng, scatter, vignette,
 } from '../../src';
-import { CAT_REST, type CatLook, Cat } from './Cat';
+import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from './Cat';
 import { type PigeonLook, Pigeon } from './Pigeon';
 import { type HousePalette, type HouseSpec, chimneyTop, drawHouse, roofSurface } from '../sets/houses';
 
@@ -37,10 +37,7 @@ const LAYERS = {
 };
 
 // ── Cast ───────────────────────────────────────────────────
-const TOM: CatLook = {
-  fur: '#B08088', furNear: '#C3979E', furBack: '#865E66', light: '#dddaf0', lightShade: '#b3b0cc', lightBack: '#8d8aa8', rim: '#b5bfff',
-  eye: '#d9e866', eyeDeep: '#8ea23a', ink: '#141220', nose: '#d88c9c', noseDeep: '#8e4f5e', innerEar: '#9a6a82', innerEarDeep: '#6e4459',
-};
+
 const DOVE: PigeonLook = {
   body: '#8a8fa6', belly: '#a3a8bd', wing: '#7c8199', wingBack: '#5d6178', primaries: '#555a70', bar: '#3e4256',
   neck: '#5f8a86', neckPurple: '#76608a', beak: '#6c6464', cere: '#e6e4ec', eye: '#e08a3c', eyeRing: '#b6b9c8', rim: '#c9d0ff',
@@ -65,7 +62,7 @@ export class RooftopsScene extends Stage {
     this.paper.light = { x: -0.55, y: 0.85 }; // moonlight from the upper right
     this.world.ground = () => 1400;
     this.world.surfaces.push(roofSurface(HOUSE_A), roofSurface(HOUSE_B));
-    this.cat = new Cat(this.world, 700, HOUSE_A.ridge, TOM);
+    this.cat = new Cat(this.world, 700, HOUSE_A.ridge, SIGNATURE_CAT_LOOK);
     this.pigeon = new Pigeon(chimneyTop(HOUSE_B)!, -1, DOVE, 1.6);
     this.cam = new Camera(900, { width: W, height: H, stiffness: 4, damping: 4, handheld: 4 });
     this.beats = this.perform();
