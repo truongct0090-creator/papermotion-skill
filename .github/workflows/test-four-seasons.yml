@@ -57,7 +57,7 @@ jobs:
           pnpm typecheck
           pnpm test
       - name: Render four seasons (draft)
-        if: inputs.quality == 'draft'
+        if: inputs.quality != 'full'
         run: pnpm render seasons20 --draft --jobs 1
       - name: Render four seasons (full)
         if: inputs.quality == 'full'
@@ -66,7 +66,7 @@ jobs:
         shell: bash
         run: |
           VIDEO="out/seasons20.mp4"
-          if [ "${{ inputs.quality }}" = "draft" ]; then VIDEO="out/seasons20_draft.mp4"; fi
+          if [ "${{ inputs.quality }}" = "full" ]; then VIDEO="out/seasons20.mp4"; else VIDEO="out/seasons20_draft.mp4"; fi
           test -s "$VIDEO"
           ffprobe -v error -show_entries format=duration -show_entries stream=codec_type -of json "$VIDEO" > out/seasons20_probe.json
           node -e "const p=require('./out/seasons20_probe.json'); const d=Number(p.format.duration); if (Math.abs(d-20)>0.15) throw new Error('Expected 20s video, got '+d); if (!p.streams.some(s=>s.codec_type==='audio')) throw new Error('Audio stream missing'); console.log('Verified '+d.toFixed(2)+'s video with audio.');"
@@ -75,7 +75,7 @@ jobs:
       - name: Upload test film and sound report
         uses: actions/upload-artifact@v4
         with:
-          name: four-seasons-20s-${{ inputs.quality }}
+          name: four-seasons-20s-${{ inputs.quality || 'draft' }}
           path: |
             out/seasons20*.mp4
             out/seasons20.wav
