@@ -32,19 +32,20 @@ const PALETTES: [string,string][] = [
 ];
 
 
-function title3D(paper: Paper, value: string, x: number, y: number, size: number): void {
-  const font = `900 ${size}px "DejaVu Sans"`;
-  // Consistent block extrusion: several hard-offset paper layers, then a bright face.
-  for (let d = 7; d >= 1; d -= 3) {
-    paper.text(value, { x: x + d, y: y + d }, {
-      font, color: d > 5 ? '#17232d' : '#34495a',
-      sheet: { shadow: 0, texture: 0, edge: false },
-    });
-  }
-  paper.text(value, { x, y }, {
-    font, color: '#fff8e9',
-    sheet: { shadow: 13, rim: { color: '#ffffff', width: 2.5 }, shade: { color: 'rgba(20,28,38,0.5)', width: 4 }, texture: 0.16 },
-  });
+function outlinedText(paper: Paper, value: string, x: number, y: number, size: number, subtitle = false): void {
+  const ctx = paper.context;
+  ctx.save();
+  ctx.font = `800 ${size}px "Be Vietnam Pro", sans-serif`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = subtitle ? 4.5 : 7;
+  ctx.strokeStyle = '#17151a';
+  ctx.strokeText(value, x, y);
+  ctx.fillStyle = '#fff9ed';
+  ctx.fillText(value, x, y);
+  ctx.restore();
 }
 
 function rounded(paper: Paper, x: number, y: number, w: number, h: number, r: number, fill: string, stroke?: string): void {
@@ -99,7 +100,8 @@ export class NokiaPilotScene extends Stage {
   private readonly ridges: RidgeSpec[];
   private readonly camera: Camera;
   private readonly cat: Cat;
-  private readonly clouds: ReturnType<typeof createGrassland>;
+  private readonly dayEnvironment: ReturnType<typeof createGrassland>;
+  private readonly nightEnvironment: ReturnType<typeof createGrassland>;
   private readonly stars = nightSky(8100, { x: 960, y: 620 });
   private lastScene = 0;
 
@@ -111,10 +113,15 @@ export class NokiaPilotScene extends Stage {
     this.world.ground=()=>890;
     this.world.wind=meadowWind(8101,0.22);
     this.cat=new Cat(this.world,470,890,SIGNATURE_CAT_LOOK);
-    this.clouds=createGrassland(8102,-1600,6200,()=>890,{
+    this.dayEnvironment=createGrassland(8102,-1600,6200,()=>890,{
       sky:'#9fc5dc',cloud:'#fff8ec',cloudShade:'#d6e4e8',farHill:'#91a9a0',midHill:'#748f7c',nearHill:'#526c58',ground:'#465b42',
       grass:[['#435b3d','#7d9556'],['#536d43','#9eaa63']],treeTrunk:'#6a503e',treeLeaves:['#607b4d','#7f995c','#a2ad69'],treeLight:'#f6d9a1',
       flowers:['#fff4df','#f3d8a4','#e6a56e'],rock:['#a99a82','#8f8779'],
+    });
+    this.nightEnvironment=createGrassland(8112,-1600,6200,()=>890,{
+      sky:'#111a31',cloud:'#35415b',cloudShade:'#202b43',farHill:'#29334b',midHill:'#202b40',nearHill:'#182338',ground:'#111a2a',
+      grass:[['#172238','#29334a'],['#1d2a3d','#354157']],treeTrunk:'#242b3d',treeLeaves:['#26334a','#303b52','#3a4358'],treeLight:'#69758a',
+      flowers:['#8d91a7','#727e9b','#a18e9c'],rock:['#30394b','#252f42'],
     });
     this.camera=new Camera(W/2,{width:W,height:H,stiffness:4,damping:4,handheld:0});
     this.camera.zoom=1.15;
@@ -163,11 +170,13 @@ export class NokiaPilotScene extends Stage {
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     const paper=this.paper;
     fillGradient(ctx,[[0,top],[1,bottom]]);
-    if(index===0){
+    const isNight = index===0 || index===3 || index===6;
+    if(isNight){
       drawSky(ctx,this.stars,{t,turn:t*0.0015,twinkle:0.38});
       this.drawMoon(1500,250);
+      this.camera.layer(paper,0.045,v=>drawProps(paper,this.nightEnvironment.clouds,v.from,v.to,()=>0,t));
     } else {
-      this.camera.layer(paper,0.045,v=>drawProps(paper,this.clouds.clouds,v.from,v.to,()=>0,t));
+      this.camera.layer(paper,0.045,v=>drawProps(paper,this.dayEnvironment.clouds,v.from,v.to,()=>0,t));
     }
     paper.piece([{x:0,y:850},{x:W,y:850},{x:W,y:H+80},{x:0,y:H+80}],index===3?'#d8d7d2':'#d6c8b5',{seed:6300+index,tear:3,shadow:0,texture:0.35});
     this.camera.layer(paper,0.14,v=>drawProps(paper,this.skyline.far,v.from,v.to,()=>0,t));
@@ -176,8 +185,8 @@ export class NokiaPilotScene extends Stage {
     this.camera.layer(paper,1,v=>drawRidge(paper,this.ridges[index],v.from,v.to,1120));
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
-    title3D(paper,TITLES[index],110,150,58);
-    paper.text(SUBTITLES[index],{x:114,y:214},{font:'700 30px "DejaVu Sans"',color:'#fff8e9',sheet:{shadow:8,rim:{color:'#ffffff',width:1.5},shade:{color:'rgba(20,28,38,0.48)',width:3},texture:0.12}});
+    outlinedText(paper,TITLES[index],110,150,58);
+    outlinedText(paper,SUBTITLES[index],114,214,30,true);
 
     if(index===0){
       for(let row=0;row<2;row++){rounded(paper,820,360+row*245,900,22,8,'#775b45');for(let col=0;col<4;col++)phone(this.paper,865+col*205,180+row*245,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);}
