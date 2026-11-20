@@ -70,11 +70,15 @@ export class FourSeasonsScene extends Stage {
       }
     }
     const airborne = this.cat.airborne;
+    const nextBoundary = (Math.floor(t / SEASON_LENGTH) + 1) * SEASON_LENGTH;
+    const untilTakeoff = nextBoundary - 0.48 - t;
+    const crouch = !airborne && untilTakeoff >= 0 && untilTakeoff < 0.42
+      ? ramp(0.42 - untilTakeoff, 0, 0.34) * 0.68 : 0;
     Object.assign(this.cat.intent, CAT_REST, {
       speed: airborne ? 0 : t < 0.35 ? 165 * ramp(t, 0, 0.35) : 165, facing: 1,
-      crouch: airborne ? 0 : 0,
+      crouch,
       // Let the tail gently rise and fall; the existing Strand physics adds a soft trailing swish.
-      tail: airborne ? 0.3 : 0.72 + Math.sin(t * 2.6) * 0.16, blink: 1,
+      tail: airborne || crouch > 0.1 ? 0.3 : 0.72 + Math.sin(t * 2.6) * 0.16, blink: 1,
     });
     this.cat.update(dt);
     while (this.cat.x >= this.nextFootstep) {
