@@ -62,6 +62,12 @@ jobs:
       - name: Render four seasons (full)
         if: inputs.quality == 'full'
         run: pnpm render seasons20 --jobs 1
+      - name: Export full-quality video in 2K QHD
+        if: inputs.quality == 'full'
+        shell: bash
+        run: |
+          ffmpeg -v error -y -i out/seasons20.mp4 -vf "scale=2560:1440:flags=lanczos" -c:v libx264 -crf 15 -preset slow -pix_fmt yuv420p -c:a copy -movflags +faststart out/seasons20_2k.mp4
+          mv out/seasons20_2k.mp4 out/seasons20.mp4
       - name: Verify 20-second video and mandatory audio
         shell: bash
         run: |
@@ -69,7 +75,8 @@ jobs:
           if [ "${{ inputs.quality }}" = "full" ]; then VIDEO="out/seasons20.mp4"; else VIDEO="out/seasons20_draft.mp4"; fi
           test -s "$VIDEO"
           ffprobe -v error -show_entries format=duration -show_entries stream=codec_type -of json "$VIDEO" > out/seasons20_probe.json
-          node -e "const p=require('./out/seasons20_probe.json'); const d=Number(p.format.duration); if (Math.abs(d-20)>0.15) throw new Error('Expected 20s video, got '+d); if (!p.streams.some(s=>s.codec_type==='audio')) throw new Error('Audio stream missing'); console.log('Verified '+d.toFixed(2)+'s video with audio.');"
+          node -e "const p=require('./out/seasons20_probe.json'); const d=Number(p.format.duration); if (Math.abs(d-20)>0.15) throw new Error('Expected 20s video, got '+d); if (!p.streams.some(s=>s.codec_type==='audio')) throw new Error('Audio stream missing'); const v=p.streams.find(s=>s.codec_type==='video'); if (process.env.QUALITY==='full' && (v.width!==2560 || v.height!==1440)) throw new Error('Expected 2560x1440 2K, got '+v.width+'x'+v.height); console.log('Verified '+d.toFixed(2)+'s '+v.width+'x'+v.height+' video with audio.');"
+          QUALITY="${{ inputs.quality || 'draft' }}" node -e "const p=require('./out/seasons20_probe.json'); const v=p.streams.find(s=>s.codec_type==='video'); if(process.env.QUALITY==='full' && (v.width!==2560 || v.height!==1440)) process.exit(1);"
           test -s out/seasons20.wav
           test -s out/seasons20_audio.png
       - name: Upload test film and sound report
