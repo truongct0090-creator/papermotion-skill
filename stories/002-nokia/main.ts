@@ -31,7 +31,7 @@ const TITLES = [
   'LỜI CẢNH BÁO CUỐI CÙNG',
 ];
 const SUBTITLES = [
-  'Từ biểu tượng điện thoại đến cú trượt dài trong kỷ nguyên smartphone',
+  'Từ biểu tượng điện thoại đến cú trượt dài\\ntrong kỷ nguyên smartphone',
   '3310, 1110, 1200 — ký ức của cả một thế hệ',
   'Năm 2007: khoảng 437 triệu thiết bị di động được bán ra',
   'Năm 2007, chiếc iPhone đầu tiên mở ra một cách dùng điện thoại mới',
@@ -60,17 +60,19 @@ function wrapText(paper: Paper, value: string, size: number, maxWidth: number): 
   const ctx = paper.context;
   ctx.save();
   ctx.font = `800 ${size}px "Be Vietnam Pro", sans-serif`;
-  const words = value.split(/\\s+/);
   const lines: string[] = [];
-  let line = '';
-  for (const word of words) {
-    const candidate = line ? `${line} ${word}` : word;
-    if (line && ctx.measureText(candidate).width > maxWidth) {
-      lines.push(line);
-      line = word;
-    } else line = candidate;
+  for (const paragraph of value.split(/\\r?\\n/)) {
+    const words = paragraph.split(/\\s+/).filter(Boolean);
+    let line = '';
+    for (const word of words) {
+      const candidate = line ? `${line} ${word}` : word;
+      if (line && ctx.measureText(candidate).width > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else line = candidate;
+    }
+    if (line) lines.push(line);
   }
-  if (line) lines.push(line);
   ctx.restore();
   return lines;
 }
@@ -387,14 +389,118 @@ export class NokiaPilotScene extends Stage {
         ctx.strokeStyle='#8a684e';ctx.lineWidth=34;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(1170,610);ctx.lineTo(1380,610);ctx.stroke();
         outlinedText(paper,'2014',1190,850,36);
       },8482);
-    } else {
-      paperFlyIn(paper,sceneLocal,beat(0,0.65),0.9,{x:835,y:335,w:930,h:480},()=>{
-        rounded(paper,850,355,900,440,28,'#e9e4d9','#8c938b');
+    } else if(index===9){
+      // Scene 10 — Nokia remains in memory: an archival display, not a generic phone lineup.
+      paperFlyIn(paper,sceneLocal,beat(0,0.65),0.9,{x:850,y:245,w:820,h:610},()=>{
+        rounded(paper,870,265,780,560,24,'#8b725c','#5c5148');
+        rounded(paper,900,295,720,500,12,'#e7dfd0','#a99a85');
+        rounded(paper,930,325,660,420,8,'#c6b59b');
+        for(let i=0;i<3;i++){
+          rounded(paper,965+i*205,390,150,270,12,'#6d756e','#4a514d');
+          rounded(paper,980+i*205,415,120,170,8,'#b8c9b7');
+          outlinedText(paper,['3310','N95','LUMIA'][i],978+i*205,625,25);
+        }
       },8490);
-      paperFlyIn(paper,sceneLocal,beat(1,0.12),1.0,{x:885,y:390,w:840,h:410},()=>{
-        for(let i=0;i<4;i++)phone(paper,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
+      paperFlyIn(paper,sceneLocal,beat(1,0.35),0.8,{x:1020,y:835,w:650,h:85},()=>{
+        outlinedText(paper,'A PART OF OUR HISTORY',1040,890,34);
       },8491);
-      paperFlyIn(paper,sceneLocal,beat(1,0.62),0.7,{x:930,y:820,w:620,h:90},()=>outlinedText(paper,'A PART OF OUR HISTORY',950,850,36),8492);
+    } else if(index===10){
+      // Scene 11 — N97 and N8: show the two distinct devices and their hardware features.
+      paperFlyIn(paper,sceneLocal,beat(0,0.18),0.9,{x:850,y:240,w:820,h:600},()=>{
+        rounded(paper,875,260,360,520,28,'#d7d1c4','#716e67');
+        rounded(paper,1260,260,360,520,28,'#d7d1c4','#716e67');
+        phone(paper,925,300,1.05,'#3c4b50',true);
+        phone(paper,1310,300,1.05,'#56636a',true);
+        rounded(paper,970,705,170,46,8,'#39474b');
+        rounded(paper,1350,705,170,46,8,'#39474b');
+        outlinedText(paper,'N97',1010,738,28);
+        outlinedText(paper,'N8',1400,738,28);
+      },8510);
+      paperFlyIn(paper,sceneLocal,beat(1,0.35),0.7,{x:1040,y:835,w:610,h:90},()=>{
+        // Camera lens detail calls out the hardware-first response.
+        paper.piece(circlePoly({x:1160,y:870},35,28),'#26343a',{seed:8512,tear:2,shadow:7});
+        paper.piece(circlePoly({x:1160,y:870},17,22),'#8fa6a5',{seed:8513,tear:1.3,shadow:2});
+        outlinedText(paper,'BETTER HARDWARE',1220,884,30);
+      },8511);
+    } else if(index===11){
+      // Scene 12 — slow internal coordination across product, software, QA and leadership.
+      paperFlyIn(paper,sceneLocal,beat(0,0.12),0.9,{x:840,y:215,w:900,h:650},()=>{
+        const nodes=[
+          {x:900,y:300,w:260,h:130,label:'PRODUCT',color:'#b8a18a'},
+          {x:1320,y:300,w:260,h:130,label:'SOFTWARE',color:'#8fa7b8'},
+          {x:900,y:585,w:260,h:130,label:'TESTING',color:'#a3b39d'},
+          {x:1320,y:585,w:260,h:130,label:'LEADERSHIP',color:'#c49b83'},
+        ];
+        ctx.save();ctx.strokeStyle='#6e6258';ctx.lineWidth=12;
+        ctx.beginPath();ctx.moveTo(1160,365);ctx.lineTo(1320,365);ctx.moveTo(1030,430);ctx.lineTo(1030,585);ctx.moveTo(1450,430);ctx.lineTo(1450,585);ctx.moveTo(1160,650);ctx.lineTo(1320,650);ctx.stroke();ctx.restore();
+        for(const n of nodes){
+          rounded(paper,n.x,n.y,n.w,n.h,18,n.color,'#625b54');
+          outlinedText(paper,n.label,n.x+24,n.y+78,27,false,n.w-42);
+        }
+        rounded(paper,1190,455,120,105,12,'#6c5b4e');
+        outlinedText(paper,'WAIT',1205,520,25);
+      },8520);
+      paperFlyIn(paper,sceneLocal,beat(1,0.42),0.7,{x:980,y:835,w:700,h:80},()=>{
+        outlinedText(paper,'DECISIONS ARRIVE TOO LATE',1000,885,30);
+      },8521);
+    } else if(index===12){
+      // Scene 13 — competitors accelerate: one iPhone, an expanding Android field and app growth.
+      paperFlyIn(paper,sceneLocal,beat(0,0.12),0.85,{x:850,y:235,w:870,h:610},()=>{
+        rounded(paper,885,270,260,500,40,'#252b32','#77828a');
+        rounded(paper,905,310,220,390,24,'#9eb8c5');
+        outlinedText(paper,'iOS',970,535,48);
+        const colors=['#7397b1','#8eaa91','#c18d72','#8c83a8','#c4ae75','#719c9a'];
+        for(let i=0;i<6;i++){
+          const x=1190+(i%3)*165,y=300+Math.floor(i/3)*230;
+          rounded(paper,x,y,135,195,18,'#303b43');
+          rounded(paper,x+10,y+12,115,165,10,colors[i]);
+          for(let j=0;j<3;j++)rounded(paper,x+22+j*30,y+38,20,24,5,'#f1e8d9');
+        }
+        ctx.save();ctx.strokeStyle='#bd7957';ctx.lineWidth=13;ctx.beginPath();ctx.moveTo(1180,795);ctx.lineTo(1640,795);ctx.lineTo(1600,760);ctx.moveTo(1640,795);ctx.lineTo(1600,830);ctx.stroke();ctx.restore();
+      },8530);
+      paperFlyIn(paper,sceneLocal,beat(1,0.45),0.7,{x:1030,y:865,w:650,h:75},()=>{
+        outlinedText(paper,'APPS • DEVICES • SPEED',1050,910,32);
+      },8531);
+    } else if(index===13){
+      // Scene 14 — leadership transition in 2010; symbolic boardroom, no fabricated portrait.
+      paperFlyIn(paper,sceneLocal,beat(0,0.12),0.9,{x:850,y:220,w:850,h:650},()=>{
+        rounded(paper,900,260,760,390,18,'#b7aa99','#75695f');
+        rounded(paper,930,290,700,330,8,'#d8d0c2');
+        rounded(paper,1120,365,320,125,12,'#4d5b62');
+        outlinedText(paper,'NOKIA',1200,445,48);
+        // Anonymous executive silhouette seen from behind, deliberately not a real likeness.
+        paper.piece(circlePoly({x:1280,y:555},52,32),'#4a4a4b',{seed:8540,tear:2.5,shadow:5});
+        paper.piece([{x:1190,y:825},{x:1210,y:635},{x:1250,y:600},{x:1310,y:600},{x:1350,y:635},{x:1370,y:825}],'#394650',{seed:8541,tear:3,shadow:9,texture:0.5});
+        for(let i=0;i<4;i++){
+          rounded(paper,950+i*155,700,110,95,10,'#8d918a');
+          paper.piece(circlePoly({x:1005+i*155,y:682},28,24),'#756e65',{seed:8542+i,tear:1.8,shadow:3});
+        }
+      },8543);
+      paperFlyIn(paper,sceneLocal,beat(1,0.35),0.7,{x:1110,y:865,w:460,h:75},()=>{
+        outlinedText(paper,'2010 • NEW CEO',1130,910,32);
+      },8544);
+    } else if(index===14){
+      // Scene 15 — Burning Platform warning: a paper oil rig and a phone in the danger zone.
+      paperFlyIn(paper,sceneLocal,beat(0,0.08),0.85,{x:850,y:185,w:900,h:700},()=>{
+        rounded(paper,900,700,780,48,10,'#5b514c');
+        // Platform legs and derrick.
+        paper.piece([{x:1010,y:700},{x:1090,y:700},{x:1130,y:400},{x:1050,y:400}],'#5a6260',{seed:8550,tear:2.8,shadow:6});
+        paper.piece([{x:1450,y:700},{x:1530,y:700},{x:1490,y:400},{x:1410,y:400}],'#5a6260',{seed:8551,tear:2.8,shadow:6});
+        paper.piece([{x:1060,y:410},{x:1190,y:210},{x:1370,y:410}],'#6c716d',{seed:8552,tear:3,shadow:7});
+        paper.piece([{x:1185,y:410},{x:1195,y:210},{x:1215,y:210},{x:1225,y:410}],'#555e5b',{seed:8553,tear:2,shadow:4});
+        ctx.save();ctx.strokeStyle='#d77a43';ctx.lineWidth=25;ctx.lineCap='round';
+        for(let i=0;i<5;i++){
+          const x=1060+i*105,base=410+(i%2)*35;
+          ctx.beginPath();ctx.moveTo(x,base);ctx.bezierCurveTo(x-55,base-70,x+50,base-105,x+8,base-190);ctx.stroke();
+        }
+        ctx.strokeStyle='#f1bd69';ctx.lineWidth=11;
+        ctx.beginPath();ctx.moveTo(1150,385);ctx.bezierCurveTo(1100,320,1230,285,1200,205);ctx.stroke();ctx.restore();
+        phone(paper,1500,455,0.65,'#313b43',true);
+      },8554);
+      paperFlyIn(paper,sceneLocal,beat(1,0.18),0.7,{x:890,y:875,w:800,h:70},()=>{
+        rounded(paper,920,860,740,62,10,'#eee0c9','#a16a4b');
+        outlinedText(paper,'BURNING PLATFORM',950,905,34);
+      },8555);
     }
     this.camera.layer(paper,1,()=>this.cat.draw(paper));
   }
