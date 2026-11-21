@@ -176,15 +176,22 @@ function renderPaperUnderlay(): string {
   layerCtx.clearRect(0, 0, W, H);
   const underlay = new Paper(layerCtx);
   underlay.light = { x: -0.7, y: -0.65 };
-  underlay.edgeColor = 'rgba(255,250,239,.58)';
-  underlay.shadowColor = 'rgba(42,20,31,.42)';
-  const sheet = (points:number[][], seed:number, color:string) => {
-    underlay.sheet({shadow:34,texture:.42,edge:true,rim:{color:'rgba(255,250,239,.56)',width:6},shade:{color:'rgba(42,20,31,.22)',width:8}},()=>{
-      underlay.blob(points.map(([x,y])=>({x,y})),color,{seed,tear:9,shadow:0,texture:.32,edge:true,rim:{color:'rgba(255,250,239,.34)',width:4},shade:{color:'rgba(42,20,31,.16)',width:5}});
+  underlay.edgeColor = 'rgba(255,250,239,.62)';
+  underlay.shadowColor = 'rgba(42,20,31,.46)';
+  const sheet = (points:number[][], seed:number, color:string, shadow=32) => {
+    underlay.sheet({shadow,texture:.48,edge:true,rim:{color:'rgba(255,250,239,.62)',width:7},shade:{color:'rgba(42,20,31,.24)',width:9}},()=>{
+      underlay.blob(points.map(([x,y])=>({x,y})),color,{seed,tear:10,shadow:0,texture:.38,edge:true,rim:{color:'rgba(255,247,228,.42)',width:5},shade:{color:'rgba(42,20,31,.18)',width:6}});
     });
   };
-  sheet([[1280,360],[1450,250],[1850,205],[2240,270],[2460,440],[2515,780],[2460,1110],[2310,1305],[1900,1340],[1510,1275],[1285,1090],[1210,760]],901,'#F7E8D2');
-  sheet([[1370,285],[1680,175],[2110,205],[2390,345],[2450,570],[2320,670],[1930,600],[1540,680],[1300,555]],902,'#EBD8C0');
+  // Match the legacy hero-panel footprint. These irregular sheets form the
+  // complete backing beneath the two phones; the legacy phone artwork is
+  // composited afterward and therefore remains crisp and untouched.
+  sheet([[2045,410],[2210,300],[2670,255],[3180,285],[3540,365],[3720,600],[3690,1060],[3730,1480],[3540,1790],[3270,1940],[2790,1900],[2350,1870],[2050,1660],[1940,1320],[1980,850]],901,'#F7E8D2',38);
+  sheet([[2110,355],[2390,250],[2840,290],[3220,360],[3460,520],[3380,690],[2980,650],[2580,710],[2180,650],[1990,535]],902,'#EBD8C0',25);
+  sheet([[2060,1330],[2370,1390],[2730,1360],[3090,1440],[3500,1390],[3670,1530],[3530,1810],[3200,1910],[2760,1850],[2350,1810],[2050,1640]],903,'#F3E2CC',24);
+  // A few torn scraps add layered edges around, not on top of, the phones.
+  sheet([[1840,520],[2040,455],[2160,570],[2070,760],[1880,735],[1780,635]],904,'#EBD8C0',16);
+  sheet([[3510,500],[3720,560],[3780,760],[3630,850],[3480,720]],905,'#F7E8D2',18);
   return layer.toDataURL('image/png');
 }
 (window as unknown as {renderPaperUnderlay:()=>string}).renderPaperUnderlay=renderPaperUnderlay;
