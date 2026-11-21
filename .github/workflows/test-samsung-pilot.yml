@@ -65,7 +65,19 @@ jobs:
           python scripts/generate_voiceover.py \
             --manifest stories/003-samsung/voiceover.json \
             --input out/samsung-pilot_draft.mp4 \
-            --output out/samsung-pilot-10-scenes.mp4
+            --output out/samsung-pilot-10-scenes.mp4 \
+            --timing-output out/samsung-pilot-voice-timing.json
+
+      - name: Verify dialogue does not overlap
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('out/samsung-pilot-voice-timing.json'))
+          lines=p['lines']
+          for previous,current in zip(lines,lines[1:]):
+              assert current['start_sec'] >= previous['end_sec'], (previous,current)
+          print(f"PASS: {len(lines)} voice lines, no overlap; last line ends at {p['voice_end_sec']:.2f}s")
+          PY
 
       - name: Verify duration, resolution, frame rate and audio
         shell: bash
@@ -93,6 +105,7 @@ jobs:
             out/samsung-pilot-10-scenes.mp4
             out/samsung-pilot_draft.mp4
             out/samsung-pilot.wav
+            out/samsung-pilot-voice-timing.json
             out/samsung-pilot_audio.png
             out/samsung-pilot-probe.json
           if-no-files-found: error
