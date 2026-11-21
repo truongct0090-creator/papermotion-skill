@@ -2,7 +2,8 @@
   "lines": [
     {
       "speaker": "adam",
-      "text": "Nếu tôi nói với bạn rằng, một trong những tập đoàn công nghệ lớn nhất thế giới từng khởi đầu bằng việc buôn bán cá khô, rau củ và trái cây… bạn có tin không?"
+      "text": "Nếu tôi nói với bạn rằng, một trong những tập đoàn công nghệ lớn nhất thế giới từng khởi đầu bằng việc buôn bán cá khô, rau củ và trái cây… bạn có tin không?",
+      "start_sec": 0.4
     },
     {
       "speaker": "my_duyen",
