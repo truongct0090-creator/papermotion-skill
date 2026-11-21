@@ -37,16 +37,16 @@ export const SAMSUNG_TITLES = [
   'BÁN DẪN THÀNH NĂNG LỰC CỐT LÕI',
 ] as const;
 export const SAMSUNG_SUBTITLES = [
-  'Từ cá khô, rau củ đến một tập đoàn công nghệ\nCâu chuyện bắt đầu bằng một cửa hàng nhỏ',
-  'Ngày 1 tháng 3 năm 1938 tại Daegu, Hàn Quốc\nLee Byung-chul thành lập Samsung Sanghoe',
-  'Những chuyến hàng tạo nên mạng lưới giao thương\nSamsung khi ấy vẫn là doanh nghiệp thương mại',
-  'Từ thực phẩm, dệt may đến bảo hiểm và bán lẻ\nDoanh nghiệp mở rộng sau chiến tranh Triều Tiên',
-  'Samsung Electronics được thành lập năm 1969\nMột bước đi riêng vào lĩnh vực điện tử',
-  'Samsung-Sanyo sản xuất TV đen trắng P-3202\nBắt đầu từ năm 1970',
-  'Năm 1971, TV Samsung được xuất khẩu sang Panama\nSản phẩm Hàn Quốc vươn ra thị trường quốc tế',
-  'Năm 1974, Samsung mua 50% Korea Semiconductor\nBước đầu tư vào công nghệ bán dẫn',
-  'Năm 1977, Samsung hoàn tất thương vụ mua lại\nĐồng thời sản xuất và xuất khẩu TV màu',
-  'Năm 1980, hoạt động bán dẫn được hợp nhất\nTrở thành một phần của Samsung Electronics',
+  'Từ cá khô và rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ',
+  'Daegu, Hàn Quốc • ngày 1 tháng 3 năm 1938\nLee Byung-chul lập Samsung Sanghoe',
+  'Những chuyến hàng mở rộng giao thương\nSamsung vẫn là doanh nghiệp thương mại',
+  'Thực phẩm, dệt may, bảo hiểm và bán lẻ\nMở rộng sau chiến tranh Triều Tiên',
+  'Samsung Electronics ra đời năm 1969\nMột bước đi riêng vào ngành điện tử',
+  'TV đen trắng P-3202 sản xuất năm 1970\nSamsung-Sanyo bước vào điện tử gia dụng',
+  'TV Samsung xuất khẩu sang Panama năm 1971\nHàng Hàn Quốc bắt đầu vươn ra thế giới',
+  'Samsung mua 50% Korea Semiconductor\nBước đầu tư vào công nghệ bán dẫn',
+  'Samsung hoàn tất mua lại năm 1977\nBắt đầu sản xuất và xuất khẩu TV màu',
+  'Bán dẫn được hợp nhất vào năm 1980\nTrở thành một phần của Samsung Electronics',
 ] as const;
 const PALETTES: [string, string][] = [
   ['#25364a', '#d2a77d'], ['#e7d7bd', '#b7c9c3'], ['#d8e2df', '#a9b9aa'],
@@ -330,7 +330,7 @@ export class SamsungPilotScene extends Stage {
 
     singleLineTitle(paper, SAMSUNG_TITLES[index], 110, 142, 50, 650);
     const subtitleLines = outlinedText(paper, SAMSUNG_SUBTITLES[index], 114, 220, 25, true, 650);
-    if (subtitleLines !== 2) throw new Error('Samsung subtitle must render as exactly two lines in the Nokia Full safe zone.');
+    if (subtitleLines !== 2) throw new Error(`Samsung scene ${index + 1} subtitle rendered ${subtitleLines} lines; expected exactly two in the Nokia Full safe zone.`);
 
     const fly = (lineOffset: number, segment: number, within: number, duration: number,
       bounds: {x:number;y:number;w:number;h:number}, draw: () => void, seed: number) =>
