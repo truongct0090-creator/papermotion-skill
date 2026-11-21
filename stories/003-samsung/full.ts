@@ -600,16 +600,16 @@ export class SamsungFullScene extends Stage {
     } else if (index === 6) {
       fly(0, 0, 0.2, 0.9, {x: 850, y: 260, w: 850, h: 590}, () => {
         paper.sheet({shadow:15,rim:{color:'rgba(255,244,224,0.75)',width:3},shade:{color:'rgba(30,24,20,0.3)',width:4},texture:0.48},()=>{
-          paper.piece([{x:930,y:690},{x:1560,y:690},{x:1670,y:570},{x:1050,y:570}], '#6d8990', {seed:9470,tear:3,shadow:9,texture:0.5});
-          paper.piece([{x:1080,y:570},{x:1080,y:440},{x:1110,y:440},{x:1110,y:570}], '#65513f', {seed:9471,tear:2,shadow:4});
-          paper.piece([{x:1100,y:445},{x:1450,y:445},{x:1280,y:280}], '#eee5d5', {seed:9472,tear:2.8,shadow:7});
-          cargoCrate(paper, 1160, 485, 240, 140, 'TV SAMSUNG', '#a7794f', 9473);
-          paper.piece([{x:1500,y:365},{x:1580,y:385},{x:1500,y:405}], '#c65f4f', {seed:9474,tear:2,shadow:4});
-          outlinedText(paper, 'PANAMA', 1450, 820, 44);
+          const appliances = [{x:930,label:'TỦ LẠNH'},{x:1190,label:'MÁY GIẶT'},{x:1450,label:'TIVI'}];
+          for (const [i,a] of appliances.entries()) {
+            rounded(paper,a.x,390,210,330,18,['#b8c8c2','#c9c8b7','#aebfc0'][i],'#647c7b');
+            rounded(paper,a.x+18,415,174,210,10,['#dbe4dc','#8da5a1','#758c91'][i]);
+            outlinedText(paper,a.label,a.x+8,770,24,false,195);
+          }
         });
       }, 9475);
       fly(0, 1, 0.38, 0.75, {x: 880, y: 820, w: 780, h: 80}, () => {
-        outlinedText(paper, 'XUẤT KHẨU  •  1971', 1040, 880, 36, false, 500);
+        outlinedText(paper, 'THIẾT BỊ GIA DỤNG', 1040, 880, 36, false, 500);
       }, 9476);
     } else if (index === 7) {
       fly(0, 0, 0.2, 0.9, {x: 850, y: 220, w: 850, h: 640}, () => {
@@ -633,39 +633,34 @@ export class SamsungFullScene extends Stage {
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.5},()=>{
           for (let i = 0; i < 3; i++) {
             const x = 900 + i * 250;
-            rounded(paper, x, 370, 220, 320, 24, '#3c4445', '#1e2527');
-            rounded(paper, x + 20, 395, 180, 235, 12, ['#c96d50','#6b9b89','#6689ad'][i]);
-            for (let j = 0; j < 3; j++) rounded(paper, x + 35 + j*48, 435 + (j%2)*70, 35, 44, 5, ['#f2d7a0','#d9e2d6','#d3c0df'][j]);
+            rounded(paper,x,370,220,320,24,'#3c4445','#1e2527');
+            rounded(paper,x+20,395,180,235,12,['#c8d8d0','#9fb6ac','#7e9ca4'][i]);
+            for(let j=0;j<4;j++) paper.line([{x:x+38,y:435+j*48},{x:x+180,y:435+j*48}],'#e4d8bd',4);
           }
-          rounded(paper, 875, 710, 790, 34, 12, '#7e644b');
-          outlinedText(paper, 'COLOR TELEVISION', 1090, 810, 38, false, 400);
+          outlinedText(paper,'KỸ SƯ NGHIÊN CỨU',1030,770,34,false,500);
+          paper.piece(circlePoly({x:1550,y:300},72,32),'#e5c47f',{seed:9497,tear:2,shadow:7});
         });
       }, 9498);
       fly(0, 1, 0.35, 0.75, {x: 950, y: 830, w: 700, h: 75}, () => {
-        outlinedText(paper, '1977  •  TV MÀU', 1110, 880, 36);
+        outlinedText(paper, 'NGHIÊN CỨU • PHÁT TRIỂN', 1050, 880, 34, false, 560);
       }, 9499);
     } else if (index === 9) {
       fly(0, 0, 0.2, 0.95, {x: 850, y: 230, w: 850, h: 620}, () => {
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.5},()=>{
-          rounded(paper, 900, 350, 700, 390, 18, '#dce4df', '#6c8586');
-          rounded(paper, 970, 280, 560, 90, 10, '#4f6972');
-          outlinedText(paper, 'SAMSUNG ELECTRONICS', 1000, 340, 29, false, 500);
-          paper.piece([{x:1000,y:530},{x:1110,y:450},{x:1210,y:530},{x:1320,y:450},{x:1450,y:530},{x:1560,y:450}], '#6f9194', {seed:9500,tear:3,shadow:7,texture:0.5});
-          for (let i = 0; i < 6; i++) {
-            const x = 990 + i * 95;
-            rounded(paper, x, 575, 72, 90, 8, ['#8ca7a1','#b7a17f','#7796a2','#9c8fa8','#7e9c91','#c18d72'][i]);
-            paper.piece(circlePoly({x:x+36,y:620},16,16),'#d8e3db',{seed:9510+i,tear:1.4,shadow:2});
-          }
+          rounded(paper,930,350,650,390,18,'#dce4df','#6c8586');
+          for(let i=0;i<7;i++) for(let j=0;j<5;j++)
+            rounded(paper,1000+i*75,410+j*58,48,38,5,['#7b9997','#a9b9a8','#c0a77c'][(i+j)%3]);
+          outlinedText(paper,'64K DRAM',1110,720,48,false,340);
+          paper.piece(circlePoly({x:1510,y:300},74,40),'#d7bd7c',{seed:9500,tear:2.2,shadow:8});
         });
       }, 9501);
       fly(0, 1, 0.35, 0.8, {x: 900, y: 790, w: 760, h: 110}, () => {
-        for (let i = 0; i < 4; i++) rounded(paper, 940 + i*170, 810, 145, 65, 8, ['#7d9b91','#9eaa9b','#b8a083','#718b97'][i]);
-        outlinedText(paper, '1980  •  BÁN DẪN', 1080, 900, 34, false, 500);
+        outlinedText(paper, '1983  •  BƯỚC NGOẶT', 1050, 880, 36, false, 540);
       }, 9502);
     } else {
       fly(0, 0, 0.20, 0.95, {x:850,y:220,w:850,h:620}, () => drawExtendedSamsungProp(paper,index), 9720 + index * 3);
       fly(0, 1, 0.34, 0.78, {x:870,y:810,w:820,h:90}, () => {
-        const labels = ['1983 • 64K DRAM','1984 • 256K DRAM','1986 • 1M DRAM','1988 • 4M DRAM','1992 • 64M DRAM','1993 • NEW MANAGEMENT','1997 • TÁI CẤU TRÚC','CHẤT LƯỢNG • THIẾT KẾ','THƯƠNG HIỆU TOÀN CẦU','TV MÀN HÌNH PHẲNG','2010 • GALAXY S','2011 • GALAXY NOTE','HỆ SINH THÁI GALAXY','2019 • GALAXY FOLD','BỘ NHỚ CHO AI','CÔNG NGHỆ • CON NGƯỜI','KỂ KỶ NIỆM CỦA BẠN','HẸN GẶP LẠI'];
+        const labels = ['NGHIÊN CỨU • ĐẦU TƯ','ĐIỆN THOẠI DI ĐỘNG • 1988','NOKIA • MOTOROLA','THIẾT KẾ GẬP VÀ TRƯỢT','IPHONE • 2007','GALAXY S • 2010','APPLE • ANDROID','GALAXY NOTE • 2011','S PEN • MÀN HÌNH LỚN','NOTE 7 • 2016','THU HỒI • AN TOÀN','GIÀNH LẠI NIỀM TIN','BÁN DẪN • BỘ NHỚ • MÀN HÌNH','GALAXY FOLD • 2019','ĐẦU TƯ • THAY ĐỔI','CÂU CHUYỆN CHƯA KẾT THÚC'];
         outlinedText(paper, labels[index - 10], 1030, 870, 34, false, 600);
       }, 9721 + index * 3);
     }
