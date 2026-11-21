@@ -18,7 +18,6 @@ on:
           - rain
           - kite
           - hands
-          - nokia-pilot
       voiceover_manifest:
         description: Optional story voiceover JSON manifest path
         required: false
