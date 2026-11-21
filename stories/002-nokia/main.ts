@@ -40,6 +40,7 @@ const SUBTITLES = [
   'Năm 2011, Nokia phải chọn một con đường mới',
   'Lumia đẹp, nhưng ứng dụng và hệ sinh thái là bài toán khác',
   'Microsoft hoàn tất thương vụ vào tháng 4 năm 2014',
+  'Một công ty có thể đổi hướng, nhưng ký ức thì còn ở lại',
   'N97 và N8 cho thấy nỗ lực đổi mới phần cứng của Nokia',
   'Cấu trúc phát triển phức tạp khiến quyết định đến chậm',
   'Apple và Android liên tục mở rộng khoảng cách',
