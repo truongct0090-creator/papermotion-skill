@@ -5,8 +5,20 @@ import {
 } from '../../src';
 import { createCitySkyline, createGrassland, meadowWind, nightSky } from '../shared/environment';
 import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
+import { STORY_TIMING } from './voiceoverTiming';
 
-const W = 1920, H = 1080, SCENE_SECONDS = 9.2, DURATION = 100;
+const W = 1920, H = 1080, DURATION = STORY_TIMING.duration_sec;
+const TEXT_SAFE_ZONE = { left: 80, right: 780, top: 70, bottom: 440 };
+const PROP_SAFE_LEFT = 800;
+
+function sceneIndexAt(t: number): number {
+  let index = 0;
+  for (let i = 1; i < STORY_TIMING.lines.length; i++) {
+    if (t >= STORY_TIMING.lines[i].start_sec) index = i;
+    else break;
+  }
+  return Math.min(STORY_TIMING.lines.length - 1, index);
+}
 const TITLES = [
   'MỘT THỜI NOKIA THỐNG TRỊ','CHIẾC ĐIỆN THOẠI QUỐC DÂN','NGƯỜI KHỔNG LỒ TRÊN ĐỈNH CAO',
   'RỒI IPHONE XUẤT HIỆN','ANDROID THAY ĐỔI CUỘC CHƠI','SYMBIAN BẮT ĐẦU CHẬM LẠI',
@@ -121,42 +133,66 @@ function phone(paper: Paper, x: number, y: number, scale: number, color: string,
 }
 
 /**
- * Reveal a prop group with a local torn-paper edge.
- * All prop bounds stay to the right of the fixed title/subtitle safe zone.
- * Once revealed, the group remains drawn for the rest of the scene.
+ * Fly a torn-paper sheet into a prop group. Direction is deterministic per prop,
+ * so the scene feels varied but renders identically on every frame and machine.
  */
-function tornReveal(
+function paperFlyIn(
   paper: Paper, t: number, at: number, duration: number,
   bounds: { x: number; y: number; w: number; h: number },
   draw: () => void, seed: number,
 ): void {
+  if (bounds.x < PROP_SAFE_LEFT) throw new Error('Prop reveal enters the protected title/subtitle column.');
   const progress = Math.max(0, Math.min(1, (t - at) / duration));
   if (progress <= 0) return;
   if (progress >= 1) { draw(); return; }
-
   const { x, y, w, h } = bounds;
   const ctx = paper.context;
+  const mode = seed % 4;
+  const vertical = mode >= 2;
+  const reverse = mode === 1 || mode === 3;
   const edge = Array.from({ length: 17 }, (_, i) => {
-    const yy = y + (i / 16) * h;
+    const along = i / 16;
     const wobble = Math.sin(i * 1.91 + seed) * 7 + Math.sin(i * 0.63 + seed * 0.7) * 4;
-    return { x: x + w * progress + wobble, y: yy };
+    return vertical
+      ? { x: x + along * w, y: y + (reverse ? 1 - progress : progress) * h + wobble }
+      : { x: x + (reverse ? 1 - progress : progress) * w + wobble, y: y + along * h };
   });
-
   ctx.save();
   ctx.beginPath();
-  ctx.moveTo(x - 16, y - 16);
-  ctx.lineTo(edge[0].x, edge[0].y);
-  for (let i = 1; i < edge.length; i++) ctx.lineTo(edge[i].x, edge[i].y);
-  ctx.lineTo(x - 16, y + h + 16);
-  ctx.closePath();
-  ctx.clip();
-  draw();
-  ctx.restore();
-
-  const strip = [...edge, ...edge.slice().reverse().map(p => ({ x: p.x + 13, y: p.y }))];
-  paper.piece(strip, '#f3ecdf', { seed, tear: 2.8, shadow: 8, texture: 0.32 });
+  if (!vertical && !reverse) {
+    ctx.moveTo(x - 18, y - 18); ctx.lineTo(edge[0].x, edge[0].y);
+    for (let i = 1; i < edge.length; i++) ctx.lineTo(edge[i].x, edge[i].y);
+    ctx.lineTo(x - 18, y + h + 18);
+  } else if (!vertical && reverse) {
+    ctx.moveTo(x + w + 18, y - 18); ctx.lineTo(edge[0].x, edge[0].y);
+    for (let i = 1; i < edge.length; i++) ctx.lineTo(edge[i].x, edge[i].y);
+    ctx.lineTo(x + w + 18, y + h + 18);
+  } else if (vertical && !reverse) {
+    ctx.moveTo(x - 18, y - 18); ctx.lineTo(x + w + 18, y - 18);
+    ctx.lineTo(edge[edge.length - 1].x, edge[edge.length - 1].y);
+    for (let i = edge.length - 2; i >= 0; i--) ctx.lineTo(edge[i].x, edge[i].y);
+  } else {
+    ctx.moveTo(x - 18, y + h + 18); ctx.lineTo(x + w + 18, y + h + 18);
+    ctx.lineTo(edge[edge.length - 1].x, edge[edge.length - 1].y);
+    for (let i = edge.length - 2; i >= 0; i--) ctx.lineTo(edge[i].x, edge[i].y);
+  }
+  ctx.closePath(); ctx.clip(); draw(); ctx.restore();
+  const flapDistance = (1 - progress) * 64 + 8;
+  const flap = edge.map(p => ({
+    x: p.x + (vertical ? 0 : reverse ? flapDistance : -flapDistance),
+    y: p.y + (vertical ? reverse ? -flapDistance : flapDistance : 0),
+  }));
+  paper.piece([...edge, ...flap.reverse()], '#f3ecdf', { seed, tear: 3.6, shadow: 12, texture: 0.48 });
+  if (progress < 0.88) {
+    for (let i = 0; i < 2; i++) {
+      const p = edge[Math.min(15, 3 + i * 9)];
+      const drift = (1 - progress) * (34 + i * 16);
+      const cx = p.x + (vertical ? (i ? 1 : -1) * drift : reverse ? drift : -drift);
+      const cy = p.y + (vertical ? reverse ? -drift : drift : (i ? 1 : -1) * drift * 0.45);
+      paper.piece([{ x: cx - 14, y: cy - 5 }, { x: cx + 13, y: cy - 9 }, { x: cx + 9, y: cy + 8 }, { x: cx - 11, y: cy + 6 }], '#eee5d6', { seed: seed + i + 1, tear: 3.2, shadow: 7, texture: 0.5 });
+    }
+  }
 }
-
 export class NokiaPilotScene extends Stage {
   private readonly skyline: ReturnType<typeof createCitySkyline>;
   private readonly ridges: RidgeSpec[];
