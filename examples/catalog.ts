@@ -20,9 +20,9 @@ export const EXAMPLES: Record<string, () => Promise<MakeStage>> = {
     const { NokiaFullScene } = await import('../stories/002-nokia/main');
     return canvas => new NokiaFullScene(canvas);
   },
-  'samsung-pilot': async () => {
-    const { SamsungPilotScene } = await import('../stories/003-samsung/main');
-    return canvas => new SamsungPilotScene(canvas);
+  'samsung-full': async () => {
+    const { SamsungFullScene } = await import('../stories/003-samsung/full');
+    return canvas => new SamsungFullScene(canvas);
   },
   hands: async () => {
     const { HandsScene } = await import('./hands/main');

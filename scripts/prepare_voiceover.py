@@ -3,6 +3,7 @@
 import argparse
 import json
 import re
+import subprocess
 import wave
 from pathlib import Path
 
@@ -14,6 +15,20 @@ VOICES = {"adam": "Adam", "my_duyen": "Mỹ Duyên"}
 def wav_duration(path: Path) -> float:
     with wave.open(str(path), "rb") as audio:
         return audio.getnframes() / audio.getframerate()
+
+
+def trim_wav_silence(path: Path) -> None:
+    """Trim only leading/trailing low-level silence; preserve short natural breaths."""
+    trimmed = path.with_name(path.stem + ".trim.wav")
+    subprocess.run([
+        "ffmpeg", "-v", "error", "-y", "-i", str(path),
+        "-af", "silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.035,areverse,silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.06,areverse",
+        "-c:a", "pcm_s16le", str(trimmed),
+    ], check=True)
+    duration = wav_duration(trimmed)
+    if duration <= 0.20:
+        raise SystemExit(f"Voice clip became implausibly short after silence trim: {path} ({duration:.3f}s)")
+    trimmed.replace(path)
 
 
 def split_sentences(text: str) -> list[str]:
@@ -49,6 +64,12 @@ def main() -> None:
     previous_end = 0.0
     line_gap = float(data.get("inter_line_gap_sec", 0.18))
     sentence_gap = float(data.get("inter_sentence_gap_sec", 0.10))
+    schedule_mode = data.get("schedule_mode", "anchored")
+    trim_silence = bool(data.get("trim_silence", False))
+    if schedule_mode not in ("anchored", "sequential"):
+        raise SystemExit("schedule_mode must be 'anchored' or 'sequential'.")
+    if not (0 <= line_gap <= 0.5 and 0 <= sentence_gap <= 0.5):
+        raise SystemExit("Narration gaps must be between 0 and 0.5 seconds.")
 
     for i, line in enumerate(lines):
         if line.get("speaker") not in VOICES:
@@ -58,12 +79,20 @@ def main() -> None:
         spoken_text = render_text(data, line["text"])
         sentences = split_sentences(spoken_text)
         requested_start = float(line.get("start_sec", 0))
-        cursor = requested_start if i == 0 else max(requested_start, previous_end + line_gap)
+        if i == 0:
+            cursor = requested_start
+        elif schedule_mode == "sequential":
+            cursor = previous_end + line_gap
+        else:
+            cursor = max(requested_start, previous_end + line_gap)
+        gap_before = max(0.0, cursor - previous_end) if i else cursor
         segments = []
         for j, sentence in enumerate(sentences):
             clip = clips_dir / f"line_{i:03d}_seg_{j:02d}.wav"
             audio = tts.infer(sentence, voice=VOICES[line["speaker"]])
             tts.save(audio, str(clip))
+            if trim_silence:
+                trim_wav_silence(clip)
             duration = wav_duration(clip)
             end = cursor + duration
             segments.append({
@@ -83,13 +112,18 @@ def main() -> None:
             "start_sec": line_start,
             "duration_sec": round(line_end - line_start, 4),
             "end_sec": line_end,
+            "gap_before_sec": round(gap_before, 4),
             "segments": segments,
         })
         previous_end = line_end
         print(f"line {i + 1:02d}: {line_start:.2f}s–{line_end:.2f}s; {len(segments)} spoken beats")
 
     total = round(previous_end + 1.25, 4)
-    timing = {"lines": timing_lines, "duration_sec": total}
+    max_line_gap = max((line["gap_before_sec"] for line in timing_lines[1:]), default=0.0)
+    max_sentence_gap = sentence_gap if any(len(line["segments"]) > 1 for line in timing_lines) else 0.0
+    timing = {"lines": timing_lines, "duration_sec": total,
+              "schedule_mode": schedule_mode, "max_inter_line_gap_sec": round(max_line_gap, 4),
+              "inter_sentence_gap_sec": round(max_sentence_gap, 4)}
     (clips_dir / "timing.json").write_text(json.dumps(timing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     module = Path(args.timing_module)
     module.parent.mkdir(parents=True, exist_ok=True)

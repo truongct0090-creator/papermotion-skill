@@ -54,7 +54,7 @@ const PALETTES: [string, string][] = [
   ['#d6d2ca', '#818c9c'], ['#d8eadc', '#8eb6a0'], ['#d1d9dd', '#8397a5'],
   ['#1d2638', '#665267'],
 ];
-if (STORY_TIMING.lines.length !== 11 || SAMSUNG_TITLES.length !== 10 ||
+if (Number(STORY_TIMING.lines.length) !== 11 || SAMSUNG_TITLES.length !== 10 ||
     SAMSUNG_SUBTITLES.length !== 10 || SCENE_LINE_INDEX.length !== 10) {
   throw new Error('Samsung pilot requires 11 measured voice lines mapped to exactly 10 visual scenes.');
 }
