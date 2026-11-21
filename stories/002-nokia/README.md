@@ -9,7 +9,7 @@
 - **Chữ:** Noto Sans với fallback hỗ trợ tiếng Việt; tiêu đề lớn luôn một dòng và tự co cỡ để vừa vùng an toàn. Phụ đề nhỏ bên dưới có thể chia hai dòng. Bỏ viền đen dày, thay bằng nhiều lớp bóng đổ tạo chiều sâu 3D. Vùng chữ bên trái (x=80–780); đạo cụ và hiệu ứng giấy được giới hạn bên phải (x>=800).
 - **Chuyển động:** Mọt Mọt di chuyển xuyên suốt, có bước nhảy chuyển đoạn; đuôi và ánh mắt có chuyển động tự nhiên. Cảnh mở đầu dùng cận cảnh mascot để tạo hook; cảnh kết trở lại với CTA. Các cảnh giữa giữ nhịp one-shot của bản test.
 - **Đạo cụ:** mỗi cảnh có bố cục riêng, không tái sử dụng cùng một cụm hình ảnh cho nhiều cảnh liên tiếp. Đạo cụ được mở theo cue câu thoại bằng giấy xé bay vào, bung mảnh, xoay và ghép; hướng chuyển động đa dạng nhưng deterministic theo seed.
-- **Âm thanh:** Adam dẫn chuyện chính; Mỹ Duyên tạo điểm nhấn ở cảnh 2 và cảnh 16. Intro/outro dùng lời dẫn Mọt Mọt bằng giọng Adam hiện tại để không phát sinh voice profile mới. Các câu được tổng hợp theo từng câu, đo WAV thực tế và đồng bộ timeline với hoạt ảnh. Khoảng nghỉ giữa câu 0,10 giây; giữa lượt thoại 0,18 giây.
+- **Âm thanh:** Adam dẫn chuyện chính; Mỹ Duyên tạo điểm nhấn ở cảnh 3 và cảnh 17. Intro/outro dùng lời dẫn Mọt Mọt bằng giọng Adam hiện tại để không phát sinh voice profile mới. Các câu được tổng hợp theo từng câu, đo WAV thực tế và đồng bộ timeline với hoạt ảnh. Khoảng nghỉ giữa câu 0,10 giây; giữa lượt thoại 0,18 giây.
 - **Chủ đề động:** voiceover manifest dùng placeholder `{{topic}}` và biến `variables.topic`, hiện đặt là Nokia. Có thể đổi chủ đề tập sau mà không phải sửa câu mở/kết theo cách thủ công.
 
 ## Danh sách 28 cảnh
