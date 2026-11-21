@@ -548,115 +548,112 @@ export class SamsungFullScene extends Stage {
         for (let i = 0; i < 5; i++) cargoCrate(paper, 875 + i * 155, 780, 135, 92, ['GẠO','CÁ','RAU','QUẢ','HÀNG'][i], ['#b99a64','#a7794f','#8b9c70','#a66e4f','#9b8063'][i], 9430 + i);
       }, 9435);
     } else if (index === 3) {
-      fly(0, 0, 0.25, 0.95, {x: 850, y: 260, w: 850, h: 580}, () => {
-        paper.sheet({shadow:13,rim:{color:'rgba(255,244,224,0.7)',width:3},shade:{color:'rgba(30,24,20,0.26)',width:4},texture:0.5},()=>{
-          rounded(paper, 890, 470, 360, 300, 12, '#b7c9bd', '#647d7d');
-          rounded(paper, 1290, 470, 360, 300, 12, '#d7c7a6', '#8a7355');
-          for (let i = 0; i < 5; i++) {
-            paper.line([{x: 930 + i*58,y: 500},{x:930+i*58,y:740}], '#718f82', 9);
-            paper.piece(circlePoly({x: 960 + i*58,y: 515}, 28, 18), ['#7e9c91','#9eaf8d','#c0a56e'][i%3], {seed:9440+i,tear:2,shadow:4});
-          }
-          for (let i = 0; i < 7; i++) paper.line([{x: 1320+i*43,y: 520},{x: 1320+i*43,y: 735}], '#9b785d', 7);
-          outlinedText(paper, 'DỆT MAY', 980, 820, 31, false, 220);
-          outlinedText(paper, 'THỰC PHẨM', 1350, 820, 29, false, 260);
-        });
-      }, 9448);
-      fly(0, 1, 0.3, 0.75, {x: 1000, y: 250, w: 650, h: 170}, () => {
-        rounded(paper, 1060, 285, 540, 90, 12, '#efe3cd', '#907b62');
-        outlinedText(paper, 'MỞ RỘNG KINH DOANH', 1090, 340, 29, false, 470);
-      }, 9449);
-    } else if (index === 4) {
       fly(0, 0, 0.18, 0.9, {x: 850, y: 260, w: 850, h: 590}, () => {
         paper.sheet({shadow:15,rim:{color:'rgba(255,244,224,0.78)',width:3},shade:{color:'rgba(30,24,20,0.3)',width:4},texture:0.48},()=>{
-          rounded(paper, 900, 440, 720, 330, 18, '#dce1d9', '#647d7d');
-          rounded(paper, 980, 340, 560, 105, 12, '#54747a');
-          outlinedText(paper, 'SAMSUNG ELECTRONICS', 1010, 410, 32, false, 500);
-          for (let i = 0; i < 4; i++) {
-            rounded(paper, 950 + i*165, 570, 125, 125, 8, '#a9b7ad');
-            rounded(paper, 975 + i*165, 595, 75, 75, 5, ['#d6e0d8','#8ca7a1','#b5a58f','#879bb0'][i]);
+          rounded(paper,900,440,720,330,18,'#dce1d9','#647d7d');
+          rounded(paper,980,340,560,105,12,'#54747a');
+          outlinedText(paper,'SAMSUNG ELECTRONICS',1010,410,32,false,500);
+          for(let i=0;i<4;i++){
+            rounded(paper,950+i*165,570,125,125,8,'#a9b7ad');
+            rounded(paper,975+i*165,595,75,75,5,['#d6e0d8','#8ca7a1','#b5a58f','#879bb0'][i]);
           }
-          paper.line([{x:930,y:725},{x:1590,y:725}], '#71817c', 10);
+          paper.line([{x:930,y:725},{x:1590,y:725}],'#71817c',10);
         });
-      }, 9450);
-      fly(0, 1, 0.45, 0.75, {x: 1000, y: 810, w: 660, h: 90}, () => {
-        outlinedText(paper, '1969  •  ĐIỆN TỬ', 1100, 870, 36, false, 500);
-      }, 9451);
-    } else if (index === 5) {
-      fly(0, 0, 0.2, 0.9, {x: 950, y: 235, w: 650, h: 630}, () => {
+      },9450);
+      fly(0,1,0.45,0.75,{x:1000,y:810,w:660,h:90},()=>{
+        outlinedText(paper,'1969  •  ĐIỆN TỬ',1100,870,36,false,500);
+      },9451);
+    } else if (index === 4) {
+      fly(0,0,0.2,0.9,{x:950,y:235,w:650,h:630},()=>{
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(20,20,20,0.38)',width:5},texture:0.5},()=>{
-          rounded(paper, 1040, 330, 480, 390, 36, '#3c4141', '#202728');
-          rounded(paper, 1080, 370, 400, 285, 18, '#d4d3c9');
-          paper.piece(circlePoly({x: 1278,y: 510}, 112, 38), '#7e8581', {seed:9460,tear:2.4,shadow:6,texture:0.35});
-          paper.piece(circlePoly({x: 1278,y: 510}, 82, 38), '#d9d8cf', {seed:9461,tear:1.7,shadow:2});
-          rounded(paper, 1170, 680, 220, 38, 8, '#806047');
-          paper.piece(circlePoly({x: 1460,y: 695}, 18, 20), '#d5c7a9', {seed:9462,tear:1.4,shadow:3});
-          outlinedText(paper, 'P-3202', 1180, 770, 30, false, 180);
+          rounded(paper,1040,330,480,390,36,'#3c4141','#202728');
+          rounded(paper,1080,370,400,285,18,'#d4d3c9');
+          paper.piece(circlePoly({x:1278,y:510},112,38),'#7e8581',{seed:9460,tear:2.4,shadow:6,texture:0.35});
+          paper.piece(circlePoly({x:1278,y:510},82,38),'#d9d8cf',{seed:9461,tear:1.7,shadow:2});
+          rounded(paper,1170,680,220,38,8,'#806047');
+          paper.piece(circlePoly({x:1460,y:695},18,20),'#d5c7a9',{seed:9462,tear:1.4,shadow:3});
+          outlinedText(paper,'TV ĐEN TRẮNG',1120,770,30,false,320);
         });
-      }, 9463);
-      fly(0, 1, 0.28, 0.7, {x: 870, y: 800, w: 800, h: 95}, () => {
-        cargoCrate(paper, 930, 815, 310, 76, 'SAMSUNG-SANYO', '#967653', 9464);
-        outlinedText(paper, '1970', 1340, 875, 38);
-      }, 9465);
-    } else if (index === 6) {
-      fly(0, 0, 0.2, 0.9, {x: 850, y: 260, w: 850, h: 590}, () => {
+      },9463);
+      fly(0,1,0.28,0.7,{x:870,y:800,w:800,h:95},()=>{
+        outlinedText(paper,'1970  •  TIVI ĐẦU TIÊN',1000,875,36,false,560);
+      },9465);
+    } else if (index === 5) {
+      fly(0,0,0.2,0.9,{x:850,y:260,w:850,h:590},()=>{
         paper.sheet({shadow:15,rim:{color:'rgba(255,244,224,0.75)',width:3},shade:{color:'rgba(30,24,20,0.3)',width:4},texture:0.48},()=>{
-          const appliances = [{x:930,label:'TỦ LẠNH'},{x:1190,label:'MÁY GIẶT'},{x:1450,label:'TIVI'}];
-          for (const [i,a] of appliances.entries()) {
+          const appliances=[{x:930,label:'TỦ LẠNH'},{x:1190,label:'MÁY GIẶT'},{x:1450,label:'TIVI'}];
+          for(const [i,a] of appliances.entries()){
             rounded(paper,a.x,390,210,330,18,['#b8c8c2','#c9c8b7','#aebfc0'][i],'#647c7b');
             rounded(paper,a.x+18,415,174,210,10,['#dbe4dc','#8da5a1','#758c91'][i]);
             outlinedText(paper,a.label,a.x+8,770,24,false,195);
           }
         });
-      }, 9475);
-      fly(0, 1, 0.38, 0.75, {x: 880, y: 820, w: 780, h: 80}, () => {
-        outlinedText(paper, 'THIẾT BỊ GIA DỤNG', 1040, 880, 36, false, 500);
-      }, 9476);
-    } else if (index === 7) {
-      fly(0, 0, 0.2, 0.9, {x: 850, y: 220, w: 850, h: 640}, () => {
+      },9475);
+      fly(0,1,0.38,0.75,{x:880,y:820,w:780,h:80},()=>{
+        outlinedText(paper,'THIẾT BỊ GIA DỤNG',1040,880,36,false,500);
+      },9476);
+    } else if (index === 6) {
+      fly(0,0,0.2,0.9,{x:850,y:220,w:850,h:640},()=>{
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.52},()=>{
-          paper.piece(circlePoly({x: 1240,y: 500}, 220, 64), '#829da0', {seed:9480,tear:3,shadow:10,texture:0.5});
-          paper.piece(circlePoly({x: 1240,y: 500}, 184, 64), '#a8c0bc', {seed:9481,tear:2,shadow:5});
-          for (let i = 0; i < 5; i++) for (let j = 0; j < 5; j++) {
-            rounded(paper, 1110 + i*52, 370 + j*52, 38, 38, 4, '#d8e3db');
-            paper.piece(circlePoly({x: 1129+i*52,y:389+j*52}, 7, 12), '#526b72', {seed:9482+i*5+j,tear:1,shadow:1});
+          paper.piece(circlePoly({x:1240,y:500},220,64),'#829da0',{seed:9480,tear:3,shadow:10,texture:0.5});
+          paper.piece(circlePoly({x:1240,y:500},184,64),'#a8c0bc',{seed:9481,tear:2,shadow:5});
+          for(let i=0;i<5;i++)for(let j=0;j<5;j++){
+            rounded(paper,1110+i*52,370+j*52,38,38,4,'#d8e3db');
+            paper.piece(circlePoly({x:1129+i*52,y:389+j*52},7,12),'#526b72',{seed:9482+i*5+j,tear:1,shadow:1});
           }
-          rounded(paper, 850, 700, 420, 95, 12, '#e8e1d2', '#8a887e');
-          outlinedText(paper, 'KOREA SEMICONDUCTOR', 880, 760, 26, false, 360);
+          rounded(paper,850,700,420,95,12,'#e8e1d2','#8a887e');
+          outlinedText(paper,'KOREA SEMICONDUCTOR',880,760,26,false,360);
         });
-      }, 9489);
-      fly(0, 1, 0.38, 0.75, {x: 850, y: 820, w: 850, h: 75}, () => {
-        rounded(paper, 930, 830, 690, 48, 10, '#647c80');
-        outlinedText(paper, '50%  •  1974', 1130, 868, 34);
-      }, 9490);
-    } else if (index === 8) {
-      fly(0, 0, 0.18, 0.9, {x: 850, y: 260, w: 850, h: 580}, () => {
+      },9489);
+      fly(0,1,0.38,0.75,{x:850,y:820,w:850,h:75},()=>{
+        rounded(paper,930,830,690,48,10,'#647c80');
+        outlinedText(paper,'ĐẦU TƯ BÁN DẪN',1080,868,34,false,420);
+      },9490);
+    } else if (index === 7) {
+      fly(0,0,0.18,0.9,{x:850,y:260,w:850,h:580},()=>{
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.5},()=>{
-          for (let i = 0; i < 3; i++) {
-            const x = 900 + i * 250;
+          for(let i=0;i<3;i++){
+            const x=900+i*250;
             rounded(paper,x,370,220,320,24,'#3c4445','#1e2527');
             rounded(paper,x+20,395,180,235,12,['#c8d8d0','#9fb6ac','#7e9ca4'][i]);
-            for(let j=0;j<4;j++) paper.line([{x:x+38,y:435+j*48},{x:x+180,y:435+j*48}],'#e4d8bd',4);
+            for(let j=0;j<4;j++)paper.line([{x:x+38,y:435+j*48},{x:x+180,y:435+j*48}],'#e4d8bd',4);
           }
           outlinedText(paper,'KỸ SƯ NGHIÊN CỨU',1030,770,34,false,500);
           paper.piece(circlePoly({x:1550,y:300},72,32),'#e5c47f',{seed:9497,tear:2,shadow:7});
         });
-      }, 9498);
-      fly(0, 1, 0.35, 0.75, {x: 950, y: 830, w: 700, h: 75}, () => {
-        outlinedText(paper, 'NGHIÊN CỨU • PHÁT TRIỂN', 1050, 880, 34, false, 560);
-      }, 9499);
-    } else if (index === 9) {
-      fly(0, 0, 0.2, 0.95, {x: 850, y: 230, w: 850, h: 620}, () => {
+      },9498);
+      fly(0,1,0.35,0.75,{x:950,y:830,w:700,h:75},()=>{
+        outlinedText(paper,'NGHIÊN CỨU • PHÁT TRIỂN',1050,880,34,false,560);
+      },9499);
+    } else if (index === 8) {
+      fly(0,0,0.2,0.95,{x:850,y:230,w:850,h:620},()=>{
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.5},()=>{
           rounded(paper,930,350,650,390,18,'#dce4df','#6c8586');
-          for(let i=0;i<7;i++) for(let j=0;j<5;j++)
+          for(let i=0;i<7;i++)for(let j=0;j<5;j++)
             rounded(paper,1000+i*75,410+j*58,48,38,5,['#7b9997','#a9b9a8','#c0a77c'][(i+j)%3]);
           outlinedText(paper,'64K DRAM',1110,720,48,false,340);
           paper.piece(circlePoly({x:1510,y:300},74,40),'#d7bd7c',{seed:9500,tear:2.2,shadow:8});
         });
-      }, 9501);
-      fly(0, 1, 0.35, 0.8, {x: 900, y: 790, w: 760, h: 110}, () => {
-        outlinedText(paper, '1983  •  BƯỚC NGOẶT', 1050, 880, 36, false, 540);
-      }, 9502);
+      },9501);
+      fly(0,1,0.35,0.8,{x:900,y:790,w:760,h:110},()=>{
+        outlinedText(paper,'1983  •  BƯỚC NGOẶT',1050,880,36,false,540);
+      },9502);
+    } else if (index === 9) {
+      fly(0,0,0.2,0.95,{x:850,y:230,w:850,h:620},()=>{
+        paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.5},()=>{
+          rounded(paper,930,350,650,390,18,'#dce4df','#6c8586');
+          outlinedText(paper,'KIỂM ĐỊNH CHẤT LƯỢNG',1000,420,34,false,540);
+          for(let i=0;i<4;i++){
+            rounded(paper,990+i*155,500,120,150,12,['#a9b9a8','#8fa9a1','#c4b28f','#8ba1ad'][i]);
+            paper.piece(circlePoly({x:1050+i*155,y:480},20,16),'#e5c47f',{seed:9510+i,tear:1.4,shadow:3});
+          }
+          paper.line([{x:980,y:700},{x:1550,y:700}],'#71817c',9);
+          outlinedText(paper,'1993',1190,790,40,false,180);
+        });
+      },9501);
+      fly(0,1,0.35,0.8,{x:900,y:790,w:760,h:110},()=>{
+        outlinedText(paper,'NEW MANAGEMENT',1060,880,36,false,500);
+      },9502);
     } else {
       fly(0, 0, 0.20, 0.95, {x:850,y:220,w:850,h:620}, () => drawExtendedSamsungProp(paper,index), 9720 + index * 3);
       fly(0, 1, 0.34, 0.78, {x:870,y:810,w:820,h:90}, () => {
