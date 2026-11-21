@@ -14,7 +14,7 @@ def clean(s: str) -> str:
 
 def fetch_json(url: str):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; MottoMottoSEO/1.0)"})
-    with urllib.request.urlopen(req, timeout=12) as response:
+    with urllib.request.urlopen(req, timeout=7) as response:
         return json.load(response)
 
 def suggestions(query: str, source: str):
