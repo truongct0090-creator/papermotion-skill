@@ -55,5 +55,7 @@
       "speaker": "adam",
       "text": "Năm 1980, hoạt động bán dẫn được hợp nhất vào Samsung Electronics. Từ đây, chip không còn là một khoản đầu tư bên lề mà dần trở thành năng lực cốt lõi."
     }
-  ]
+  ],
+  "schedule_mode": "anchored",
+  "gap_sec": 0.4
 }
