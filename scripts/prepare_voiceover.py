@@ -85,10 +85,10 @@ def main() -> None:
     module = Path(args.timing_module)
     module.parent.mkdir(parents=True, exist_ok=True)
     module.write_text(
-        "/** Generated from measured sentence-level VieNeu WAV durations; do not edit by hand. */\\n"
+        "/** Generated from measured sentence-level VieNeu WAV durations; do not edit by hand. */\n"
         + "export const STORY_TIMING = "
         + json.dumps(timing, ensure_ascii=False, indent=2)
-        + " as const;\\n",
+        + " as const;\n",
         encoding="utf-8",
     )
     print(f"Prepared {sum(len(line['segments']) for line in timing_lines)} sentence clips; animation timeline is {total:.2f}s.")
