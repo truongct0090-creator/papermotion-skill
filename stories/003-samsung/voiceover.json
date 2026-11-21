@@ -2,120 +2,119 @@
   "lines": [
     {
       "speaker": "adam",
-      "text": "Nếu tôi nói với bạn rằng, một trong những tập đoàn công nghệ lớn nhất thế giới từng khởi đầu bằng việc buôn bán cá khô, rau củ và trái cây… bạn có tin không?",
-      "start_sec": 0.4
+      "text": "Nếu tôi nói với bạn rằng một trong những tập đoàn công nghệ lớn nhất thế giới từng kiếm sống bằng cách bán cá khô, rau củ và hàng tạp hóa… bạn có tin không? Nghe giống một câu chuyện chẳng liên quan gì đến smartphone đúng không? Nhưng đó chính là điểm khởi đầu của Samsung!"
+    },
+    {
+      "speaker": "adam",
+      "text": "Năm 1938, Lee Byung-chul thành lập Samsung tại thành phố Daegu, Hàn Quốc. Samsung có nghĩa là ‘ba ngôi sao’. Một cái tên mang tham vọng về sự lớn mạnh và trường tồn. Nhưng lúc ấy, chẳng ai có thể tưởng tượng ba ngôi sao này rồi sẽ xuất hiện trên hàng triệu thiết bị khắp thế giới."
+    },
+    {
+      "speaker": "adam",
+      "text": "Samsung dần mở rộng sang nhiều lĩnh vực như dệt may, bảo hiểm và thương mại. Họ không muốn chỉ kiếm tiền từ việc mua đi bán lại hàng hóa. Họ muốn tự sản xuất, tự xây dựng doanh nghiệp và kiểm soát nhiều hơn những gì mình kinh doanh."
+    },
+    {
+      "speaker": "adam",
+      "text": "Rồi năm 1969, Samsung Electronics được thành lập. Một doanh nghiệp vốn quen với hoạt động thương mại nay quyết định bước vào ngành điện tử. Nhưng đây không phải sân chơi dễ dàng. Những đối thủ quốc tế đã có kinh nghiệm, công nghệ và thị trường. Samsung đang bước vào một cuộc chơi mà họ chưa phải người giỏi nhất."
+    },
+    {
+      "speaker": "adam",
+      "text": "Năm 1970, Samsung bắt đầu sản xuất tivi đen trắng. So với những chiếc tivi hiện đại ngày nay, nó chẳng có gì đặc biệt. Nhưng đừng đánh giá thấp một khởi đầu nhỏ. Bởi từ những chiếc tivi ấy, Samsung bắt đầu xây dựng nền móng cho một đế chế điện tử."
+    },
+    {
+      "speaker": "adam",
+      "text": "Samsung mở rộng sản xuất, xuất khẩu tivi và phát triển thêm tủ lạnh, máy giặt cùng nhiều thiết bị gia dụng. Công việc kinh doanh ngày càng lớn. Nhưng có một vấn đề: nếu chỉ lắp ráp sản phẩm, Samsung sẽ luôn phụ thuộc vào công nghệ của người khác."
+    },
+    {
+      "speaker": "adam",
+      "text": "Và rồi Samsung quyết định bước vào ngành bán dẫn. Đây là lĩnh vực cực kỳ tốn kém. Một nhà máy sản xuất chip có thể ngốn hàng tỷ đô la, trong khi công nghệ thay đổi liên tục. Nói cách khác, họ chọn một cuộc chơi mà chỉ cần đi sai một bước, cái giá phải trả có thể rất khủng khiếp."
+    },
+    {
+      "speaker": "adam",
+      "text": "Samsung bắt đầu học hỏi, tuyển dụng kỹ sư, tiếp nhận công nghệ và đầu tư vào nghiên cứu. Họ không có lợi thế của những người đi trước. Nhưng họ có một thứ khác: quyết tâm không chấp nhận mãi đứng phía sau."
+    },
+    {
+      "speaker": "adam",
+      "text": "Năm 1983, Samsung phát triển thành công chip 64K DRAM. Đây là một bước tiến quan trọng, đưa Hàn Quốc vào nhóm những quốc gia có khả năng phát triển công nghệ bộ nhớ bán dẫn tiên tiến. Một con chip nhỏ xíu, nhưng phía sau nó là cả một cuộc chạy đua công nghệ khổng lồ."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nhưng công nghệ không phải thứ duy nhất Samsung cần thay đổi. Năm 1993, Lee Kun-hee thúc đẩy một cuộc cải tổ lớn, yêu cầu Samsung thay đổi tư duy và nâng cao chất lượng. Thông điệp rất rõ: đừng chỉ sản xuất thật nhiều. Hãy làm ra những sản phẩm thực sự tốt."
+    },
+    {
+      "speaker": "adam",
+      "text": "Samsung tăng tốc đầu tư vào nghiên cứu, sản xuất chip và công nghệ điện tử. Họ không còn muốn được biết đến như một nhà sản xuất giá rẻ. Họ muốn cạnh tranh với những tên tuổi hàng đầu thế giới. Và một thị trường mới sắp khiến cuộc chiến ấy trở nên khốc liệt hơn bao giờ hết."
+    },
+    {
+      "speaker": "adam",
+      "text": "Năm 1988, Samsung giới thiệu chiếc điện thoại di động đầu tiên của mình tại Hàn Quốc. Nhưng thị trường lúc ấy đã có những đối thủ rất mạnh. Điện thoại còn đắt đỏ, cồng kềnh và chưa phổ biến như ngày nay. Samsung vẫn phải tìm cách chứng minh rằng mình có thể làm tốt hơn."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nokia và Motorola lúc này đã có vị thế rất vững chắc. Người dùng quen thuộc với những chiếc điện thoại của họ. Samsung hiểu rằng nếu chỉ làm thêm một chiếc điện thoại giống đối thủ, họ sẽ rất khó tạo ra khác biệt."
+    },
+    {
+      "speaker": "adam",
+      "text": "Samsung bắt đầu gây chú ý bằng những chiếc điện thoại nắp gập, điện thoại trượt và thiết kế nhiều màu sắc. Điện thoại lúc này không còn chỉ để nghe gọi. Nó bắt đầu trở thành một món đồ thể hiện cá tính. Và Samsung đã tìm được cách khiến người dùng chú ý đến mình."
     },
     {
       "speaker": "my_duyen",
-      "text": "Khoan đã! Một cửa hàng bán cá khô thì liên quan gì đến chiếc điện thoại chúng ta đang cầm mỗi ngày?"
+      "text": "Khoan đã! Chẳng phải điện thoại sinh ra chỉ để gọi điện thôi sao? Tại sao bây giờ người ta lại muốn dùng nó để chụp ảnh, xem phim, chơi game và làm đủ mọi thứ vậy?"
     },
     {
       "speaker": "adam",
-      "text": "Ngày 1 tháng 3 năm 1938, tại thành phố Daegu của Hàn Quốc, Lee Byung-chul thành lập Samsung Sanghoe. Đó là một doanh nghiệp thương mại nhỏ, chưa hề sản xuất điện thoại hay máy tính."
+      "text": "Bởi vì năm 2007, Apple giới thiệu iPhone. Một thiết bị đã góp phần thay đổi cách cả thế giới nhìn nhận về điện thoại di động."
     },
     {
       "speaker": "adam",
-      "text": "Samsung bắt đầu bằng việc buôn bán hàng tạp hóa, cá khô và nông sản. Những chuyến hàng nhỏ cùng mạng lưới giao thương đã đặt viên gạch đầu tiên cho một doanh nghiệp lớn."
+      "text": "Năm 2010, Samsung ra mắt Galaxy S. Đây không chỉ là một chiếc smartphone mới. Nó đánh dấu việc Samsung bước vào cuộc cạnh tranh trực tiếp với những đối thủ lớn trong kỷ nguyên smartphone. Và lần này, họ không định làm kẻ đứng ngoài cuộc."
     },
     {
       "speaker": "adam",
-      "text": "Sau chiến tranh Triều Tiên, Samsung mở rộng sang nhiều lĩnh vực, từ chế biến thực phẩm, dệt may cho tới bảo hiểm và bán lẻ. Tham vọng của họ ngày càng lớn."
+      "text": "Một bên là Apple với hệ sinh thái riêng. Một bên là Samsung với Android, nhiều phân khúc sản phẩm và tốc độ ra mắt thiết bị liên tục. Hai chiến lược khác nhau, nhưng cùng hướng đến một mục tiêu: chiếm lấy chiếc điện thoại nằm trong túi của hàng triệu người. Và Samsung đang ngày càng tiến gần đến vị trí dẫn đầu."
     },
     {
       "speaker": "adam",
-      "text": "Năm 1969, Samsung Electronics được thành lập. Đây là bước đi riêng vào ngành điện tử, mở ra một chương hoàn toàn mới trong lịch sử doanh nghiệp."
+      "text": "Năm 2011, Samsung giới thiệu Galaxy Note với màn hình lớn và bút S Pen. Nhưng thời điểm ấy, nhiều người cho rằng điện thoại như vậy quá to. Cầm trên tay thì giống điện thoại, áp lên tai lại chẳng khác nào đang nghe một chiếc máy tính bảng!"
     },
     {
       "speaker": "adam",
-      "text": "Năm 1970, Samsung-Sanyo bắt đầu sản xuất TV đen trắng P-3202. Từ những chuyến hàng nông sản, Samsung đã bước vào ngành điện tử gia dụng."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1971, TV đen trắng Samsung được xuất khẩu sang Panama. Một sản phẩm do Hàn Quốc sản xuất đã bắt đầu hành trình ra thị trường quốc tế."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1974, Samsung mua 50 phần trăm Korea Semiconductor. Đây là bước đầu tư quan trọng vào công nghệ bán dẫn, lĩnh vực sau này trở thành một trụ cột của hãng."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1977, Samsung hoàn tất việc mua lại Korea Semiconductor và bắt đầu sản xuất, xuất khẩu TV màu. Hãng vừa mở rộng sản phẩm, vừa củng cố năng lực công nghệ."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1980, hoạt động bán dẫn được hợp nhất vào Samsung Electronics. Từ đây, chip không còn là một khoản đầu tư bên lề mà dần trở thành năng lực cốt lõi."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1983, Samsung phát triển thành công chip DRAM 64K, đánh dấu bước tiến quan trọng trong tham vọng tự chủ bán dẫn. Hãng bắt đầu cạnh tranh ở một lĩnh vực đòi hỏi vốn đầu tư, kỹ thuật và tầm nhìn dài hạn."
-    },
-    {
-      "speaker": "adam",
-      "text": "Chỉ một năm sau, Samsung tiếp tục phát triển DRAM 256K. Những thế hệ chip nối tiếp cho thấy hãng không chỉ mua công nghệ mà đang xây dựng năng lực nghiên cứu và sản xuất của riêng mình."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1986, Samsung công bố phát triển DRAM 1 megabit. Đây là cột mốc giúp công ty tiến gần hơn tới nhóm nhà sản xuất bộ nhớ hàng đầu thế giới."
-    },
-    {
-      "speaker": "adam",
-      "text": "Đến năm 1988, Samsung phát triển DRAM 4 megabit. Tốc độ tiến bộ của ngành bán dẫn rất nhanh, và hãng chọn đầu tư mạnh để không bị bỏ lại phía sau."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1992, Samsung phát triển chip DRAM 64 megabit và vươn lên vị trí dẫn đầu trong một số phân khúc bộ nhớ. Bán dẫn đã trở thành lợi thế chiến lược, không còn chỉ là một ngành kinh doanh mới."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 1993, Chủ tịch Lee Kun-hee khởi xướng chương trình New Management, kêu gọi thay đổi sâu sắc cách Samsung làm việc. Thông điệp nổi tiếng nhấn mạnh chất lượng, đổi mới và tư duy lấy khách hàng làm trung tâm."
-    },
-    {
-      "speaker": "adam",
-      "text": "Cuộc khủng hoảng tài chính châu Á năm 1997 tạo ra sức ép rất lớn lên các tập đoàn Hàn Quốc. Samsung phải tái cấu trúc, giảm nợ và tập trung nguồn lực vào những lĩnh vực có khả năng cạnh tranh toàn cầu."
-    },
-    {
-      "speaker": "adam",
-      "text": "Sau khủng hoảng, Samsung tiếp tục chuyển trọng tâm từ sản xuất số lượng lớn sang chất lượng và giá trị thương hiệu. Thiết kế, độ tin cậy và công nghệ dần trở thành những yếu tố quan trọng trong từng sản phẩm."
-    },
-    {
-      "speaker": "adam",
-      "text": "Trong những năm 2000, Samsung mở rộng hiện diện trên thị trường quốc tế với TV, màn hình, điện thoại và linh kiện điện tử. Thương hiệu dần được nhận diện không chỉ nhờ giá cả mà còn nhờ thiết kế và công nghệ."
-    },
-    {
-      "speaker": "adam",
-      "text": "TV màn hình phẳng và công nghệ màn hình mới giúp Samsung trở thành một cái tên nổi bật trong phòng khách của nhiều gia đình. Hãng đầu tư vào LCD rồi tiếp tục phát triển các công nghệ hiển thị tiên tiến hơn."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 2010, Samsung ra mắt Galaxy S, mở đầu dòng smartphone Android cao cấp có ảnh hưởng lớn của hãng. Đây là bước chuyển quan trọng từ nhà sản xuất điện thoại đa dạng sang đối thủ lớn trong cuộc đua smartphone toàn cầu."
-    },
-    {
-      "speaker": "adam",
-      "text": "Năm 2011, Galaxy Note đưa màn hình lớn và bút S Pen đến với một nhóm người dùng rộng hơn. Dòng máy này góp phần tạo nên phân khúc điện thoại lai máy tính bảng mà ban đầu nhiều người còn hoài nghi."
-    },
-    {
-      "speaker": "adam",
-      "text": "Samsung tiếp tục mở rộng hệ sinh thái Galaxy với đồng hồ, máy tính bảng, tai nghe và thiết bị gia đình kết nối. Giá trị không còn nằm ở một chiếc điện thoại riêng lẻ mà ở trải nghiệm giữa nhiều thiết bị."
-    },
-    {
-      "speaker": "adam",
-      "text": "Công nghệ màn hình AMOLED và OLED trở thành một trong những dấu ấn của Samsung. Năm 2019, hãng thương mại hóa Galaxy Fold, mở ra hướng đi mới cho điện thoại màn hình gập dù thế hệ đầu còn nhiều thách thức."
-    },
-    {
-      "speaker": "adam",
-      "text": "Ở mảng bán dẫn, Samsung tiếp tục đầu tư vào bộ nhớ tiên tiến, NAND, DRAM và các giải pháp phục vụ trung tâm dữ liệu. Khi trí tuệ nhân tạo phát triển, bộ nhớ băng thông cao và năng lực sản xuất chip càng trở nên quan trọng."
-    },
-    {
-      "speaker": "adam",
-      "text": "Ngày nay, Samsung hoạt động trên nhiều lĩnh vực từ smartphone, TV, màn hình đến bán dẫn và thiết bị gia dụng. Hành trình ấy không phải đường thẳng đi lên, mà là chuỗi quyết định đầu tư, thay đổi và thích nghi trước cạnh tranh."
+      "text": "Thế nhưng Galaxy Note lại tìm được nhóm khách hàng riêng. Màn hình lớn và bút S Pen phù hợp với những người muốn ghi chú, làm việc và giải trí trên cùng một thiết bị. Thứ từng bị xem là quá khổ, dần trở thành một lựa chọn được yêu thích."
     },
     {
       "speaker": "my_duyen",
-      "text": "Từ cửa hàng cá khô ở Daegu đến những chiếc Galaxy ngày nay, câu chuyện Samsung đã đi qua rất nhiều thế hệ. Bạn từng dùng chiếc điện thoại hay chiếc TV Samsung nào đáng nhớ nhất?"
+      "text": "Vậy là Samsung đã tìm được công thức chiến thắng rồi đúng không? Cứ ra sản phẩm mới, bán thật nhiều là xong!"
     },
     {
       "speaker": "adam",
-      "text": "Hãy kể lại kỷ niệm của bạn với Mọt Mọt ở phần bình luận nhé. Cảm ơn bạn đã theo dõi, hẹn gặp lại trong câu chuyện tiếp theo!"
+      "text": "Không đơn giản như vậy đâu. Bởi có một sản phẩm từng được kỳ vọng rất lớn, nhưng lại trở thành một trong những thất bại đáng nhớ nhất của Samsung."
+    },
+    {
+      "speaker": "adam",
+      "text": "Năm 2016, Galaxy Note 7 gặp sự cố pin có thể dẫn đến cháy nổ. Samsung ban đầu triển khai chương trình đổi máy. Nhưng những thiết bị thay thế vẫn tiếp tục gặp vấn đề. Cuối cùng, hãng phải ngừng bán và thu hồi toàn bộ dòng sản phẩm này. Một siêu phẩm được kỳ vọng trở thành niềm tự hào, lại biến thành một cuộc khủng hoảng nghiêm trọng. Đây là lời nhắc rằng trong công nghệ, một sai lầm về an toàn có thể khiến mọi thành công trước đó bị lu mờ."
+    },
+    {
+      "speaker": "adam",
+      "text": "Sau sự cố Note 7, Samsung phải đối mặt với một nhiệm vụ khó khăn: lấy lại niềm tin của khách hàng. Họ tiếp tục phát triển Galaxy S, cải tiến thiết kế, camera và màn hình. Lần này, chất lượng và độ an toàn không thể chỉ là lời quảng cáo."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nhưng sức mạnh của Samsung không chỉ nằm ở smartphone. Họ còn là một tên tuổi lớn trong ngành bán dẫn, bộ nhớ và màn hình. Có những linh kiện Samsung sản xuất mà bạn chẳng bao giờ nhìn thấy, nhưng chúng lại có thể đang vận hành bên trong thiết bị bạn sử dụng mỗi ngày."
+    },
+    {
+      "speaker": "adam",
+      "text": "Năm 2019, Samsung đưa Galaxy Fold ra thị trường, mở đầu cho một hướng đi mới với smartphone màn hình gập. Một chiếc điện thoại có thể mở ra thành màn hình lớn hơn. Ý tưởng này không hoàn hảo ngay từ đầu, nhưng Samsung vẫn tiếp tục cải tiến để biến điều từng giống khoa học viễn tưởng thành sản phẩm thực tế."
+    },
+    {
+      "speaker": "my_duyen",
+      "text": "Vậy rốt cuộc, điều gì đã giúp một cửa hàng bán cá khô ngày xưa trở thành tập đoàn công nghệ lớn như bây giờ?"
+    },
+    {
+      "speaker": "adam",
+      "text": "Có lẽ không phải vì họ luôn chiến thắng. Mà bởi họ liên tục dám đầu tư, thay đổi và chấp nhận bước vào những cuộc chơi khó khăn."
+    },
+    {
+      "speaker": "adam",
+      "text": "Từ những thùng hàng nhỏ ở Daegu đến những con chip và smartphone hiện đại, Samsung đã trải qua gần một thế kỷ đầy thăng trầm. Và đôi khi, điều tạo nên một đế chế không phải là chưa từng thất bại… Mà là sau mỗi lần vấp ngã, họ vẫn tìm được cách bước tiếp."
     }
   ],
   "schedule_mode": "sequential",
