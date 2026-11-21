@@ -2,8 +2,17 @@
  * Fast runtime preflight for a long-form scene before spending time on full-resolution encoding.
  * It advances the real stage through the complete timeline but draws only transition/cue checkpoints.
  */
-import { STORY_TIMING } from '../stories/002-nokia/voiceoverTiming.ts';
+import { readFileSync } from 'node:fs';
 import { load, open } from './browser.ts';
+
+interface MeasuredTiming {
+  lines: Array<{
+    start_sec: number;
+    end_sec: number;
+    segments: Array<{ start_sec: number; duration_sec: number }>;
+  }>;
+}
+const STORY_TIMING = JSON.parse(readFileSync('out/nokia-voice-clips/timing.json', 'utf8')) as MeasuredTiming;
 
 const name = process.argv[2] ?? 'nokia-full';
 const session = await open();
