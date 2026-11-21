@@ -237,12 +237,12 @@ export class NokiaPilotScene extends Stage {
 
   protected update(t:number,dt:number):void {
     const scene=sceneIndexAt(t);
-    Object.assign(this.cat.intent,CAT_REST,{speed:scene===9?26:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+220,y:560}});
+    Object.assign(this.cat.intent,CAT_REST,{speed:scene===14?26:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+220,y:560}});
     if(scene!==this.lastScene){
       if(!this.cat.airborne)this.cat.jump({x:this.cat.x+265,y:890},145);
       this.lastScene=scene;
     }
-    if(scene===9){const finalStart=STORY_TIMING.lines[9].start_sec;this.cat.intent.speed=0;this.cat.intent.sit=ramp(t,finalStart+0.7,finalStart+3.7);this.cat.intent.look={x:this.cat.x+180,y:250};}
+    if(scene===14){const finalStart=STORY_TIMING.lines[14].start_sec;this.cat.intent.speed=0;this.cat.intent.sit=ramp(t,finalStart+0.7,finalStart+3.7);this.cat.intent.look={x:this.cat.x+180,y:250};}
     this.cat.update(dt);
   }
 
