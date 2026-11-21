@@ -10,6 +10,7 @@ import { STORY_TIMING } from './voiceoverTiming';
 const W = 1920, H = 1080, DURATION = STORY_TIMING.duration_sec;
 const TEXT_SAFE_ZONE = { left: 80, right: 780, top: 70, bottom: 440 };
 const PROP_SAFE_LEFT = TEXT_SAFE_ZONE.right + 20;
+const CAT_BLINKS = Array.from({ length: 110 }, (_, i) => 1.1 + i * 5.1 + (i % 4) * 0.65);
 
 function sceneIndexAt(t: number): number {
   let index = 0;
@@ -318,7 +319,7 @@ export class NokiaFullScene extends Stage {
 
   protected update(t:number,dt:number):void {
     const scene=sceneIndexAt(t);
-    Object.assign(this.cat.intent,CAT_REST,{speed:scene===27?0:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+(scene===0||scene===27?120:220),y:scene===0||scene===27?470:560}});
+    Object.assign(this.cat.intent,CAT_REST,{speed:scene===27?0:82,tail:0.82,blink:blink(t,CAT_BLINKS),look:{x:this.cat.x+(scene===0||scene===27?120:220),y:scene===0||scene===27?470:560}});
     if(scene!==this.lastScene){
       if(!this.cat.airborne)this.cat.jump({x:this.cat.x+265,y:890},145);
       this.lastScene=scene;
