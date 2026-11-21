@@ -1,0 +1,75 @@
+name: Mọt Mọt Studio - YouTube SEO Assistant
+
+on:
+  workflow_run:
+    workflows: ["Render PaperMotion video"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      render_run_id:
+        description: "Optional: exact Render PaperMotion video run ID. Leave blank to use the latest successful full render."
+        required: false
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: papermotion-youtube-seo-${{ github.event.workflow_run.id || inputs.render_run_id || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  seo:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out story scripts
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Resolve exact full-quality render artifact
+        id: source
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REQUESTED_RENDER_RUN_ID: ${{ inputs.render_run_id }}
+          EVENT_RENDER_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: python scripts/resolve_render_artifact.py
+
+      - name: Download selected full video artifact
+        if: steps.source.outputs.skip != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.source.outputs.artifact_name }}
+          run-id: ${{ steps.source.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: video-source
+
+      - name: Install FFmpeg for video metadata
+        if: steps.source.outputs.skip != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Generate Vietnamese SEO package
+        if: steps.source.outputs.skip != 'true'
+        run: |
+          VIDEO="$(find video-source -type f -name '*.mp4' | head -n 1)"
+          test -n "$VIDEO"
+          python scripts/youtube_seo.py --video "$VIDEO" --artifact "${{ steps.source.outputs.artifact_name }}" --repo-root . --out seo-output
+
+      - name: Upload SEO package
+        if: steps.source.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-seo-${{ steps.source.outputs.scene }}-${{ github.run_number }}
+          path: seo-output/
+          if-no-files-found: error
+          retention-days: 30
