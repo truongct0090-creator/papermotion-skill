@@ -121,7 +121,7 @@ export class SamsungPilotScene extends Stage {
     const scene=Math.min(9,Math.floor(this.time/SCENE_SECONDS));
     return {...super.probe(),story:'samsung-pilot',scene:scene+1,sceneTitle:TITLES[scene],beat:this.beats.current,
       cat:[Math.round(this.cat.root.x),Math.round(this.cat.root.y)],airborne:this.cat.airborne,
-      camera:[Math.round(this.cam.x),Math.round(this.cam.y)],zoom:this.cam.zoom};
+      cameraX:Math.round(this.cam.x),zoom:this.cam.zoom};
   }
 
   protected draw(t:number,frame:number):void{
