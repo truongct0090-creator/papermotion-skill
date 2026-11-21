@@ -46,6 +46,11 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Typecheck Samsung v2 scene and timing code
+        run: pnpm typecheck
+
+      - name: Run unit tests
+        run: pnpm test
 
       - name: Install Chromium
         run: pnpm exec playwright-core install --with-deps chromium
