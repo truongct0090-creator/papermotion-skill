@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/samsung-nokia-full-standard
+      - feat/samsung-full-env-weather
     paths:
       - '.github/workflows/preflight-samsung-full.yml'
       - 'stories/003-samsung/**'
