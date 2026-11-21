@@ -102,6 +102,7 @@ export async function load(page: Page, base: string, name: string, errors: strin
   page.removeAllListeners('pageerror');
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(`${base}/?example=${name}&headless${scale !== 1 ? `&scale=${scale}` : ''}`);
+  await page.evaluate(() => document.fonts.ready);
   await page.waitForFunction(() => (globalThis as { ready?: boolean }).ready || document.querySelector('p'), null, { timeout: 60_000 });
   if (errors.length) throw new Error(`${name}: ${errors.join('; ')}`);
   const meta = await page.evaluate(() => (globalThis as unknown as { meta?: { fps: number; frames: number } }).meta);
