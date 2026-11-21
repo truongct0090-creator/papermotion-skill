@@ -62,10 +62,10 @@ jobs:
 
       - name: Generate Adam and My Duyen voiceover
         run: |
-          python scripts/generate_voiceover.py \
-            --manifest stories/003-samsung/voiceover.json \
-            --input out/samsung-pilot_draft.mp4 \
-            --output out/samsung-pilot-10-scenes.mp4 \
+          python scripts/generate_voiceover.py \\
+            --manifest stories/003-samsung/voiceover.json \\
+            --input out/samsung-pilot_draft.mp4 \\
+            --output out/samsung-pilot-10-scenes.mp4 \\
             --timing-output out/samsung-pilot-voice-timing.json
 
       - name: Verify dialogue does not overlap
@@ -100,10 +100,9 @@ jobs:
       - name: Upload Samsung pilot artifact
         uses: actions/upload-artifact@v4
         with:
-          name: samsung-10-scenes-2min-draft
+          name: samsung-10-scenes-2min-review
           path: |
             out/samsung-pilot-10-scenes.mp4
-            out/samsung-pilot_draft.mp4
             out/samsung-pilot.wav
             out/samsung-pilot-voice-timing.json
             out/samsung-pilot_audio.png
