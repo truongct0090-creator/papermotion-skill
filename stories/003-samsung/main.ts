@@ -121,10 +121,14 @@ export class SamsungPilotScene extends Stage {
     ctx.fillStyle='rgba(35,48,56,.10)';ctx.fillRect(0,870,W,210);
     this.cam.layer(ctx,0.18,()=>{
       const base=index*1780;
-      // Distant paper-cutout skyline and ground props move under one continuous tracking camera.
+      // Distant skyline moves more slowly to create paper-layer parallax.
       ctx.fillStyle='rgba(47,61,65,.14)';
       for(let i=0;i<7;i++)ctx.fillRect(base+i*260,540-(i%3)*65,180,330+(i%3)*65);
       ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(base,820,1780,12);
+    });
+    this.cam.layer(ctx,1,()=>{
+      const base=index*1780;
+      // Foreground props and the mascot share the camera's full movement.
       if(index===0){
         // A modern Galaxy phone glides into view, then the old shop emerges behind it.
         phone(ctx,base+180,360,1.15,'#26313c',true);
