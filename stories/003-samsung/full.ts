@@ -464,13 +464,18 @@ export class SamsungFullScene extends Stage {
     this.camera.layer(paper, 0.14, v => drawProps(paper, this.skyline.far, v.from, v.to, () => 0, t));
     this.camera.layer(paper, 0.4, v => drawProps(paper, this.skyline.mid, v.from, v.to, () => 0, t));
     this.camera.layer(paper, 0.8, v => drawProps(paper, this.skyline.near, v.from, v.to, () => 0, t));
-    this.camera.layer(paper, 0.66, v => drawProps(paper, environment.trees, v.from, v.to, windAt, t));
+    const outdoor = index <= 3 || index >= 26;
+    if (outdoor) {
+      this.camera.layer(paper, 0.66, v => drawProps(paper, environment.trees, v.from, v.to, windAt, t));
+    }
     this.camera.layer(paper, 1, v => drawRidge(paper, this.ridges[index % this.ridges.length], v.from, v.to, 1120));
     ctx.globalAlpha = 0.22 + 0.02 * Math.sin(t * 1.8);
     ctx.fillStyle = 'rgba(255,255,255,0.24)'; ctx.beginPath(); ctx.arc(1570, 260, 230, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}], 'rgba(35,48,56,0.08)', { seed: 6390 + index, tear: 1.5, shadow: 0, texture: 0.18 });
-    this.camera.layer(paper, 0.94, v => drawProps(paper, environment.details, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
-    this.camera.layer(paper, 1.08, v => drawSward(paper, environment.sward, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
+    if (outdoor) {
+      this.camera.layer(paper, 0.94, v => drawProps(paper, environment.details, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
+      this.camera.layer(paper, 1.08, v => drawSward(paper, environment.sward, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
+    }
 
     singleLineTitle(paper, SAMSUNG_TITLES[index], 110, 142, 50, 650);
     const subtitleLines = outlinedText(paper, SAMSUNG_SUBTITLES[index], 114, 220, 25, true, 650);
