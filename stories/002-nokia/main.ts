@@ -201,7 +201,9 @@ function phone(paper: Paper, x: number, y: number, scale: number, color: string,
       for(let i=0;i<6;i++) rounded(paper,31+(i%3)*55,55+Math.floor(i/3)*76,42,58,7,colors[i]);
     } else {
       ctx.fillStyle='#263d35'; ctx.font='700 31px "Noto Sans", "DejaVu Sans", sans-serif'; ctx.textAlign='center';
+      ctx.shadowColor='rgba(18,17,20,0.48)'; ctx.shadowBlur=5; ctx.shadowOffsetX=1.5; ctx.shadowOffsetY=2.5;
       ctx.fillText('NOKIA',110,125); ctx.font='600 23px "Noto Sans", "DejaVu Sans", sans-serif'; ctx.fillText('12:08',110,165);
+      ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetX=0; ctx.shadowOffsetY=0;
       for(let i=0;i<3;i++) for(let j=0;j<3;j++) paper.piece(
         circlePoly({x:62+j*48,y:270+i*35},12,14),'#d8d8d0',{seed:8100+i*3+j,tear:1.2,shadow:2},
       );
