@@ -19,7 +19,6 @@ on:
           - kite
           - hands
           - nokia-pilot
-          - nokia-full
       voiceover_manifest:
         description: Optional story voiceover JSON manifest path
         required: false
