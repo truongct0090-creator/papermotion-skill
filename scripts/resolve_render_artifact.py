@@ -95,7 +95,12 @@ scene = name[:-len("-full")]
 if scene.startswith("papermotion-"):
     scene = scene[len("papermotion-"):]
 with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-    f.write(f"run_id={run['id']}\nartifact_name={name}\nscene={scene}\n")
+    f.write(
+        f"run_id={run['id']}\n"
+        f"artifact_name={name}\n"
+        f"scene={scene}\n"
+        f"head_sha={run.get('head_sha', '')}\n"
+    )
 print(
     f"Selected full-quality artifact '{name}' from workflow "
     f"'{run.get('name')}' run #{run.get('run_number')} ({run['id']})."
