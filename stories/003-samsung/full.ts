@@ -243,6 +243,85 @@ function galaxyPhone(paper: Paper, x: number, y: number, scale: number): void {
   });
 }
 
+
+function drawExtendedSamsungProp(paper: Paper, index: number): void {
+  const ctx = paper.context;
+  const chip = (x: number, y: number, size: number, label: string, seed: number, color = '#8da7a1') => {
+    rounded(paper, x, y, size, size, 12, '#303d4a', '#71858b');
+    rounded(paper, x + 18, y + 18, size - 36, size - 36, 6, color, '#d5e0d8');
+    for (let k = 0; k < 6; k++) {
+      const p = x + 22 + k * (size - 44) / 5;
+      paper.line([{x:p,y:y-16},{x:p,y:y+4}], '#b8c4bc', 5);
+      paper.line([{x:p,y:y+size-4},{x:p,y:y+size+16}], '#b8c4bc', 5);
+      const q = y + 22 + k * (size - 44) / 5;
+      paper.line([{x:x-16,y:q},{x:x+4,y:q}], '#b8c4bc', 5);
+      paper.line([{x:x+size-4,y:q},{x:x+size+16,y:q}], '#b8c4bc', 5);
+    }
+    outlinedText(paper, label, x + 24, y + size * 0.57, Math.min(30, size / 5), false, size - 48);
+    paper.piece(circlePoly({x:x+size-30,y:y+30},8,12),'#e6c27f',{seed,tear:1,shadow:1});
+  };
+  if (index >= 10 && index <= 14) {
+    paper.piece(circlePoly({x:1270,y:500},235,72),'#829b9b',{seed:9600+index,tear:3,shadow:12,texture:0.5});
+    paper.piece(circlePoly({x:1270,y:500},202,72),'#c2d2c9',{seed:9610+index,tear:2,shadow:5,texture:0.4});
+    const n = index === 10 ? 3 : index === 11 ? 4 : index === 12 ? 5 : index === 13 ? 6 : 7;
+    for (let i=0;i<n;i++) for (let j=0;j<n;j++) {
+      const size = index >= 13 ? 28 : 34;
+      rounded(paper, 1120+i*(index>=13?42:50), 350+j*(index>=13?42:50), size, size, 4,
+        ['#607f86','#8ca99c','#b9a17b','#728fa0'][(i+j+index)%4]);
+    }
+    chip(1430,650,155, index===10?'64K':index===11?'256K':index===12?'1M':index===13?'4M':'64M', 9620+index, '#9fb9aa');
+  } else if (index === 15) {
+    paper.piece([{x:950,y:730},{x:1640,y:730},{x:1580,y:470},{x:1010,y:470}],'#c8d4d0',{seed:9630,tear:3,shadow:10});
+    for(let i=0;i<5;i++) rounded(paper,1010+i*118,540,90,180,4,['#8d9d9a','#b6a58c','#849ba0'][i%3]);
+    rounded(paper,1110,370,390,90,12,'#5e7479');
+    outlinedText(paper,'NEW MANAGEMENT',1140,430,31,false,330);
+  } else if (index === 16) {
+    rounded(paper,920,330,700,420,18,'#d7ded9','#6f7e7b');
+    for(let i=0;i<6;i++) { const h=[210,260,170,120,80,55][i]; rounded(paper,1010+i*92,690-h,58,h,6,i<3?'#8ca59a':'#bd806b'); }
+    paper.line([{x:980,y:420},{x:1570,y:690}],'#b95f58',12);
+    outlinedText(paper,'1997',1170,810,46,false,200);
+  } else if (index === 17) {
+    rounded(paper,1030,330,500,420,30,'#718b84','#d8e4d9');
+    paper.piece(circlePoly({x:1280,y:500},150,48),'#e4c78c',{seed:9640,tear:3,shadow:8});
+    paper.piece([{x:1280,y:390},{x:1380,y:500},{x:1280,y:610},{x:1180,y:500}],'#a1b8a5',{seed:9641,tear:2,shadow:5});
+    outlinedText(paper,'QUALITY',1160,790,42,false,260);
+  } else if (index === 18) {
+    paper.piece(circlePoly({x:1270,y:520},220,64),'#8ba8a1',{seed:9650,tear:3,shadow:12});
+    ctx.save();ctx.strokeStyle='#f0d7a6';ctx.lineWidth=8;ctx.beginPath();ctx.ellipse(1270,520,300,105,-0.35,0,Math.PI*2);ctx.stroke();ctx.restore();
+    for(let i=0;i<5;i++) paper.piece(circlePoly({x:1130+i*68,y:470+(i%2)*90},24,20),'#d9e5d9',{seed:9651+i,tear:1.5,shadow:3});
+    outlinedText(paper,'GLOBAL',1160,800,40,false,260);
+  } else if (index === 19) {
+    rounded(paper,930,330,700,430,32,'#303b42','#89999a'); rounded(paper,970,370,620,340,12,'#82a9ad','#d9e1d8');
+    paper.piece([{x:970,y:600},{x:1150,y:480},{x:1300,y:580},{x:1450,y:450},{x:1590,y:600},{x:1590,y:710},{x:970,y:710}],'#5c8586',{seed:9660,tear:2.5,shadow:3});
+    rounded(paper,1180,760,210,35,10,'#8c765f'); outlinedText(paper,'FLAT DISPLAY',1090,830,34,false,400);
+  } else if (index === 20 || index === 21) {
+    galaxyPhone(paper,1110,270,index===20?1.45:1.28);
+    if(index===21) { paper.line([{x:1500,y:360},{x:1600,y:650}],'#c6a16f',9); outlinedText(paper,'S PEN',1480,760,32,false,160); }
+  } else if (index === 22) {
+    const nodes=[[1120,390],[1430,390],[1275,650],[970,650],[1580,650]];
+    nodes.forEach(([x,y],i)=>paper.piece(circlePoly({x,y},74,36),['#839f9a','#b6a27e','#7998a8','#9e8da4','#8da98d'][i],{seed:9680+i,tear:2.2,shadow:8}));
+    nodes.slice(1).forEach(([x,y])=>paper.line([{x:1275,y:520},{x,y}],'#f2e4c8',6));
+    outlinedText(paper,'GALAXY',1150,820,40,false,260);
+  } else if (index === 23) {
+    rounded(paper,1050,330,260,470,34,'#27323c','#899ba0'); rounded(paper,1080,360,200,390,20,'#7b9fa6');
+    rounded(paper,1310,330,260,470,34,'#27323c','#899ba0'); rounded(paper,1340,360,200,390,20,'#8fb4b0');
+    paper.line([{x:1300,y:360},{x:1300,y:770}],'#d9e2da',8); outlinedText(paper,'FOLD',1180,850,38,false,220);
+  } else if (index === 24) {
+    for(let i=0;i<5;i++) rounded(paper,1000+i*125,610-i*44,110,150,8,['#718f9b','#8ca79e','#a99a80'][i%3],'#d4dfd7');
+    rounded(paper,1070,320,500,90,12,'#33495a'); outlinedText(paper,'HBM',1220,380,42,false,180);
+    for(let i=0;i<6;i++) paper.line([{x:1040+i*95,y:790},{x:1040+i*95,y:850}],'#d1bd92',5);
+  } else if (index === 25) {
+    chip(1110,390,300,'AI',9690,'#819f9b');
+    for(let i=0;i<4;i++) { paper.line([{x:1410,y:450+i*75},{x:1580,y:380+i*75}],'#d7c59f',7); paper.piece(circlePoly({x:1590,y:375+i*75},25,20),'#9ab4a6',{seed:9691+i,tear:1.5,shadow:4}); }
+  } else if (index === 26) {
+    paper.piece([{x:930,y:360},{x:1640,y:360},{x:1640,y:690},{x:1280,y:690},{x:1190,y:790},{x:1200,y:690},{x:930,y:690}],'#f2e6d1',{seed:9700,tear:4,shadow:13,texture:0.45});
+    outlinedText(paper,'BẠN TỪNG DÙNG SAMSUNG?',1010,510,39,false,550); outlinedText(paper,'KỂ MỌT MỌT NGHE!',1100,590,32,false,450);
+  } else {
+    galaxyPhone(paper,1170,310,1.12); paper.piece(circlePoly({x:1510,y:390},62,32),'#e7c77f',{seed:9710,tear:2,shadow:8});
+    outlinedText(paper,'CẢM ƠN BẠN!',1100,820,40,false,360);
+  }
+}
+
 /** Exact Nokia Full torn-paper reveal: a ragged paper edge peels across a fixed prop group. */
 function paperFlyIn(
   paper: Paper, t: number, at: number, duration: number,
