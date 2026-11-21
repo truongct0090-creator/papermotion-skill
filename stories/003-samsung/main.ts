@@ -37,16 +37,16 @@ export const SAMSUNG_TITLES = [
   'BÁN DẪN THÀNH NĂNG LỰC CỐT LÕI',
 ] as const;
 export const SAMSUNG_SUBTITLES = [
-  'Từ cá khô và rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ',
-  'Daegu, Hàn Quốc • ngày 1 tháng 3 năm 1938\nLee Byung-chul lập Samsung Sanghoe',
-  'Những chuyến hàng mở rộng giao thương\nSamsung vẫn là doanh nghiệp thương mại',
-  'Thực phẩm, dệt may, bảo hiểm và bán lẻ\nMở rộng sau chiến tranh Triều Tiên',
-  'Samsung Electronics ra đời năm 1969\nMột bước đi riêng vào ngành điện tử',
-  'TV đen trắng P-3202 sản xuất năm 1970\nSamsung-Sanyo bước vào điện tử gia dụng',
-  'TV Samsung xuất khẩu sang Panama năm 1971\nHàng Hàn Quốc bắt đầu vươn ra thế giới',
+  'Từ cá khô, rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ',
+  'Daegu, Hàn Quốc • ngày 1/3/1938\nLee Byung-chul lập Samsung Sanghoe',
+  'Những chuyến hàng mở rộng giao thương\nSamsung là doanh nghiệp thương mại',
+  'Thực phẩm, dệt may, bảo hiểm, bán lẻ\nMở rộng sau chiến tranh Triều Tiên',
+  'Samsung Electronics ra đời năm 1969\nBước đi mới vào ngành điện tử',
+  'TV đen trắng P-3202 ra đời năm 1970\nSamsung-Sanyo vào ngành TV gia dụng',
+  'TV Samsung đến Panama năm 1971\nHàng Hàn Quốc vươn ra thế giới',
   'Samsung mua 50% Korea Semiconductor\nBước đầu tư vào công nghệ bán dẫn',
-  'Samsung hoàn tất mua lại năm 1977\nBắt đầu sản xuất và xuất khẩu TV màu',
-  'Bán dẫn được hợp nhất vào năm 1980\nTrở thành một phần của Samsung Electronics',
+  'Samsung hoàn tất mua lại năm 1977\nBắt đầu sản xuất TV màu và xuất khẩu',
+  'Bán dẫn được hợp nhất vào năm 1980\nGia nhập hệ thống Samsung Electronics',
 ] as const;
 const PALETTES: [string, string][] = [
   ['#25364a', '#d2a77d'], ['#e7d7bd', '#b7c9c3'], ['#d8e2df', '#a9b9aa'],
