@@ -65,6 +65,26 @@ def main() -> None:
     line_gap = float(data.get("inter_line_gap_sec", 0.18))
     sentence_gap = float(data.get("inter_sentence_gap_sec", 0.10))
     schedule_mode = data.get("schedule_mode", "anchored")
+    scene_line_indices = data.get("scene_line_indices", [])
+    scene_durations = data.get("scene_durations_sec", [])
+    target_duration = data.get("target_duration_sec")
+    if scene_line_indices or scene_durations:
+        if len(scene_line_indices) != len(scene_durations) or not scene_line_indices or scene_line_indices[0] != 0:
+            raise SystemExit("Scene timing requires matching scene_line_indices / scene_durations_sec arrays starting at voice line 0.")
+        if sorted(scene_line_indices) != scene_line_indices or len(set(scene_line_indices)) != len(scene_line_indices):
+            raise SystemExit("scene_line_indices must be strictly increasing and unique.")
+        if scene_line_indices[-1] >= len(lines) or any(float(d) <= 0 for d in scene_durations):
+            raise SystemExit("Invalid scene timing metadata.")
+        scene_starts = []
+        elapsed = 0.0
+        for duration in scene_durations:
+            scene_starts.append(round(elapsed, 4))
+            elapsed += float(duration)
+        if target_duration is not None and abs(elapsed - float(target_duration)) > 0.01:
+            raise SystemExit(f"Scene durations total {elapsed:.2f}s but target_duration_sec is {target_duration}.")
+        scene_start_by_line = dict(zip(scene_line_indices, scene_starts))
+    else:
+        scene_start_by_line = {}
     trim_silence = bool(data.get("trim_silence", False))
     if schedule_mode not in ("anchored", "sequential"):
         raise SystemExit("schedule_mode must be 'anchored' or 'sequential'.")
@@ -78,7 +98,7 @@ def main() -> None:
             raise SystemExit(f"Line {i}: text is required.")
         spoken_text = render_text(data, line["text"])
         sentences = split_sentences(spoken_text)
-        requested_start = float(line.get("start_sec", 0))
+        requested_start = float(scene_start_by_line.get(i, line.get("start_sec", 0)))
         if i == 0:
             cursor = requested_start
         elif schedule_mode == "sequential":
@@ -118,11 +138,25 @@ def main() -> None:
         previous_end = line_end
         print(f"line {i + 1:02d}: {line_start:.2f}s–{line_end:.2f}s; {len(segments)} spoken beats")
 
-    total = round(previous_end + 1.25, 4)
-    max_line_gap = max((line["gap_before_sec"] for line in timing_lines[1:]), default=0.0)
+    tail = (float(target_duration) - previous_end) if target_duration is not None else float(data.get("tail_duration_sec", 1.25))
+    if tail < -0.02:
+        raise SystemExit(f"Measured narration overruns target timeline by {-tail:.2f}s; do not speed up or cut narration.")
+    total = round(previous_end + max(0.0, tail), 4)
+    if target_duration is not None and abs(total - float(target_duration)) > 0.02:
+        raise SystemExit(f"Measured timeline {total:.2f}s does not match target {target_duration}s.")
+    scene_start_set = set(scene_line_indices)
+    gaps = [timing_lines[i]["gap_before_sec"] for i in range(1, len(timing_lines))]
+    max_line_gap = max(gaps, default=0.0)
+    max_intra_scene_gap = max((timing_lines[i]["gap_before_sec"] for i in range(1, len(timing_lines)) if i not in scene_start_set), default=0.0)
+    max_inter_scene_gap = max((timing_lines[i]["gap_before_sec"] for i in range(1, len(timing_lines)) if i in scene_start_set), default=0.0)
     max_sentence_gap = sentence_gap if any(len(line["segments"]) > 1 for line in timing_lines) else 0.0
     timing = {"lines": timing_lines, "duration_sec": total,
               "schedule_mode": schedule_mode, "max_inter_line_gap_sec": round(max_line_gap, 4),
+              "max_intra_scene_gap_sec": round(max_intra_scene_gap, 4),
+              "max_inter_scene_gap_sec": round(max_inter_scene_gap, 4),
+              "scene_line_indices": scene_line_indices,
+              "scene_durations_sec": scene_durations,
+              "scene_starts_sec": scene_starts if scene_line_indices else [],
               "inter_sentence_gap_sec": round(max_sentence_gap, 4)}
     (clips_dir / "timing.json").write_text(json.dumps(timing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     module = Path(args.timing_module)
