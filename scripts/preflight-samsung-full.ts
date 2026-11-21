@@ -8,6 +8,9 @@ import { load, open } from './browser.ts';
 interface Timing {
   duration_sec: number;
   max_inter_line_gap_sec: number;
+  scene_line_indices: number[];
+  scene_durations_sec: number[];
+  scene_starts_sec: number[];
   lines: Array<{
     start_sec: number;
     end_sec: number;
@@ -17,14 +20,19 @@ interface Timing {
 }
 const timing = JSON.parse(readFileSync('out/samsung-full-voice-clips/timing.json', 'utf8')) as Timing;
 const name = process.argv[2] ?? 'samsung-full';
-const sceneLineIndex = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,28];
-if (timing.lines.length !== 29 || sceneLineIndex.length !== 26) {
+const sceneLineIndex = timing.scene_line_indices;
+const sceneDurations = timing.scene_durations_sec;
+const sceneStarts = timing.scene_starts_sec;
+if (timing.lines.length !== 29 || sceneLineIndex.length !== 26 || sceneDurations.length !== 26 || sceneStarts.length !== 26 || Math.abs(timing.duration_sec - 450) > 0.02) {
   throw new Error(`Samsung Full timing mismatch: expected 29 voice lines / 26 scenes, got ${timing.lines.length} lines.`);
 }
 for (let i = 1; i < timing.lines.length; i++) {
   const gap = timing.lines[i].start_sec - timing.lines[i - 1].end_sec;
   if (gap < -0.001) throw new Error(`Narration overlap between lines ${i} and ${i + 1}: ${gap.toFixed(3)}s.`);
-  if (gap > 0.5) throw new Error(`Excessive silence between lines ${i} and ${i + 1}: ${gap.toFixed(3)}s.`);
+  if (sceneLineIndex.includes(i)) {
+    const scene = sceneLineIndex.indexOf(i);
+    if (Math.abs(timing.lines[i].start_sec - sceneStarts[scene]) > 0.02) throw new Error(`Scene ${scene + 1} narration does not start on its approved ${sceneDurations[scene]}s boundary.`);
+  } else if (gap > 0.5) throw new Error(`Excessive silence inside scene ${i + 1}: ${gap.toFixed(3)}s.`);
 }
 for (let i = 0; i < timing.lines.length; i++) {
   const segments = timing.lines[i].segments;
@@ -67,7 +75,7 @@ try {
       console.log(`Samsung Full preflight: ${i + 1}/${samples.length} checkpoints passed (frame ${samples[i]}/${frames - 1}).`);
     }
   }
-  console.log(`PASS: ${name}; 26 scene entrances; ${samples.length} checkpoints; 29 voice lines; ${frames} frames; max line gap ${timing.max_inter_line_gap_sec.toFixed(3)}s.`);
+  console.log(`PASS: ${name}; 26 scene entrances; ${samples.length} checkpoints; 29 voice lines; ${frames} frames; target runtime ${timing.duration_sec.toFixed(2)}s; max intra-scene gap ${timing.max_intra_scene_gap_sec.toFixed(3)}s.`);
 } finally {
   await session.close();
 }
