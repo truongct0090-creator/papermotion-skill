@@ -41,7 +41,7 @@ try{
   page.on('pageerror',e=>{throw e;});
   await page.goto(new URL('/thumbnail.html',base).toString(),{waitUntil:'networkidle'});
   await page.waitForFunction(()=>Boolean((window as unknown as {thumbnailReady?:boolean}).thumbnailReady),null,{timeout:30000});
-  const data=await page.evaluate(async input=>(window as unknown as {renderThumbnail:(v:typeof input)=>Promise<string>}).renderThumbnail(input),input);
+  const data=await page.evaluate(async (value:typeof input)=>(window as unknown as {renderThumbnail:(v:typeof input)=>Promise<string>}).renderThumbnail(value),input);
   const png=Buffer.from(data.slice(data.indexOf(',')+1),'base64');
   if(png.toString('hex',0,8)!=='89504e470d0a1a0a')throw new Error('Renderer did not return a PNG.');
   const width=png.readUInt32BE(16),height=png.readUInt32BE(20);if(width!==3840||height!==2160)throw new Error(`Unexpected output dimensions: ${width}x${height}`);
