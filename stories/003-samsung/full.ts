@@ -11,7 +11,7 @@ const W = 1920, H = 1080, DURATION = STORY_TIMING.duration_sec;
 const TEXT_SAFE_ZONE = { left: 80, right: 780, top: 70, bottom: 440 };
 const PROP_SAFE_LEFT = TEXT_SAFE_ZONE.right + 20;
 const CAT_BLINKS = Array.from({ length: 110 }, (_, i) => 1.1 + i * 5.1 + (i % 4) * 0.65);
-const SCENE_LINE_INDEX = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,28] as const;
+const SCENE_LINE_INDEX = STORY_TIMING.scene_line_indices;
 
 function sceneStart(index: number): number {
   return STORY_TIMING.lines[SCENE_LINE_INDEX[index]]?.start_sec ?? DURATION;
