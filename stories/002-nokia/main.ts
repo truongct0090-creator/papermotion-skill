@@ -242,7 +242,7 @@ export class NokiaPilotScene extends Stage {
       if(!this.cat.airborne)this.cat.jump({x:this.cat.x+265,y:890},145);
       this.lastScene=scene;
     }
-    if(scene===14){const finalStart=STORY_TIMING.lines[14].start_sec;this.cat.intent.speed=0;this.cat.intent.sit=ramp(t,finalStart+0.7,finalStart+3.7);this.cat.intent.look={x:this.cat.x+180,y:250};}
+    if(scene===14){const finalStart=STORY_TIMING.lines[STORY_TIMING.lines.length-1]?.start_sec ?? 0;this.cat.intent.speed=0;this.cat.intent.sit=ramp(t,finalStart+0.7,finalStart+3.7);this.cat.intent.look={x:this.cat.x+180,y:250};}
     this.cat.update(dt);
   }
 
