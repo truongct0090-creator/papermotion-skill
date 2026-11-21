@@ -1,14 +1,6 @@
 name: Build full Nokia 28-scene film
 
 on:
-  push:
-    paths:
-      - 'stories/002-nokia/**'
-      - 'stories/shared/environment/**'
-      - 'examples/rooftops/Cat.ts'
-      - 'scripts/generate_voiceover.py'
-      - 'scripts/prepare_voiceover.py'
-      - 'examples/catalog.ts'
   workflow_dispatch:
 
 permissions:
