@@ -1,0 +1,89 @@
+name: Create reusable YouTube thumbnail
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: Main headline (Vietnamese supported; use \n for a deliberate line break)
+        required: true
+        type: string
+        default: "NOKIA ĐÃ THUA NHƯ THẾ NÀO?"
+      kicker:
+        description: Small category label in the fixed top-left position
+        required: true
+        type: string
+        default: "CÂU CHUYỆN CÔNG NGHỆ"
+      subtitle:
+        description: Optional supporting line in the lower-left safe zone
+        required: false
+        type: string
+        default: ""
+      image_url:
+        description: Optional direct HTTPS image URL for the right-side hero visual
+        required: false
+        type: string
+        default: ""
+      output_name:
+        description: PNG artifact name (without extension)
+        required: true
+        type: string
+        default: "nokia-thumbnail"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: papermotion-thumbnail-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  thumbnail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install image and Vietnamese font dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-core
+          python -m pip install --upgrade pip pillow
+      - name: Render fixed-layout 2K thumbnail
+        env:
+          THUMBNAIL_TITLE: ${{ inputs.title }}
+          THUMBNAIL_KICKER: ${{ inputs.kicker }}
+          THUMBNAIL_SUBTITLE: ${{ inputs.subtitle }}
+          THUMBNAIL_IMAGE_URL: ${{ inputs.image_url }}
+          THUMBNAIL_OUTPUT_NAME: ${{ inputs.output_name }}
+        shell: bash
+        run: |
+          python scripts/create_thumbnail.py \
+            --title "$THUMBNAIL_TITLE" \
+            --kicker "$THUMBNAIL_KICKER" \
+            --subtitle "$THUMBNAIL_SUBTITLE" \
+            --image-url "$THUMBNAIL_IMAGE_URL" \
+            --output "out/$THUMBNAIL_OUTPUT_NAME.png"
+      - name: Verify dimensions and format
+        env:
+          THUMBNAIL_OUTPUT_NAME: ${{ inputs.output_name }}
+        run: |
+          python - <<'PY'
+          import os
+          from PIL import Image
+          path = f"out/{os.environ['THUMBNAIL_OUTPUT_NAME']}.png"
+          image = Image.open(path)
+          assert image.size == (2560, 1440), image.size
+          assert image.format == "PNG", image.format
+          print("PASS: 2560x1440 PNG thumbnail")
+          PY
+      - name: Upload thumbnail
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.output_name }}
+          path: out/${{ inputs.output_name }}.png
+          if-no-files-found: error
+          retention-days: 14
