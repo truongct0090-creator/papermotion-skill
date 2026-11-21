@@ -1,57 +1,77 @@
 # Tập 02 — Samsung: Từ cửa hàng cá khô đến gã khổng lồ công nghệ
 
-## Trạng thái
+## Bản dựng Full
 
-- Pilot gồm 10 cảnh nội dung, khoảng 2 phút; thời lượng cuối cùng được xác định bởi WAV thực tế.
-- Samsung pilot được dựng trên đúng nền hình ảnh và chuyển động của Nokia Full.
-- Chỉ thay câu chuyện, lời thoại, palette theo bối cảnh và đạo cụ Samsung.
-- Chưa triển khai 26 cảnh + 2 mascot layouts cho tới khi pilot được xem và duyệt.
+- 28 layouts: 26 cảnh câu chuyện (cảnh 1 là hook) + 2 cảnh mascot kết thúc.
+- Timeline thoại được đo từ WAV VieNeu thực tế; Samsung dùng lịch tuần tự, không dùng các mốc start cố định cách nhau 12 giây.
+- Trim im lặng chỉ ở đầu/cuối clip thoại, giữ lại 35 ms đầu và 60 ms cuối làm đệm tự nhiên.
+- Khoảng nghỉ giữa câu mặc định 0,16 giây; giữa câu con trong cùng một line là 0,08 giây.
+- Mục tiêu xuất bản: 1920×1080, 30 FPS; workflow xác minh MP4 bằng ffprobe.
+- Nokia Full không bị thay đổi; bản pilot 10 cảnh gốc vẫn được giữ tại main.ts.
 
-## Chuẩn kế thừa Nokia Full
+## Kế thừa PaperMotion gốc
 
-Samsung dùng trực tiếp cùng:
+Samsung Full tái sử dụng rig Mọt Mọt, camera follow, zoom hook/ending, one-shot motion, tearWipe, paperFlyIn, paper material, grain, vignette, mixer, city skyline và grassland environment từ repo. Bổ sung các lớp môi trường đã có trong `stories/shared/environment/grassland.ts`:
 
-- Mọt Mọt rig, màu sắc, tỷ lệ, tọa độ sàn và nhịp chạy/nhảy từ Nokia Full.
-- Camera follow, zoom intro/ending, one-shot motion và parallax layers.
-- Paper materials, light, edge, core/rim shadows, grain, vignette và tearWipe.
-- Hàm typography Nokia Full: title một dòng lớn, subtitle đúng hai dòng nhỏ, layered shadows.
-- Text safe zone bên trái và prop safe zone từ x=800.
-- Hàm paperFlyIn Nokia Full cho từng nhóm đạo cụ, được kích hoạt theo sentence-level voice timing.
-- Mixer, music bed và ambience theo timeline đo từ giọng đọc.
+1. Mây và đồi ở hậu cảnh.
+2. Cây lớn, cây thông ở trung cảnh.
+3. Hoa, đá và bụi cây ở lớp gần.
+4. Cỏ uốn theo gió ở tiền cảnh; cỏ và props phản ứng khi Mọt Mọt đi qua.
 
-## Pilot 10 cảnh
+Các lớp được cuộn bằng camera parallax, không dùng ảnh nền tĩnh thay thế.
 
-| Cảnh | Nội dung | Vật thể chính |
+## 28 layouts
+
+| # | Phân đoạn | Mốc / vật thể chủ đạo |
 |---:|---|---|
-| 1 | Hook: từ Galaxy hiện đại về cửa hàng hàng hóa | Galaxy, thùng cá khô, rau củ |
-| 2 | Samsung Sanghoe thành lập tại Daegu năm 1938 | Biển hiệu cửa hàng, cá khô, gạo, trái cây, sổ hàng |
-| 3 | Mở rộng mạng lưới giao thương | Tàu hàng giấy, kiện hàng |
-| 4 | Mở rộng sau chiến tranh Triều Tiên | Xưởng dệt, thực phẩm, bảng mở rộng kinh doanh |
-| 5 | Samsung Electronics thành lập năm 1969 | Nhà máy điện tử, bảng hiệu, linh kiện |
-| 6 | TV đen trắng P-3202 năm 1970 | TV CRT đen trắng, nhãn P-3202 |
-| 7 | Xuất khẩu TV sang Panama năm 1971 | Tàu hàng, kiện TV, cờ Panama |
-| 8 | Mua 50% Korea Semiconductor năm 1974 | Wafer bán dẫn, chip, hợp đồng |
-| 9 | Hoàn tất mua lại và sản xuất TV màu năm 1977 | Dây chuyền TV màu |
-| 10 | Hợp nhất hoạt động bán dẫn vào Samsung Electronics năm 1980 | Bảng mạch, chip, nhà máy điện tử |
+| 1 | Hook: cá khô và gã khổng lồ | Galaxy đối lập thùng cá khô, rau củ |
+| 2 | Samsung bắt đầu ở Daegu | Samsung Sanghoe, 1938 |
+| 3 | Mạng lưới thương mại | Tàu hàng và kiện hàng |
+| 4 | Mở rộng sau chiến tranh | Dệt may, thực phẩm, bán lẻ |
+| 5 | Bước vào ngành điện tử | Samsung Electronics, 1969 |
+| 6 | TV đen trắng đầu tiên | P-3202, 1970 |
+| 7 | Xuất khẩu đến Panama | TV xuất khẩu, 1971 |
+| 8 | Đầu tư vào bán dẫn | Korea Semiconductor, 1974 |
+| 9 | TV màu và bán dẫn | Mua lại và TV màu, 1977 |
+| 10 | Bán dẫn thành trụ cột | Hợp nhất hoạt động, 1980 |
+| 11 | DRAM vào cuộc đua toàn cầu | DRAM 64K, 1983 |
+| 12 | Bước tiến 256K DRAM | 1984 |
+| 13 | Chip 1M DRAM | 1986 |
+| 14 | 4M DRAM | 1988 |
+| 15 | 64M DRAM | 1992 |
+| 16 | New Management | Chuyển đổi chất lượng, 1993 |
+| 17 | Vượt qua khủng hoảng | Khủng hoảng tài chính châu Á, 1997 |
+| 18 | Chất lượng là ưu tiên | Thiết kế và độ tin cậy |
+| 19 | Thương hiệu toàn cầu | TV, màn hình, điện thoại và linh kiện |
+| 20 | Kỷ nguyên TV màn hình phẳng | LCD và công nghệ hiển thị |
+| 21 | Galaxy S mở ra chương mới | Galaxy S, 2010 |
+| 22 | Galaxy Note và màn hình lớn | Note, S Pen, 2011 |
+| 23 | Hệ sinh thái Galaxy | Điện thoại, đồng hồ, tablet, tai nghe |
+| 24 | OLED và điện thoại gập | Galaxy Fold, 2019 |
+| 25 | Bán dẫn cho kỷ nguyên AI | DRAM, NAND, HBM |
+| 26 | Samsung hôm nay và ngày mai | Tổng kết hành trình đa ngành |
+| 27 | Mọt Mọt hỏi bạn | Câu hỏi bình luận, mascot tương tác |
+| 28 | Hẹn gặp lại | Cảnh kết, mascot chào và dẫn sang tập sau |
 
-## Lời thoại và đồng bộ
+## Đồng bộ thoại và hình
 
-Nguồn thoại: voiceover.json.
+- Adam là giọng kể chính; Mỹ Duyên tạo điểm nhấn ở hook và đoạn hỏi khán giả.
+- Hai giọng không chồng nhau; lịch sequential được tạo sau khi WAV đã trim.
+- Mỗi câu được tách thành các spoken beat; các lần paperFlyIn đọc cue từ `STORY_TIMING` đo thật.
+- Đạo cụ chính và nhãn mốc thời gian có hai cue riêng khi câu thoại có đủ nhịp.
+- Title và subtitle vẫn ở cột an toàn bên trái; đạo cụ ở từ x=800 trở đi.
 
-- Adam là giọng kể chính.
-- Mỹ Duyên chỉ có câu hỏi nhấn ở hook, bắt đầu sau khi Adam kết thúc.
-- scripts/prepare_voiceover.py tạo clip theo từng câu và xuất voiceoverTiming.ts.
-- Mốc bắt đầu scene lấy từ line timing đo thực tế; nếu câu trước dài hơn mốc dự kiến, lịch thoại được đẩy tiếp thay vì chồng tiếng.
-- Đạo cụ xuất hiện theo cue câu thoại tương ứng, không dùng một hiệu ứng trượt ngang chung.
+## Kiểm tra trước render
 
-## Kiểm tra
+Workflow `.github/workflows/build-samsung-full.yml` chạy thủ công và có các chốt:
 
-Workflow .github/workflows/test-samsung-pilot.yml thực hiện:
-1. Chuẩn bị WAV và timeline đo thực tế.
-2. Typecheck và unit tests.
-3. Runtime preflight từng giây, từng scene transition và từng voice cue.
-4. Render draft 10 cảnh.
-5. Mix thoại Adam/Mỹ Duyên.
-6. Kiểm tra thời lượng, 960×540 draft, 30 fps và audio stream.
+1. Typecheck và unit tests.
+2. Tạo WAV, trim silence đầu/cuối và sinh timeline tuần tự.
+3. Từ chối khoảng nghỉ thoại trên 0,5 giây hoặc thoại chồng nhau.
+4. Preflight 28 scene entrances, mỗi giây, từng cue thoại và runtime draw.
+5. Render ở full resolution, không dùng `--draft`.
+6. Mix Adam/Mỹ Duyên.
+7. Dùng ffprobe xác minh thời lượng, 1920×1080, 30 FPS và audio stream.
+8. Chỉ upload artifact cuối sau khi toàn bộ bước kiểm tra thành công.
 
-Bản draft trung gian chỉ dùng nội bộ để mix âm thanh; artifact review chỉ chứa MP4 cuối và các file kiểm tra cần thiết.
+`voiceoverTiming.ts` trong repo là placeholder để TypeScript kiểm tra tĩnh; workflow luôn ghi đè file này bằng timeline WAV thực tế trước preflight và render.
