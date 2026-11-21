@@ -142,19 +142,6 @@ function cargoCrate(paper: Paper, x: number, y: number, w: number, h: number, la
     paper.piece([{ x: x + 12, y: y + 10 }, { x: x + w - 12, y: y + 10 }, { x: x + w - 18, y: y + 18 }, { x: x + 18, y: y + 18 }], '#d5b58a', { seed, tear: 1.4, shadow: 2, texture: 0.25 });
   });
 }
-function oldPhone(paper: Paper, x: number, y: number, scale: number): void {
-  paper.sheet({ shadow: 13, rim: { color: 'rgba(255,244,224,0.8)', width: 2.5 }, shade: { color: 'rgba(22,26,30,0.32)', width: 4 }, texture: 0.5 }, () => {
-    const ctx = paper.context;
-    ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
-    rounded(paper, 0, 0, 220, 390, 30, '#263b42', '#30343a');
-    rounded(paper, 18, 38, 184, 190, 12, '#b8d1c1');
-    outlinedText(paper, 'SAMSUNG', 39, 125, 25, false, 145);
-    outlinedText(paper, '12:08', 76, 170, 21, false, 95);
-    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) paper.piece(circlePoly({ x: 62 + j * 48, y: 270 + i * 35 }, 12, 14), '#d8d8d0', { seed: 9200 + i * 3 + j, tear: 1.2, shadow: 2 });
-    rounded(paper, 78, 250, 64, 18, 9, '#d6d8d6');
-    ctx.restore();
-  });
-}
 function galaxyPhone(paper: Paper, x: number, y: number, scale: number): void {
   paper.sheet({ shadow: 14, rim: { color: 'rgba(255,244,224,0.8)', width: 2.5 }, shade: { color: 'rgba(22,26,30,0.32)', width: 4 }, texture: 0.5 }, () => {
     const ctx = paper.context;
