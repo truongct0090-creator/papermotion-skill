@@ -396,18 +396,20 @@ export class NokiaPilotScene extends Stage {
       .bus('music',{gain:0.55,reverb:0.28})
       .bus('ambience',{gain:0.22,reverb:0.16});
     const roots=[note('C4'),note('A3'),note('F3'),note('G3')];
-    for(let s=0;s<10;s++){
-      const sceneDuration=s===9?DURATION-s*SCENE_SECONDS:SCENE_SECONDS;
+    for(let s=0;s<STORY_TIMING.lines.length;s++){
+      const sceneStart=STORY_TIMING.lines[s].start_sec;
+      const nextStart=STORY_TIMING.lines[s+1]?.start_sec ?? DURATION;
+      const sceneDuration=Math.max(0.1,nextStart-sceneStart);
       const root=roots[Math.floor(s/3)%roots.length];
       for(const [i,n] of triad(root,'major',0).entries()){
-        mix.add('music',s*SCENE_SECONDS,instrument.pad(n-12,sceneDuration,sampleRate,{
+        mix.add('music',sceneStart,instrument.pad(n-12,sceneDuration,sampleRate,{
           seed:2400+s*7+i,cutoff:s>=6?560:920,attack:0.9,release:1.1,
         }),{gain:0.12,pan:(i-1)*0.32});
       }
-      mix.add('music',s*SCENE_SECONDS+0.7,instrument.harp(root+12,sampleRate,{seed:2600+s,decay:1.05}),{gain:0.11,pan:s%2?0.25:-0.25});
-      mix.add('music',s*SCENE_SECONDS+4.2,instrument.harp(root+19,sampleRate,{seed:2700+s,decay:0.72}),{gain:0.065,pan:s%2?-0.2:0.2});
-      mix.add('ambience',s*SCENE_SECONDS,instrument.pad(root-24,sceneDuration,sampleRate,{seed:2800+s,cutoff:420,attack:0.8,release:0.8}),{gain:0.075});
-      if(s===0||s===1||s===3||s===6||s===7||s===9)mix.add('ambience',s*SCENE_SECONDS+0.18,instrument.chime(root+24,sampleRate),{gain:0.09,pan:0.2});
+      mix.add('music',sceneStart+0.7,instrument.harp(root+12,sampleRate,{seed:2600+s,decay:1.05}),{gain:0.11,pan:s%2?0.25:-0.25});
+      if(sceneDuration>4.5)mix.add('music',sceneStart+4.2,instrument.harp(root+19,sampleRate,{seed:2700+s,decay:0.72}),{gain:0.065,pan:s%2?-0.2:0.2});
+      mix.add('ambience',sceneStart,instrument.pad(root-24,sceneDuration,sampleRate,{seed:2800+s,cutoff:420,attack:0.8,release:0.8}),{gain:0.075});
+      if(s===0||s===1||s===3||s===6||s===7||s===9)mix.add('ambience',sceneStart+0.18,instrument.chime(root+24,sampleRate),{gain:0.09,pan:0.2});
     }
     return mix.render({reverb:{room:0.58,damp:0.62},master:-2,ceiling:-1,fadeIn:0.8,fadeOut:1.5});
   }
