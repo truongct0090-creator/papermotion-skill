@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Vietnamese narration/dialogue with VieNeu-TTS and mix it into a rendered MP4."""
+"""Mix pre-rendered sentence-level Vietnamese narration into the rendered MP4."""
 import argparse
 import json
 import subprocess
@@ -10,88 +10,100 @@ from vieneu import Vieneu
 
 VOICES = {"adam": "Adam", "my_duyen": "Mỹ Duyên"}
 
+
 def media_duration(path: Path) -> float:
     probe = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
-        check=True, capture_output=True, text=True
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
+        check=True, capture_output=True, text=True,
     )
     return float(probe.stdout.strip())
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--clips-dir", help="Reuse clips prepared before render.")
+    parser.add_argument("--clips-dir", help="Reuse sentence clips prepared before render.")
     args = parser.parse_args()
 
-    manifest_path = Path(args.manifest)
-    data = json.loads(manifest_path.read_text(encoding="utf-8"))
-    lines = data.get("lines", [])
+    manifest = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
+    lines = manifest.get("lines", [])
     if not lines:
         raise SystemExit("Voiceover manifest has no lines.")
     for i, line in enumerate(lines):
         if line.get("speaker") not in VOICES:
-            raise SystemExit(f"Line {i}: speaker must be one of {', '.join(VOICES)}")
-        if not isinstance(line.get("start_sec"), (int, float)) or line["start_sec"] < 0:
-            raise SystemExit(f"Line {i}: start_sec must be a non-negative number.")
+            raise SystemExit(f"Line {i}: unsupported speaker {line.get('speaker')!r}")
         if not isinstance(line.get("text"), str) or not line["text"].strip():
             raise SystemExit(f"Line {i}: text is required.")
 
-    tts = None if args.clips_dir else Vieneu()  # Reuse prepared clips when supplied.
-    prepared_timing = None
-    if args.clips_dir:
-        prepared_timing = json.loads((Path(args.clips_dir) / "timing.json").read_text(encoding="utf-8"))
-        if len(prepared_timing.get("lines", [])) != len(lines):
-            raise SystemExit("Prepared timing does not match voiceover manifest line count.")
     probe = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
          "-show_entries", "format=duration", "-of", "json", args.input],
-        check=True, capture_output=True, text=True
+        check=True, capture_output=True, text=True,
     )
     probe_data = json.loads(probe.stdout)
     has_audio = any(s.get("codec_type") == "audio" for s in probe_data.get("streams", []))
-    duration = float(probe_data["format"]["duration"])
+    video_duration = float(probe_data["format"]["duration"])
 
-    with tempfile.TemporaryDirectory(prefix="papermotion-voice-") as tmp:
+    clip_entries = []
+    if args.clips_dir:
+        clips_dir = Path(args.clips_dir)
+        timing = json.loads((clips_dir / "timing.json").read_text(encoding="utf-8"))
+        if len(timing.get("lines", [])) != len(lines):
+            raise SystemExit("Prepared timing does not match voiceover manifest line count.")
+        for i, line_timing in enumerate(timing["lines"]):
+            for segment in line_timing.get("segments", []):
+                clip = clips_dir / segment["clip"]
+                if not clip.exists():
+                    raise SystemExit(f"Prepared voice clip is missing: {clip}")
+                clip_entries.append((clip, float(segment["start_sec"])))
+    else:
+        # Compatibility path for older workflows: synthesize each complete dialogue line.
+        tts = Vieneu()
+        previous_end = 0.0
+        gap = float(manifest.get("inter_line_gap_sec", 0.18))
+        with tempfile.TemporaryDirectory(prefix="papermotion-voice-") as tmp:
+            temp = Path(tmp)
+            for i, line in enumerate(lines):
+                clip = temp / f"line_{i:03d}.wav"
+                tts.save(tts.infer(line["text"], voice=VOICES[line["speaker"]]), str(clip))
+                start = float(line.get("start_sec", 0)) if i == 0 else max(float(line.get("start_sec", 0)), previous_end + gap)
+                previous_end = start + media_duration(clip)
+                clip_entries.append((clip, start))
+            mix_clips(args, clip_entries, video_duration, has_audio)
+            return
+
+    mix_clips(args, clip_entries, video_duration, has_audio)
+
+
+def mix_clips(args, clip_entries, video_duration: float, has_audio: bool) -> None:
+    with tempfile.TemporaryDirectory(prefix="papermotion-voice-mix-") as tmp:
         temp = Path(tmp)
         inputs = ["-i", args.input]
         base_audio_index = 0
         next_audio_index = 1
         if not has_audio:
-            inputs += ["-f", "lavfi", "-t", str(duration), "-i",
+            inputs += ["-f", "lavfi", "-t", str(video_duration), "-i",
                        "anullsrc=sample_rate=48000:channel_layout=stereo"]
             base_audio_index = 1
             next_audio_index = 2
+
         filters = []
-        mix_labels = []
+        labels = []
         voice_ends = []
-        previous_end = 0.0
-        inter_line_gap = float(data.get('inter_line_gap_sec', 0.32))
-        for i, line in enumerate(lines):
-            if args.clips_dir:
-                clip = Path(args.clips_dir) / f"line_{i:03d}.wav"
-                if not clip.exists():
-                    raise SystemExit(f"Prepared voice clip is missing: {clip}")
-                start_sec = float(prepared_timing["lines"][i]["start_sec"])
-            else:
-                clip = temp / f"line_{i:03d}.wav"
-                audio = tts.infer(line["text"], voice=VOICES[line["speaker"]])
-                tts.save(audio, str(clip))
-                requested_start = float(line["start_sec"])
-                start_sec = requested_start if i == 0 else max(requested_start, previous_end + inter_line_gap)
+        for i, (clip, start_sec) in enumerate(clip_entries):
             inputs += ["-i", str(clip)]
             clip_duration = media_duration(clip)
-            previous_end = start_sec + clip_duration
-            voice_ends.append(previous_end)
+            voice_ends.append(start_sec + clip_duration)
             delay = round(start_sec * 1000)
             label = f"vo{i}"
             filters.append(f"[{next_audio_index+i}:a]adelay={delay}|{delay},volume=1.0[{label}]")
-            mix_labels.append(f"[{label}]")
+            labels.append(f"[{label}]")
 
-        required_duration = max(duration, max(voice_ends) + 1.25)
-        extension = required_duration - duration
+        required_duration = max(video_duration, max(voice_ends) + 1.25)
+        extension = required_duration - video_duration
         if extension > 0.01:
             filters.append(f"[0:v]tpad=stop_mode=clone:stop_duration={extension:.3f}[vout]")
             video_map = "[vout]"
@@ -101,18 +113,21 @@ def main():
             video_codec = ["-c:v", "copy"]
 
         filters.append(
-            f"[{base_audio_index}:a]{''.join(mix_labels)}amix=inputs={len(lines)+1}:duration=longest:"
+            f"[{base_audio_index}:a]{''.join(labels)}amix=inputs={len(labels)+1}:duration=longest:"
             "dropout_transition=0:normalize=0[aout]"
         )
         output = Path(args.output)
         output.parent.mkdir(parents=True, exist_ok=True)
-        cmd = ["ffmpeg", "-v", "error", "-y", *inputs,
-               "-filter_complex", ";".join(filters),
-               "-map", video_map, "-map", "[aout]", "-t", f"{required_duration:.3f}",
-               *video_codec, "-c:a", "aac", "-b:a", "192k",
-               "-movflags", "+faststart", str(output)]
-        subprocess.run(cmd, check=True)
-    print(f"Voiceover mixed into {args.output} ({len(lines)} lines, final duration {required_duration:.2f}s; speech is never clipped).")
+        command = [
+            "ffmpeg", "-v", "error", "-y", *inputs,
+            "-filter_complex", ";".join(filters),
+            "-map", video_map, "-map", "[aout]", "-t", f"{required_duration:.3f}",
+            *video_codec, "-c:a", "aac", "-b:a", "192k",
+            "-movflags", "+faststart", str(output),
+        ]
+        subprocess.run(command, check=True)
+    print(f"Voiceover mixed into {args.output} ({len(clip_entries)} sentence clips, final duration {required_duration:.2f}s).")
+
 
 if __name__ == "__main__":
     main()
