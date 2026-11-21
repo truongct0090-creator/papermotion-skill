@@ -24,7 +24,7 @@ def split_sentences(text: str) -> list[str]:
 def render_text(manifest: dict, text: str) -> str:
     for key, value in manifest.get("variables", {}).items():
         text = text.replace("{{" + str(key) + "}}", str(value))
-    unresolved = re.findall(r"{{\\s*([a-zA-Z0-9_]+)\\s*}}", text)
+    unresolved = re.findall(r"{{\s*([a-zA-Z0-9_]+)\s*}}", text)
     if unresolved:
         raise SystemExit("Unresolved voiceover template variables: " + ", ".join(unresolved))
     return text
