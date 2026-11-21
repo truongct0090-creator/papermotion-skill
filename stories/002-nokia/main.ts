@@ -233,7 +233,7 @@ export class NokiaPilotScene extends Stage {
   }
 
   protected update(t:number,dt:number):void {
-    const scene=Math.min(9,Math.floor(t/SCENE_SECONDS));
+    const scene=sceneIndexAt(t);
     Object.assign(this.cat.intent,CAT_REST,{speed:scene===9?26:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+220,y:560}});
     if(scene!==this.lastScene){
       if(!this.cat.airborne)this.cat.jump({x:this.cat.x+265,y:890},145);
@@ -248,12 +248,12 @@ export class NokiaPilotScene extends Stage {
   }
 
   probe():Record<string,unknown>{
-    const i=Math.min(9,Math.floor(this.time/SCENE_SECONDS));
+    const i=sceneIndexAt(this.time);
     return {...super.probe(),story:'nokia-pilot',scene:i+1,sceneTitle:TITLES[i]};
   }
 
   protected draw(t:number,frame:number):void {
-    const index=Math.min(9,Math.floor(t/SCENE_SECONDS)),local=t-index*SCENE_SECONDS;
+    const index=sceneIndexAt(t),local=t-STORY_TIMING.lines[index].start_sec;
     if(index>0&&local<0.85){
       this.drawScene(index-1,t);
       tearWipe(this.ctx,ramp(local,0,0.85),()=>this.drawScene(index,t),{
@@ -267,6 +267,7 @@ export class NokiaPilotScene extends Stage {
   private drawScene(index:number,t:number):void {
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     const paper=this.paper;
+    const sceneLocal=t-STORY_TIMING.lines[index].start_sec;
     fillGradient(ctx,[[0,top],[1,bottom]]);
     const isNight = index===0 || index===3 || index===6;
     if(isNight){
@@ -287,10 +288,10 @@ export class NokiaPilotScene extends Stage {
     const titleLines = outlinedText(paper,TITLES[index],110,142,52,false,650);
     outlinedText(paper,SUBTITLES[index],114,142+titleLines*64+10,27,true,650);
 
-    // Fixed text-safe zone: x=0..780. Prop groups enter only in x>=800,
-    // are revealed on the spoken beat, and remain visible until the scene cut.
+    // Both title and subtitle are protected together. Prop bounds, flying paper edges,
+    // and their shadows remain to the right of the typography column.
     if(index===0){
-      tornReveal(paper,t,1.1,0.9,{x:820,y:155,w:900,h:230},()=>{
+      paperFlyIn(paper,sceneLocal,0.7,0.9,{x:820,y:155,w:900,h:230},()=>{
         for(let col=0;col<4;col++)phone(paper,865+col*205,180,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);
         rounded(paper,820,360,900,22,8,'#775b45');
       },8400);
