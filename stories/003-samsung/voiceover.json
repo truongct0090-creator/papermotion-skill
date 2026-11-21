@@ -119,5 +119,6 @@
   ],
   "schedule_mode": "sequential",
   "inter_line_gap_sec": 0.16,
-  "inter_sentence_gap_sec": 0.08
+  "inter_sentence_gap_sec": 0.08,
+  "trim_silence": true
 }
