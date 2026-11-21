@@ -260,10 +260,10 @@ export class NokiaPilotScene extends Stage {
       },8400);
       tornReveal(paper,t,3.4,0.9,{x:820,y:405,w:900,h:440},()=>{
         for(let col=0;col<4;col++)phone(paper,865+col*205,425,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);
-        rounded(paper,780,825,1000,25,8,'#765b45');
+        rounded(paper,820,825,900,25,8,'#765b45');
       },8401);
     } else if(index===1){
-      tornReveal(paper,t,10.5,0.8,{x:1035,y:260,w:330,h:600},()=>{
+      tornReveal(paper,t,10.5,0.8,{x:860,y:260,w:810,h:620},()=>{
         rounded(paper,870,650,780,36,12,'#8b6046');rounded(paper,930,680,34,190,8,'#76513e');rounded(paper,1550,680,34,190,8,'#76513e');
         phone(paper,1080,275,1.18,'#263b42');
       },8410);
