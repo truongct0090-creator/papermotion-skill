@@ -22,7 +22,7 @@ def trim_wav_silence(path: Path) -> None:
     trimmed = path.with_name(path.stem + ".trim.wav")
     subprocess.run([
         "ffmpeg", "-v", "error", "-y", "-i", str(path),
-        "-af", "silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.035:stop_periods=1:stop_threshold=-48dB:stop_silence=0.06",
+        "-af", "silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.035,areverse,silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.06,areverse",
         "-c:a", "pcm_s16le", str(trimmed),
     ], check=True)
     duration = wav_duration(trimmed)
