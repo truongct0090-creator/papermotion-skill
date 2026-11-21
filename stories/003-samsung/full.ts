@@ -1,6 +1,6 @@
 import {
   Mixer, Stage, Camera, fillGradient, tearWipe, ramp, vignette, grain, circlePoly,
-  instrument, note, triad, drawProps, drawRidge, drawSky, blink,
+  instrument, note, triad, drawProps, drawRidge, drawSward, drawSky, blink,
   type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
 import { createCitySkyline, createGrassland, meadowWind, nightSky } from '../shared/environment';
@@ -11,7 +11,7 @@ const W = 1920, H = 1080, DURATION = STORY_TIMING.duration_sec;
 const TEXT_SAFE_ZONE = { left: 80, right: 780, top: 70, bottom: 440 };
 const PROP_SAFE_LEFT = TEXT_SAFE_ZONE.right + 20;
 const CAT_BLINKS = Array.from({ length: 110 }, (_, i) => 1.1 + i * 5.1 + (i % 4) * 0.65);
-const SCENE_LINE_INDEX = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
+const SCENE_LINE_INDEX = [0, ...Array.from({ length: 27 }, (_, i) => i + 2)] as const;
 
 function sceneStart(index: number): number {
   return STORY_TIMING.lines[SCENE_LINE_INDEX[index]]?.start_sec ?? DURATION;
@@ -35,28 +35,116 @@ export const SAMSUNG_TITLES = [
   'ĐẦU TƯ VÀO BÁN DẪN',
   'TV MÀU VÀ BÁN DẪN',
   'BÁN DẪN THÀNH TRỤ CỘT',
+  'DRAM VÀO CUỘC ĐUA TOÀN CẦU',
+  'BƯỚC TIẾN 64K DRAM',
+  'CHIP 1M DRAM',
+  '4M DRAM VÀO NĂM 1988',
+  '64M DRAM – DẤU MỐC 1992',
+  'NEW MANAGEMENT 1993',
+  'VƯỢT QUA KHỦNG HOẢNG 1997',
+  'CHẤT LƯỢNG LÀ ƯU TIÊN',
+  'THƯƠNG HIỆU TOÀN CẦU',
+  'KỶ NGUYÊN TV MÀN HÌNH PHẲNG',
+  'GALAXY S MỞ RA CHƯƠNG MỚI',
+  'GALAXY NOTE VÀ MÀN HÌNH LỚN',
+  'HỆ SINH THÁI GALAXY',
+  'OLED VÀ ĐIỆN THOẠI GẬP',
+  'BÁN DẪN CHO KỶ NGUYÊN AI',
+  'SAMSUNG HÔM NAY VÀ NGÀY MAI',
+  'MỌT MỌT HỎI BẠN',
+  'HẸN GẶP LẠI'
 ] as const;
 export const SAMSUNG_SUBTITLES = [
-  'Từ cá khô, rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ',
-  'Daegu, Hàn Quốc • ngày 1/3/1938\nLee Byung-chul lập Samsung Sanghoe',
-  'Những chuyến hàng mở rộng giao thương\nSamsung là doanh nghiệp thương mại',
-  'Thực phẩm, dệt may, bảo hiểm, bán lẻ\nMở rộng sau chiến tranh Triều Tiên',
-  'Samsung Electronics ra đời năm 1969\nBước đi mới vào ngành điện tử',
-  'TV đen trắng P-3202 ra đời năm 1970\nSamsung-Sanyo vào ngành TV gia dụng',
-  'TV Samsung đến Panama năm 1971\nHàng Hàn Quốc vươn ra thế giới',
-  'Samsung mua 50% Korea Semiconductor\nBước đầu tư vào công nghệ bán dẫn',
-  'Samsung hoàn tất mua lại năm 1977\nBắt đầu sản xuất TV màu và xuất khẩu',
-  'Bán dẫn được hợp nhất vào năm 1980\nGia nhập hệ thống Samsung Electronics',
+  'Từ cá khô, rau củ đến công nghệ
+Mọi thứ bắt đầu từ một cửa hàng nhỏ',
+  'Daegu, Hàn Quốc • ngày 1/3/1938
+Lee Byung-chul lập Samsung Sanghoe',
+  'Những chuyến hàng mở rộng giao thương
+Samsung là doanh nghiệp thương mại',
+  'Thực phẩm, dệt may, bảo hiểm, bán lẻ
+Mở rộng sau chiến tranh Triều Tiên',
+  'Samsung Electronics ra đời năm 1969
+Bước đi mới vào ngành điện tử',
+  'TV đen trắng P-3202 ra đời năm 1970
+Samsung-Sanyo vào ngành TV gia dụng',
+  'TV Samsung đến Panama năm 1971
+Hàng Hàn Quốc vươn ra thế giới',
+  'Samsung mua 50% Korea Semiconductor
+Bước đầu tư vào công nghệ bán dẫn',
+  'Samsung hoàn tất mua lại năm 1977
+Bắt đầu sản xuất TV màu và xuất khẩu',
+  'Bán dẫn được hợp nhất vào năm 1980
+Gia nhập hệ thống Samsung Electronics',
+  'Samsung phát triển DRAM 64K năm 1983
+Bắt đầu cuộc đua bộ nhớ tiên tiến',
+  'Tiến lên DRAM 256K năm 1984
+Tự chủ công nghệ và sản xuất',
+  'DRAM 1 megabit năm 1986
+Năng lực nghiên cứu tăng tốc',
+  'DRAM 4 megabit năm 1988
+Tiến gần nhóm dẫn đầu thế giới',
+  'DRAM 64 megabit năm 1992
+Bán dẫn thành lợi thế chiến lược',
+  'Lee Kun-hee khởi xướng New Management
+Chất lượng và đổi mới là trọng tâm',
+  'Khủng hoảng tài chính châu Á năm 1997
+Tái cấu trúc để tồn tại và cạnh tranh',
+  'Chuyển từ số lượng sang chất lượng
+Thiết kế và độ tin cậy được ưu tiên',
+  'TV, màn hình, điện thoại và linh kiện
+Samsung vươn thành thương hiệu toàn cầu',
+  'LCD và công nghệ hiển thị mới
+TV màn hình phẳng bước vào gia đình',
+  'Galaxy S ra mắt năm 2010
+Samsung tăng tốc trong kỷ nguyên smartphone',
+  'Galaxy Note ra mắt năm 2011
+Màn hình lớn và bút S Pen tạo khác biệt',
+  'Điện thoại, đồng hồ, tablet, tai nghe
+Một hệ sinh thái kết nối nhiều thiết bị',
+  'Galaxy Fold thương mại hóa năm 2019
+Mở ra hướng đi cho điện thoại gập',
+  'DRAM, NAND và bộ nhớ băng thông cao
+Chip trở thành hạ tầng của AI',
+  'Từ thiết bị đến bán dẫn và kết nối
+Một tập đoàn đa ngành không ngừng đổi mới',
+  'Bạn từng dùng Galaxy hay TV Samsung nào?
+Kể kỷ niệm của bạn với Mọt Mọt nhé',
+  'Cảm ơn bạn đã theo dõi câu chuyện
+Hẹn gặp lại trong tập tiếp theo'
 ] as const;
 const PALETTES: [string, string][] = [
-  ['#25364a', '#d2a77d'], ['#e7d7bd', '#b7c9c3'], ['#d8e2df', '#a9b9aa'],
-  ['#eadbc4', '#b6a38d'], ['#c5d6d2', '#829b91'], ['#d7e1e7', '#899eae'],
-  ['#d6d2ca', '#818c9c'], ['#d8eadc', '#8eb6a0'], ['#d1d9dd', '#8397a5'],
+  ['#25364a', '#d2a77d'],
+  ['#e7d7bd', '#b7c9c3'],
+  ['#d8e2df', '#a9b9aa'],
+  ['#eadbc4', '#b6a38d'],
+  ['#c5d6d2', '#829b91'],
+  ['#d7e1e7', '#899eae'],
+  ['#d6d2ca', '#818c9c'],
+  ['#d8eadc', '#8eb6a0'],
+  ['#d1d9dd', '#8397a5'],
   ['#1d2638', '#665267'],
+  ['#d8e3dc', '#93aaa4'],
+  ['#c9d8d5', '#829c99'],
+  ['#d5dfdc', '#91a8a5'],
+  ['#c8d7d5', '#7f9998'],
+  ['#d2dfdc', '#7d9996'],
+  ['#d8d2c5', '#9d8979'],
+  ['#303b4c', '#7e6561'],
+  ['#e7e0d2', '#b6a28e'],
+  ['#d9e4e0', '#8ba59c'],
+  ['#d5e1e7', '#8aa3b1'],
+  ['#dbe4e5', '#8aa8b4'],
+  ['#d9dedf', '#8199a6'],
+  ['#dce8e4', '#92afa8'],
+  ['#c8dce1', '#7f9eac'],
+  ['#1c2b3e', '#566c86'],
+  ['#d5e0dc', '#849b95'],
+  ['#e6d9c7', '#a88f79'],
+  ['#202c40', '#5d7180']
 ];
-if (STORY_TIMING.lines.length !== 11 || SAMSUNG_TITLES.length !== 10 ||
-    SAMSUNG_SUBTITLES.length !== 10 || SCENE_LINE_INDEX.length !== 10) {
-  throw new Error('Samsung pilot requires 11 measured voice lines mapped to exactly 10 visual scenes.');
+if (STORY_TIMING.lines.length !== 29 || SAMSUNG_TITLES.length !== 28 ||
+    SAMSUNG_SUBTITLES.length !== 28 || SCENE_LINE_INDEX.length !== 28 || PALETTES.length !== 28) {
+  throw new Error('Samsung Full requires 29 measured voice lines mapped to exactly 28 layouts (26 story scenes + 2 mascot scenes).');
 }
 
 function wrapText(paper: Paper, value: string, size: number, maxWidth: number): string[] {
