@@ -385,7 +385,7 @@ function paperFlyIn(
 }
 
 
-export class SamsungPilotScene extends Stage {
+export class SamsungFullScene extends Stage {
   private readonly skyline: ReturnType<typeof createCitySkyline>;
   private readonly ridges: RidgeSpec[];
   private readonly camera: Camera;
@@ -435,7 +435,7 @@ export class SamsungPilotScene extends Stage {
       this.lastScene = scene;
     }
     if (scene === 27) {
-      const finalStart = sceneStart(9);
+      const finalStart = sceneStart(27);
       this.cat.intent.speed = 0;
       this.cat.intent.sit = ramp(t, finalStart + 0.7, finalStart + 3.7);
       this.cat.intent.look = { x: this.cat.x + 180, y: 250 };
