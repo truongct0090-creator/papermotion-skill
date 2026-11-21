@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       title:
-        description: Main headline (Vietnamese supported; use \n for a deliberate line break)
+        description: Main headline (Vietnamese supported; use \\n for a deliberate line break)
         required: true
         type: string
         default: "NOKIA ĐÃ THUA NHƯ THẾ NÀO?"
@@ -43,24 +43,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.1.3
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: pnpm
-      - name: Install fonts
+      - name: Install fonts and image renderer
         run: |
           sudo apt-get update
           sudo apt-get install -y fonts-noto-core python3-pil
-      - name: Install project dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Install Chromium and system dependencies
-        run: pnpm exec playwright-core install --with-deps chromium
-      - name: Render legacy thumbnail with PaperMotion paper underlay
+      - name: Render thumbnail without torn-paper effects
         env:
           THUMBNAIL_TITLE: ${{ inputs.title }}
           THUMBNAIL_KICKER: ${{ inputs.kicker }}
@@ -69,13 +56,11 @@ jobs:
           THUMBNAIL_OUTPUT_NAME: ${{ inputs.output_name }}
         shell: bash
         run: |
-          node scripts/create-thumbnail.ts --output out/paper-underlay.png
-          python3 scripts/create_thumbnail.py \
-            --title "$THUMBNAIL_TITLE" \
-            --kicker "$THUMBNAIL_KICKER" \
-            --subtitle "$THUMBNAIL_SUBTITLE" \
-            --image-url "$THUMBNAIL_IMAGE_URL" \
-            --paper-underlay out/paper-underlay.png \
+          python3 scripts/create_thumbnail.py \\
+            --title "$THUMBNAIL_TITLE" \\
+            --kicker "$THUMBNAIL_KICKER" \\
+            --subtitle "$THUMBNAIL_SUBTITLE" \\
+            --image-url "$THUMBNAIL_IMAGE_URL" \\
             --output "out/$THUMBNAIL_OUTPUT_NAME.png"
       - name: Upload thumbnail
         uses: actions/upload-artifact@v4
