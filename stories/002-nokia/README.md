@@ -55,4 +55,4 @@
 
 ## Quy trình render
 
-Workflow `.github/workflows/test-nokia-pilot.yml` hiện tạo WAV theo từng câu từ manifest, đo timeline thực tế, render full resolution, trộn voiceover và kiểm tra thời lượng, độ phân giải, frame rate và audio stream. Artifact cuối có tên `nokia-28-scenes-full`.
+Workflow `.github/workflows/build-nokia-full.yml` hiện tạo WAV theo từng câu từ manifest, đo timeline thực tế, render full resolution, trộn voiceover và kiểm tra thời lượng, độ phân giải, frame rate và audio stream. Artifact cuối có tên `nokia-28-scenes-full`.
