@@ -275,7 +275,7 @@ function paperFlyIn(
     }
   }
 }
-export class NokiaPilotScene extends Stage {
+export class NokiaFullScene extends Stage {
   private readonly skyline: ReturnType<typeof createCitySkyline>;
   private readonly ridges: RidgeSpec[];
   private readonly camera: Camera;
