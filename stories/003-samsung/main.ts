@@ -9,25 +9,25 @@ const TITLES = [
   'TỪ CỬA HÀNG CÁ KHÔ ĐẾN GÃ KHỔNG LỒ CÔNG NGHỆ',
   'MỌI THỨ BẮT ĐẦU Ở DAEGU, NĂM 1938',
   'TỪ HÀNG HÓA ĐẾN MỘT ĐẾ CHẾ THƯƠNG MẠI',
+  'SAU CHIẾN TRANH, SAMSUNG MỞ RỘNG LĨNH VỰC',
   'SAMSUNG BƯỚC VÀO NGÀNH ĐIỆN TỬ',
   'CHIẾC TV ĐEN TRẮNG ĐẦU TIÊN',
   'NHỮNG CHIẾC TV ĐẦU TIÊN VƯƠN RA THẾ GIỚI',
   'BƯỚC CHÂN ĐẦU TIÊN VÀO BÁN DẪN',
   'TỪ TV MÀU ĐẾN SẢN XUẤT QUY MÔ LỚN',
   'BÁN DẪN TRỞ THÀNH MỘT PHẦN CỐT LÕI',
-  'NĂM 1988: SAMSUNG BƯỚC VÀO KỶ NGUYÊN DI ĐỘNG',
 ];
 const SUBTITLES = [
   'Một tập đoàn công nghệ từng khởi đầu bằng cá khô, rau củ và trái cây',
   'Ngày 1 tháng 3 năm 1938, Lee Byung-chul mở Samsung Sanghoe',
   'Những chuyến hàng nhỏ đặt nền móng cho tham vọng lớn',
+  'Sau chiến tranh Triều Tiên, Samsung mở rộng sang dệt may, thực phẩm và nhiều lĩnh vực',
   'Năm 1969, Samsung Electronics chính thức được thành lập',
   'Năm 1970, Samsung-Sanyo bắt đầu sản xuất TV đen trắng',
   'Năm 1971, TV đen trắng Samsung được xuất khẩu sang Panama',
   'Năm 1974, Samsung mua 50% Korea Semiconductor',
-  'Năm 1977, Samsung hoàn tất việc mua lại Korea Semiconductor',
-  'Năm 1980, mảng bán dẫn được hợp nhất vào Samsung Electronics',
-  'SH-100 là điện thoại di động đầu tiên của Samsung',
+  'Năm 1977, Samsung hoàn tất mua lại Korea Semiconductor và xuất khẩu TV màu',
+  'Năm 1980, hoạt động bán dẫn được hợp nhất vào Samsung Electronics',
 ];
 const PALETTES: [string,string][] = [
   ['#253447','#b88c68'],['#d9c7a8','#a88c6c'],['#d8d0b9','#78918a'],['#c8d6d0','#607d80'],
@@ -144,40 +144,41 @@ export class SamsungPilotScene extends Stage {
         ctx.fillStyle='#526d79';ctx.fillRect(base+980,390,24,180);ctx.beginPath();ctx.moveTo(base+1005,400);ctx.lineTo(base+1210,545);ctx.lineTo(base+1005,545);ctx.fill();
         label(ctx,'TRADE',base+1080,825,44);
       }else if(index===3){
+        // Post-war diversification: textile mill, food processing and a trading counter.
+        rounded(ctx,base+520,450,430,330,16,'#b7c9bd','#647d7d');rounded(ctx,base+1010,450,430,330,16,'#d7c7a6','#8a7355');
+        for(let i=0;i<4;i++){ctx.fillStyle='#7e9c91';ctx.fillRect(base+590+i*82,540,28,190);ctx.beginPath();ctx.arc(base+604+i*82,520,38,0,Math.PI*2);ctx.fill();}
+        crate(ctx,base+1120,620,220,140,'SUGAR','#b18d5d');label(ctx,'TEXTILES · FOOD · TRADE',base+990,835,34);
+      }else if(index===4){
         // Samsung Electronics factory opens with an assembly line.
         rounded(ctx,base+500,420,980,390,18,'#dce1d9','#647d7d');rounded(ctx,base+620,320,740,110,10,'#54747a');
         label(ctx,'SAMSUNG ELECTRONICS',base+990,390,38,'#f7f0dd');
         for(let i=0;i<4;i++){rounded(ctx,base+600+i*220,610,160,120,10,'#a9b7ad');rounded(ctx,base+630+i*220,640,100,60,8,'#d6e0d8');}
-      }else if(index===4){
+      }else if(index===5){
         // The first black-and-white television moves onto a wooden display counter.
         rounded(ctx,base+570,690,870,45,10,'#78583f');rounded(ctx,base+820,360,430,320,28,'#353b3c','#1e2527');
         rounded(ctx,base+865,400,340,220,10,'#b7b9b3');ctx.fillStyle='#565a59';ctx.beginPath();ctx.arc(base+1035,510,78,0,Math.PI*2);ctx.fill();
         ctx.fillStyle='#e5e4dc';ctx.beginPath();ctx.arc(base+1035,510,64,0,Math.PI*2);ctx.fill();
         label(ctx,'BLACK & WHITE TV',base+1035,800,34);
-      }else if(index===5){
+      }else if(index===6){
         // Export crate boards unfold toward a Panama-bound ship.
         crate(ctx,base+570,620,310,190,'SAMSUNG TV','#9b704c');
         ctx.fillStyle='#e8e5da';ctx.beginPath();ctx.moveTo(base+1050,700);ctx.lineTo(base+1540,700);ctx.lineTo(base+1430,820);ctx.lineTo(base+1150,820);ctx.fill();
         ctx.fillStyle='#526b78';ctx.fillRect(base+1260,470,22,230);ctx.beginPath();ctx.moveTo(base+1280,485);ctx.lineTo(base+1490,670);ctx.lineTo(base+1280,670);ctx.fill();
         label(ctx,'PANAMA · 1971',base+1310,430,38);
-      }else if(index===6){
+      }else if(index===7){
         // Semiconductor wafer and a small acquisition contract.
         rounded(ctx,base+620,590,420,190,18,'#e8e1d2','#8a887e');ctx.beginPath();ctx.arc(base+1110,580,190,0,Math.PI*2);ctx.fillStyle='#7899a0';ctx.fill();
         for(let i=0;i<5;i++)for(let j=0;j<5;j++){ctx.strokeStyle='rgba(239,248,245,.7)';ctx.strokeRect(base+1000+i*44,470+j*44,36,36);}
         label(ctx,'KOREA SEMICONDUCTOR',base+1110,830,34);
-      }else if(index===7){
+      }else if(index===8){
         // Color televisions move down a varied assembly line.
         for(let i=0;i<3;i++){rounded(ctx,base+570+i*310,430,250,220,18,'#3d4445');rounded(ctx,base+595+i*310,455,200,150,8,['#c96d50','#6b9b89','#6689ad'][i]);}
         rounded(ctx,base+520,710,1080,35,12,'#7e644b');label(ctx,'COLOR TV · EXPORT',base+1080,820,38);
-      }else if(index===8){
+      }else{
         // Semiconductor production joins the electronics business.
         rounded(ctx,base+570,380,930,400,20,'#dfe7e2','#6c8586');
         for(let i=0;i<6;i++){rounded(ctx,base+640+i*135,470,95,180,12,'#78979a');rounded(ctx,base+660+i*135,495,55,70,6,'#d3e4dc');}
         label(ctx,'SEMICONDUCTOR DIVISION',base+1030,840,36);
-      }else{
-        // SH-100: an early mobile handset, not a smartphone.
-        phone(ctx,base+920,300,1.28,'#39464b',false);
-        rounded(ctx,base+690,760,780,24,8,'#785b45');label(ctx,'SH-100 · 1988',base+1120,840,44);
       }
       // The mascot is always in the moving world, never pasted as a static presenter.
       this.cat.draw(this.paper);
