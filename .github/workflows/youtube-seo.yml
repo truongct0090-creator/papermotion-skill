@@ -2,12 +2,14 @@ name: Mọt Mọt Studio - YouTube SEO Assistant
 
 on:
   workflow_run:
-    workflows: ["Render PaperMotion video"]
+    workflows:
+      - "Render PaperMotion video"
+      - "Build full Nokia 28-scene film"
     types: [completed]
   workflow_dispatch:
     inputs:
       render_run_id:
-        description: "Optional: exact Render PaperMotion video run ID. Leave blank to use the latest successful full render."
+        description: "Optional: exact successful full-video run ID. Leave blank to use the latest available full render."
         required: false
         type: string
 
