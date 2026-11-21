@@ -1,17 +1,17 @@
 # Tập 01 — Nokia: Từ ông vua điện thoại đến kẻ tụt lại
 
 ## Trạng thái sản xuất
-- Pilot 10 cảnh, 30 fps, 16:9; thời lượng được tính từ WAV giọng đọc thực tế, không cố định 100 giây. Trước khi render, VieNeu tạo clip theo từng câu và đo thời điểm bắt đầu/kết thúc; cảnh chuyển đúng tại đầu câu thoại tiếp theo, cảnh cuối giữ thêm 1,25 giây sau câu kết.
+- Bản kiểm tra mở rộng 15 cảnh (10 cảnh đầu + 5 cảnh tiếp theo), 30 fps, 16:9; thời lượng được tính từ WAV giọng đọc thực tế, không cố định 100 giây. Trước khi render, VieNeu tạo clip theo từng câu và đo thời điểm bắt đầu/kết thúc; cảnh chuyển đúng tại đầu câu thoại tiếp theo, cảnh cuối giữ thêm 1,25 giây sau câu kết.
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
 - Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
 - Mèo mauve là mascot dẫn chuyện xuyên suốt, dùng rig và chuyển động chuẩn từ Rooftops; các đạo cụ lịch sử riêng của Nokia được thiết kế theo bối cảnh từng cảnh.
-- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề cùng nằm trong một vùng an toàn bên trái (x=80–780, y=70–440). Đạo cụ, tờ giấy đang bay, sợi giấy rách và bóng đổ đều bị giới hạn bên phải x=800; vùng này được clip cứng trong suốt hiệu ứng.
+- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề cùng nằm trong một vùng an toàn bên trái (x=80–780, y=70–440). Đạo cụ, tờ giấy đang bay, sợi giấy rách, bóng đổ và mascot đều bị giới hạn bên phải x=800; vùng này được clip cứng trong suốt hiệu ứng. Phụ đề nhỏ góc trên trái có lớp bảo vệ độc lập và không thể bị vật thể phủ lên.
 - Lời thoại được chia theo từng câu để đo thời lượng TTS thực tế; khoảng nghỉ giữa câu trong cùng lượt nói là 0,10 giây, giữa hai lượt thoại là 0,18 giây. Mốc chuyển cảnh và mốc xuất hiện đạo cụ lấy trực tiếp từ các clip thoại đã đo, không dùng nhịp 9,2 giây ước lượng.
-- Đạo cụ được hé lộ ở đầu từng câu thoại liên quan bằng tờ giấy xé bay vào; các nhóm tiếp theo có thể bung từ trái/phải hoặc trên/dưới, ghép từ mảnh giấy và có sợi giấy bay theo. Hướng bay được chọn ngẫu nhiên có kiểm soát theo seed để đa dạng nhưng không đổi giữa các lần render. Khi đã xuất hiện, đạo cụ tiếp tục tồn tại đến hết cảnh.
-- Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7.
+- Đạo cụ được hé lộ ở đầu từng câu thoại liên quan bằng một tấm giấy rách mang cả cụm hình, bay nhanh từ ngoài khung hình vào, có xoay, rung theo gió và sợi giấy trailing; các nhóm tiếp theo có thể bung từ trái/phải hoặc trên/dưới, ghép từ mảnh giấy và có sợi giấy bay theo. Hướng bay được chọn ngẫu nhiên có kiểm soát theo seed để đa dạng nhưng không đổi giữa các lần render. Khi đã xuất hiện, đạo cụ tiếp tục tồn tại đến hết cảnh.
+- Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7 trong bản thử nghiệm đầu. Năm cảnh nối tiếp 11–15 dùng Adam để giữ mạch phân tích.
 - Cảnh đêm dùng bầu trời sao và mặt trăng theo demo Rooftops; cảnh ban ngày dùng mây và môi trường giấy từ shared environment.
 
-## Pilot 10 cảnh
+## Bản kiểm tra mở rộng 15 cảnh
 
 Mỗi cảnh bắt đầu theo mốc thoại thực tế; chuyển cảnh không được cắt lời. Script đo từng câu thoại trước khi render, dùng cùng timeline cho hoạt ảnh và audio, sau đó giữ hình cuối thêm 1,25 giây.
 
@@ -30,7 +30,7 @@ Mỗi cảnh bắt đầu theo mốc thoại thực tế; chuyển cảnh không
 
 Lời thoại và mốc thu âm chính xác nằm trong [voiceover.json](./voiceover.json).
 
-## Dàn ý bản đầy đủ 26 cảnh
+## Năm cảnh mới bổ sung (11–15)\n\n| Cảnh | Lời kể trọng tâm | Hình ảnh cần xuất hiện |\n|---:|---|---|\n| 11 | N97, N8 và nỗ lực cải tiến phần cứng | Hai mẫu máy, màn hình cảm ứng, camera |\n| 12 | Những tầng phối hợp và quyết định nội bộ | Sơ đồ nhóm sản phẩm, phần mềm, kiểm thử và lãnh đạo |\n| 13 | Đối thủ tăng tốc | iPhone, nhiều thiết bị Android, nhịp phát triển ứng dụng |\n| 14 | Stephen Elop trở thành CEO năm 2010 | Không dùng chân dung giả; thể hiện bối cảnh lãnh đạo |\n| 15 | Burning Platform đầu năm 2011 | Điện thoại và giàn khoan/giấy bốc cháy mang tính ẩn dụ |\n\nCác cảnh 11–15 nối tiếp ngay sau cảnh 10; timeline được tạo lại từ thời lượng WAV thực tế của 15 câu thoại.\n\n## Dàn ý bản đầy đủ 26 cảnh
 1. Mở bằng chiếc Nokia rơi xuống đất và câu hỏi vì sao người khổng lồ mất ngai vàng.
 2. Ký ức Nokia trong gia đình Việt Nam — Mỹ Duyên.
 3. Nokia trở thành thương hiệu toàn cầu.
