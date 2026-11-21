@@ -3,7 +3,7 @@ import type { V } from '../core/math';
 
 type Input = { title: string; kicker: string; subtitle: string; imageDataUrl?: string };
 const W = 3840, H = 2160;
-const BG = '#B08088', PAPER = '#F7E8D2', CREAM = '#FFF3DF', INK = '#30232B', RED = '#713B49';
+const BG = '#B08088', PAPER = '#F7E8D2', INK = '#30232B', RED = '#713B49';
 const canvas = document.querySelector<HTMLCanvasElement>('#thumbnail')!;
 const ctx = canvas.getContext('2d', { alpha: false })!;
 const paper = new Paper(ctx);
