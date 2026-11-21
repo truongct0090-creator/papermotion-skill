@@ -2,12 +2,14 @@ name: Mọt Mọt Studio - YouTube SEO Assistant
 
 on:
   workflow_run:
-    workflows: ["Render PaperMotion video"]
+    workflows:
+      - "Render PaperMotion video"
+      - "Build full Nokia 28-scene film"
     types: [completed]
   workflow_dispatch:
     inputs:
       render_run_id:
-        description: "Optional: exact Render PaperMotion video run ID. Leave blank to use the latest successful full render."
+        description: "Optional: exact successful full-video run ID. Leave blank to use the latest available full render."
         required: false
         type: string
 
@@ -23,12 +25,12 @@ jobs:
   seo:
     if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
-      - name: Check out story scripts
+      - name: Check out SEO code from default branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -42,6 +44,13 @@ jobs:
           REQUESTED_RENDER_RUN_ID: ${{ inputs.render_run_id }}
           EVENT_RENDER_RUN_ID: ${{ github.event.workflow_run.id }}
         run: python scripts/resolve_render_artifact.py
+
+      - name: Check out matching story revision
+        if: steps.source.outputs.skip != 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.source.outputs.head_sha }}
+          path: story-source
 
       - name: Download selected full video artifact
         if: steps.source.outputs.skip != 'true'
@@ -63,7 +72,7 @@ jobs:
         run: |
           VIDEO="$(find video-source -type f -name '*.mp4' | head -n 1)"
           test -n "$VIDEO"
-          python scripts/youtube_seo.py --video "$VIDEO" --artifact "${{ steps.source.outputs.artifact_name }}" --repo-root . --out seo-output
+          python scripts/youtube_seo.py --video "$VIDEO" --artifact "${{ steps.source.outputs.artifact_name }}" --repo-root story-source --out seo-output
 
       - name: Upload SEO package
         if: steps.source.outputs.skip != 'true'
