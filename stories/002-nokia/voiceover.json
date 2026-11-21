@@ -51,5 +51,6 @@
       "text": "Năm 2014, Microsoft hoàn tất mua lại mảng thiết bị và dịch vụ của Nokia. Nokia không biến mất, nhưng một thời đại điện thoại đã khép lại."
     }
   ],
-  "inter_line_gap_sec": 0.32
+  "inter_line_gap_sec": 0.18,
+  "inter_sentence_gap_sec": 0.1
 }
