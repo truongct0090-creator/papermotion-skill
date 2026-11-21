@@ -28,6 +28,11 @@ for run in runs:
     if chosen:
         break
 if not chosen:
+    if EVENT_RUN_ID:
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+            f.write("skip=true\\n")
+        print("This successful render was a draft or has no full artifact; skipping SEO.")
+        raise SystemExit(0)
     if RUN_ID:
         raise SystemExit(f"No successful full-quality PaperMotion artifact found in render run {RUN_ID}. Verify quality=full and artifact retention.")
     raise SystemExit("No recent successful full-quality render found. Run Render PaperMotion video with quality=full first.")
