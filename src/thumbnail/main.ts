@@ -166,4 +166,26 @@ async function render(input:Input):Promise<string>{
   return canvas.toDataURL('image/png');
 }
 (window as unknown as {renderThumbnail:(input:Input)=>Promise<string>}).renderThumbnail=render;
+
+// PaperMotion supplies only the transparent torn-paper layer. The legacy renderer
+// remains responsible for every object, photo crop, typography and final layout.
+function renderPaperUnderlay(): string {
+  const layer = document.createElement('canvas');
+  layer.width = W; layer.height = H;
+  const layerCtx = layer.getContext('2d', { alpha: true })!;
+  layerCtx.clearRect(0, 0, W, H);
+  const underlay = new Paper(layerCtx);
+  underlay.light = { x: -0.7, y: -0.65 };
+  underlay.edgeColor = 'rgba(255,250,239,.58)';
+  underlay.shadowColor = 'rgba(42,20,31,.42)';
+  const sheet = (points:number[][], seed:number, color:string) => {
+    underlay.sheet({shadow:34,texture:.42,edge:true,rim:{color:'rgba(255,250,239,.56)',width:6},shade:{color:'rgba(42,20,31,.22)',width:8}},()=>{
+      underlay.blob(points.map(([x,y])=>({x,y})),color,{seed,tear:9,shadow:0,texture:.32,edge:true,rim:{color:'rgba(255,250,239,.34)',width:4},shade:{color:'rgba(42,20,31,.16)',width:5}});
+    });
+  };
+  sheet([[1280,360],[1450,250],[1850,205],[2240,270],[2460,440],[2515,780],[2460,1110],[2310,1305],[1900,1340],[1510,1275],[1285,1090],[1210,760]],901,'#F7E8D2');
+  sheet([[1370,285],[1680,175],[2110,205],[2390,345],[2450,570],[2320,670],[1930,600],[1540,680],[1300,555]],902,'#EBD8C0');
+  return layer.toDataURL('image/png');
+}
+(window as unknown as {renderPaperUnderlay:()=>string}).renderPaperUnderlay=renderPaperUnderlay;
 (window as unknown as {thumbnailReady:boolean}).thumbnailReady=true;
