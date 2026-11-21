@@ -107,9 +107,10 @@ export class SamsungPilotScene extends Stage {
       });
     }else this.drawScene(index,t);
     const ctx=this.ctx;
-    ctx.textAlign='left';ctx.fillStyle='#26343b';ctx.font='bold 48px Arial, sans-serif';
-    ctx.fillText(TITLES[index],100,125,1720);
-    ctx.fillStyle='rgba(38,52,59,.82)';ctx.font='29px Arial, sans-serif';
+    ctx.textAlign='left';ctx.font='bold 48px "Noto Sans", Arial, sans-serif';
+    ctx.fillStyle='rgba(28,38,44,.34)';ctx.fillText(TITLES[index],103,131,1720);
+    ctx.fillStyle='#26343b';ctx.fillText(TITLES[index],100,125,1720);
+    ctx.fillStyle='rgba(38,52,59,.84)';ctx.font='29px "Noto Sans", Arial, sans-serif';
     ctx.fillText(SUBTITLES[index],104,180,1700);
     vignette(ctx,[35,28,20],0.16,0.5);grain(ctx,frame,0.045);
   }
