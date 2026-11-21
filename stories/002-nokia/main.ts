@@ -268,7 +268,7 @@ export class NokiaPilotScene extends Stage {
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     const paper=this.paper;
     const sceneLocal=t-STORY_TIMING.lines[index].start_sec;
-    const beat=(fraction:number)=>STORY_TIMING.lines[index].duration_sec*fraction;
+    const beat=(segment:number,within=0)=>{const cue=STORY_TIMING.lines[index].segments[Math.min(segment,STORY_TIMING.lines[index].segments.length-1)];return cue.start_sec-STORY_TIMING.lines[index].start_sec+cue.duration_sec*within;};
     fillGradient(ctx,[[0,top],[1,bottom]]);
     const isNight = index===0 || index===3 || index===6;
     if(isNight){
@@ -292,7 +292,7 @@ export class NokiaPilotScene extends Stage {
     // Both title and subtitle are protected together. Prop bounds, flying paper edges,
     // and their shadows remain to the right of the typography column.
     if(index===0){
-      paperFlyIn(paper,sceneLocal,0.7,0.9,{x:820,y:155,w:900,h:230},()=>{
+      paperFlyIn(paper,sceneLocal,beat(0,0.12),0.9,{x:820,y:155,w:900,h:230},()=>{
         for(let col=0;col<4;col++)phone(paper,865+col*205,180,0.62,['#28343a','#47605c','#8b8e88','#394d63'][col]);
         rounded(paper,820,360,900,22,8,'#775b45');
       },8400);
