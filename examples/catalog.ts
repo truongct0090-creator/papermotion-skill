@@ -12,9 +12,13 @@ export const EXAMPLES: Record<string, () => Promise<MakeStage>> = {
     const { FourSeasonsScene } = await import('../stories/001-four-seasons/main');
     return canvas => new FourSeasonsScene(canvas);
   },
+  'nokia-full': async () => {
+    const { NokiaFullScene } = await import('../stories/002-nokia/main');
+    return canvas => new NokiaFullScene(canvas);
+  },
   'nokia-pilot': async () => {
-    const { NokiaPilotScene } = await import('../stories/002-nokia/main');
-    return canvas => new NokiaPilotScene(canvas);
+    const { NokiaFullScene } = await import('../stories/002-nokia/main');
+    return canvas => new NokiaFullScene(canvas);
   },
   hands: async () => {
     const { HandsScene } = await import('./hands/main');
