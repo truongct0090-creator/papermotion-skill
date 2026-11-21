@@ -116,8 +116,13 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--title",required=True); p.add_argument("--kicker",default="CÂU CHUYỆN CÔNG NGHỆ")
     p.add_argument("--subtitle",default=""); p.add_argument("--image-url",default="")
-    p.add_argument("--output",default="out/thumbnail.png"); a=p.parse_args()
-    canvas=background(); hero=fetch(a.image_url) if a.image_url.strip() else None
+    p.add_argument("--paper-underlay",default=""); p.add_argument("--output",default="out/thumbnail.png"); a=p.parse_args()
+    canvas=background()
+    if a.paper_underlay.strip():
+        underlay=Image.open(a.paper_underlay).convert("RGBA")
+        if underlay.size != (W,H): raise ValueError(f"PaperMotion underlay must be {W}x{H}, got {underlay.size}")
+        canvas.paste(underlay,(0,0),underlay)
+    hero=fetch(a.image_url) if a.image_url.strip() else None
     hero_panel(canvas,hero); text_layer(canvas,a.title.strip(),a.kicker.strip(),a.subtitle.strip())
     out=Path(a.output); out.parent.mkdir(parents=True,exist_ok=True)
     canvas.save(out,"PNG",optimize=True,compress_level=6)
