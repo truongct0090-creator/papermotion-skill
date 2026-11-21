@@ -69,7 +69,7 @@ def main() -> None:
                 clip = clips_dir / segment["clip"]
                 if not clip.exists():
                     raise SystemExit(f"Prepared voice clip is missing: {clip}")
-                clip_entries.append((clip, float(segment["start_sec"]), line["speaker"], segment.get("text", "")))
+                clip_entries.append((clip, float(segment["start_sec"]), line_timing["speaker"], segment.get("text", "")))
     else:
         # Compatibility path for older workflows: synthesize each complete dialogue line.
         tts = Vieneu()
