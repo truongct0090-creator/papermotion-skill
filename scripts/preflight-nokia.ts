@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { load, open } from './browser.ts';
 
 interface MeasuredTiming {
+  duration_sec: number;
   lines: Array<{
     start_sec: number;
     end_sec: number;
@@ -20,6 +21,10 @@ try {
   const errors: string[] = [];
   const { fps, frames } = await load(session.page, session.base, name, errors);
   const requested = new Set<number>([0, frames - 1]);
+  // Sample the whole film at one-second intervals as well as all exact cue/transition boundaries.
+  for (let second = 0; second < STORY_TIMING.duration_sec; second += 1) {
+    requested.add(Math.floor(second * fps));
+  }
 
   for (const line of STORY_TIMING.lines) {
     // Exercise both sides of every paper-tear transition and the interior of each scene.
