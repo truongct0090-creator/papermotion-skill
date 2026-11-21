@@ -97,7 +97,7 @@ jobs:
           python scripts/generate_voiceover.py \
             --manifest stories/003-samsung/voiceover.json \
             --clips-dir out/samsung-voice-clips \
-            --input out/samsung-pilot.mp4 \
+            --input out/samsung-pilot_draft.mp4 \
             --output out/samsung-pilot-10-scenes.mp4
 
       - name: Verify duration, resolution, frame rate and audio
