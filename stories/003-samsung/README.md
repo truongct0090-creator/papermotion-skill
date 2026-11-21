@@ -1,79 +1,74 @@
-# Tập 02 — Samsung: Từ cửa hàng cá khô đến gã khổng lồ công nghệ
+# Samsung – Từ cửa hàng nhỏ đến đế chế công nghệ
+## Kịch bản Mọt Mọt Studio – Bản duyệt số 2
 
-## Bản dựng Full
+- 26 cảnh nội dung, 5 chương, mục tiêu biên tập 07:30 (450 giây).
+- 29 lượt thoại tuần tự: 26 cảnh và 3 cảnh có hai lượt thoại (nữ hỏi, nam trả lời) tại cảnh 15, 20, 25.
+- Giọng nam là dẫn chuyện chính; giọng nữ chỉ xuất hiện đúng 3 lần.
+- Timeline xuất bản được đo từ WAV VieNeu thực tế; 07:30 là tổng thời lượng phân bổ theo kịch bản, không ép tốc độ đọc để khớp.
+- Trim khoảng lặng đầu/cuối clip thoại; giữ khoảng nghỉ có dụng ý trong câu hỏi, câu đùa và cao trào.
+- Định dạng 1920×1080, 30 FPS, One-shot PaperMotion. Camera di chuyển liên tục; Mọt Mọt tương tác và nối cảnh, không dựng slideshow.
+- Nokia Full không bị thay đổi.
 
-- 28 layouts: 26 cảnh câu chuyện (cảnh 1 là hook) + 2 cảnh mascot kết thúc.
-- Timeline thoại được đo từ WAV VieNeu thực tế; Samsung dùng lịch tuần tự, không dùng các mốc start cố định cách nhau 12 giây.
-- Trim im lặng chỉ ở đầu/cuối clip thoại, giữ lại 35 ms đầu và 60 ms cuối làm đệm tự nhiên.
-- Khoảng nghỉ giữa câu mặc định 0,16 giây; giữa câu con trong cùng một line là 0,08 giây.
-- Mục tiêu xuất bản: 1920×1080, 30 FPS; workflow xác minh MP4 bằng ffprobe.
-- Nokia Full không bị thay đổi. Mã nguồn pilot 10 cảnh cũ vẫn được giữ tại main.ts làm tài liệu tham chiếu; render target chính thức mới là samsung-full.
+## Kế thừa thư viện PaperMotion gốc
 
-## Kế thừa PaperMotion gốc
-
-Samsung Full tái sử dụng rig Mọt Mọt, camera follow, zoom hook/ending, one-shot motion, tearWipe, paperFlyIn, paper material, grain, vignette, mixer, city skyline và grassland environment từ repo. Bổ sung các lớp môi trường đã có trong `stories/shared/environment/grassland.ts`:
+Samsung Full tái sử dụng rig Mọt Mọt, camera follow, zoom hook/ending, one-shot motion, tearWipe, paperFlyIn, paper material, grain, vignette, mixer, city skyline và grassland environment từ repo. Các lớp môi trường gồm:
 
 1. Mây và đồi ở hậu cảnh.
 2. Cây lớn, cây thông ở trung cảnh.
 3. Hoa, đá và bụi cây ở lớp gần.
 4. Cỏ uốn theo gió ở tiền cảnh; cỏ và props phản ứng khi Mọt Mọt đi qua.
-5. Mưa nhẹ có hạt rơi, độ nghiêng theo gió và điểm chạm mặt đất được lấy trực tiếp từ `stories/shared/environment/weather.ts` (`rainfall`) + `src/weather/rain.ts` (`drawRain`); chỉ kích hoạt ở phân đoạn khủng hoảng 1997 để tạo nhịp cảm xúc, không phủ mưa lên toàn bộ video.
-6. Các preset tuyết `snowfall`/`drawSnow` của repo vẫn được giữ làm lựa chọn cho bối cảnh mùa đông; không tự ý gắn tuyết vào các mốc lịch sử không có căn cứ thời tiết.
+5. Mưa nhẹ lấy từ preset `rainfall` và `drawRain`, chỉ dùng ở phân đoạn khủng hoảng khi phù hợp nhịp kể.
+6. Giữ các preset tuyết `snowfall`/`drawSnow` sẵn có trong thư viện; không gắn tuyết vào câu chuyện Samsung nếu không có căn cứ bối cảnh.
 
 Các lớp được cuộn bằng camera parallax, không dùng ảnh nền tĩnh thay thế.
 
-## 28 layouts
+## Cấu trúc 26 cảnh
 
-| # | Phân đoạn | Mốc / vật thể chủ đạo |
+| # | Nội dung | Mốc / điểm nhấn |
 |---:|---|---|
-| 1 | Hook: cá khô và gã khổng lồ | Galaxy đối lập thùng cá khô, rau củ |
-| 2 | Samsung bắt đầu ở Daegu | Samsung Sanghoe, 1938 |
-| 3 | Mạng lưới thương mại | Tàu hàng và kiện hàng |
-| 4 | Mở rộng sau chiến tranh | Dệt may, thực phẩm, bán lẻ |
-| 5 | Bước vào ngành điện tử | Samsung Electronics, 1969 |
-| 6 | TV đen trắng đầu tiên | P-3202, 1970 |
-| 7 | Xuất khẩu đến Panama | TV xuất khẩu, 1971 |
-| 8 | Đầu tư vào bán dẫn | Korea Semiconductor, 1974 |
-| 9 | TV màu và bán dẫn | Mua lại và TV màu, 1977 |
-| 10 | Bán dẫn thành trụ cột | Hợp nhất hoạt động, 1980 |
-| 11 | DRAM vào cuộc đua toàn cầu | DRAM 64K, 1983 |
-| 12 | Bước tiến 256K DRAM | 1984 |
-| 13 | Chip 1M DRAM | 1986 |
-| 14 | 4M DRAM | 1988 |
-| 15 | 64M DRAM | 1992 |
-| 16 | New Management | Chuyển đổi chất lượng, 1993 |
-| 17 | Vượt qua khủng hoảng | Khủng hoảng tài chính châu Á, 1997 |
-| 18 | Chất lượng là ưu tiên | Thiết kế và độ tin cậy |
-| 19 | Thương hiệu toàn cầu | TV, màn hình, điện thoại và linh kiện |
-| 20 | Kỷ nguyên TV màn hình phẳng | LCD và công nghệ hiển thị |
-| 21 | Galaxy S mở ra chương mới | Galaxy S, 2010 |
-| 22 | Galaxy Note và màn hình lớn | Note, S Pen, 2011 |
-| 23 | Hệ sinh thái Galaxy | Điện thoại, đồng hồ, tablet, tai nghe |
-| 24 | OLED và điện thoại gập | Galaxy Fold, 2019 |
-| 25 | Bán dẫn cho kỷ nguyên AI | DRAM, NAND, HBM |
-| 26 | Samsung hôm nay và ngày mai | Tổng kết hành trình đa ngành |
-| 27 | Mọt Mọt hỏi bạn | Câu hỏi bình luận, mascot tương tác |
-| 28 | Hẹn gặp lại | Cảnh kết, mascot chào và dẫn sang tập sau |
+| 1 | Bạn sẽ không tin Samsung bắt đầu từ đâu | Cửa hàng nhỏ, cá khô, rau củ, 1938 |
+| 2 | Ba ngôi sao | Samsung thành lập tại Daegu |
+| 3 | Samsung không muốn mãi bán cá khô | Dệt may, bảo hiểm, thương mại |
+| 4 | Một quyết định có vẻ điên rồ | Samsung Electronics, 1969 |
+| 5 | Chiếc tivi mở ra tương lai | TV đen trắng, 1970 |
+| 6 | Những chiếc tivi chưa đủ | TV và thiết bị gia dụng |
+| 7 | Một quyết định đốt tiền | Đầu tư bán dẫn |
+| 8 | Kẻ đi sau muốn đuổi kịp | Kỹ sư, nghiên cứu, tiếp nhận công nghệ |
+| 9 | Con chip nhỏ, bước ngoặt lớn | 64K DRAM, 1983 |
+| 10 | Thay đổi hoặc bị bỏ lại | New Management, 1993 |
+| 11 | Tham vọng bắt đầu thành hiện thực | Đầu tư nghiên cứu và công nghệ |
+| 12 | Samsung cũng muốn làm điện thoại | Điện thoại di động đầu tiên tại Hàn Quốc, 1988 |
+| 13 | Khi những ông lớn đã có chỗ đứng | Nokia, Motorola |
+| 14 | Samsung bắt đầu chơi khác | Điện thoại gập, trượt |
+| 15 | Một chiếc điện thoại khiến cả ngành suy nghĩ lại | iPhone, 2007; nữ hỏi, nam trả lời |
+| 16 | Samsung tung ra quân bài của mình | Galaxy S, 2010 |
+| 17 | Cuộc chiến không khoan nhượng | Apple, Android, Samsung |
+| 18 | Một ý tưởng từng bị chê cười | Galaxy Note, S Pen, 2011 |
+| 19 | Khi kẻ bị chê lại tạo ra xu hướng | Màn hình lớn và S Pen |
+| 20 | Nhưng chiến thắng không kéo dài mãi | Nữ hỏi, nam dẫn vào Note 7 |
+| 21 | Cú ngã mang tên Note 7 | Sự cố pin, đổi máy và thu hồi, 2016 |
+| 22 | Samsung phải giành lại niềm tin | Kiểm định, chất lượng, Galaxy S |
+| 23 | Bí mật phía sau những chiếc điện thoại | Bán dẫn, bộ nhớ, màn hình |
+| 24 | Lại một lần thử thách giới hạn | Galaxy Fold, 2019 |
+| 25 | Điều gì tạo nên một đế chế? | Nữ hỏi, nam trả lời |
+| 26 | Câu chuyện chưa kết thúc | Tổng kết hành trình, nhận diện Mọt Mọt Studio |
 
 ## Đồng bộ thoại và hình
 
-- Adam là giọng kể chính; Mỹ Duyên tạo điểm nhấn ở hook và đoạn hỏi khán giả.
-- Hai giọng không chồng nhau; lịch sequential được tạo sau khi WAV đã trim.
-- Mỗi câu được tách thành các spoken beat; các lần paperFlyIn đọc cue từ `STORY_TIMING` đo thật.
-- Đạo cụ chính và nhãn mốc thời gian có hai cue riêng khi câu thoại có đủ nhịp.
-- Title và subtitle vẫn ở cột an toàn bên trái; đạo cụ ở từ x=800 trở đi.
+- `voiceover.json` giữ 29 lượt thoại theo thứ tự tuần tự; 3 lượt nữ đứng ngay trước câu trả lời nam ở cảnh 15, 20 và 25.
+- Chỉ mục cảnh ánh xạ 26 cảnh vào 29 lượt thoại, bỏ qua lượt thứ hai khi xác định điểm bắt đầu cảnh.
+- WAV thực tế là nguồn sự thật cho timeline. Không ép giọng đọc tăng tốc để khớp 07:30.
+- Mỗi câu được tách thành spoken beats; cue đạo cụ, nhãn thời gian và chuyển động camera phải bám theo thời điểm thoại thực tế.
+- Title và subtitle nằm trong vùng an toàn bên trái; đạo cụ ở vùng bên phải, không che chữ chính/phụ.
+- Thay đổi hiệu ứng xuất hiện giữa các đạo cụ; không dùng một kiểu entrance lặp lại cho tất cả vật thể.
 
 ## Kiểm tra trước render
 
-Workflow `.github/workflows/build-samsung-full.yml` chạy thủ công và có các chốt:
-
-1. Typecheck và unit tests.
+Workflow preflight xác minh:
+1. Typecheck và khả năng nạp scene.
 2. Tạo WAV, trim silence đầu/cuối và sinh timeline tuần tự.
-3. Từ chối khoảng nghỉ thoại trên 0,5 giây hoặc thoại chồng nhau.
-4. Preflight 28 scene entrances, mỗi giây, từng cue thoại và runtime draw.
-5. Render ở full resolution, không dùng `--draft`.
-6. Mix Adam/Mỹ Duyên.
-7. Dùng ffprobe xác minh thời lượng, 1920×1080, 30 FPS và audio stream.
-8. Chỉ upload artifact cuối sau khi toàn bộ bước kiểm tra thành công.
+3. Từ chối thoại chồng nhau hoặc khoảng nghỉ ngoài giới hạn.
+4. Kiểm tra 26 điểm vào cảnh, từng giây, từng cue thoại và runtime draw.
+5. Xác minh MP4 sau render: thời lượng theo WAV, 1920×1080, 30 FPS và audio stream.
 
-`voiceoverTiming.ts` trong repo là placeholder để TypeScript kiểm tra tĩnh; workflow luôn ghi đè file này bằng timeline WAV thực tế trước preflight và render.
+Full render chỉ chạy sau khi preflight và rà soát đồng bộ thoại/hình hoàn tất.
