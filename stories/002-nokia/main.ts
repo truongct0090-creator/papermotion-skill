@@ -110,8 +110,19 @@ const PALETTES: [string,string][] = [
   ["#d4d0c4","#8c8178"],
   ["#e5d8c9","#a78f7c"],
   ["#e7d8c5","#b28f78"],
-  ["#e8dfd0","#aab7ad"]
+  ["#e8dfd0","#aab7ad"],
+  ["#1d2638","#665267"]
 ];
+
+const maxVisualIndex = Math.max(...VISUAL_SCENE_MAP);
+if (TITLES.length !== STORY_TIMING.lines.length ||
+    SUBTITLES.length !== STORY_TIMING.lines.length ||
+    VISUAL_SCENE_MAP.length !== STORY_TIMING.lines.length) {
+  throw new Error("Nokia scene metadata mismatch: titles, subtitles, visual map and measured voice timeline must have the same scene count.");
+}
+if (PALETTES.length <= maxVisualIndex) {
+  throw new Error(`Nokia palette missing for visual index ${maxVisualIndex}; available palettes: ${PALETTES.length}.`);
+}
 
 
 function wrapText(paper: Paper, value: string, size: number, maxWidth: number): string[] {
