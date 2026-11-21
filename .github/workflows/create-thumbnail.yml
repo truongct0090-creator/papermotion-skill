@@ -56,12 +56,7 @@ jobs:
           THUMBNAIL_OUTPUT_NAME: ${{ inputs.output_name }}
         shell: bash
         run: |
-          python3 scripts/create_thumbnail.py \\
-            --title "$THUMBNAIL_TITLE" \\
-            --kicker "$THUMBNAIL_KICKER" \\
-            --subtitle "$THUMBNAIL_SUBTITLE" \\
-            --image-url "$THUMBNAIL_IMAGE_URL" \\
-            --output "out/$THUMBNAIL_OUTPUT_NAME.png"
+          python3 scripts/create_thumbnail.py --title "$THUMBNAIL_TITLE" --kicker "$THUMBNAIL_KICKER" --subtitle "$THUMBNAIL_SUBTITLE" --image-url "$THUMBNAIL_IMAGE_URL" --output "out/$THUMBNAIL_OUTPUT_NAME.png"
       - name: Upload thumbnail
         uses: actions/upload-artifact@v4
         with:
