@@ -33,8 +33,8 @@ export const SAMSUNG_TITLES = [
   'TV ĐEN TRẮNG ĐẦU TIÊN',
   'XUẤT KHẨU ĐẾN PANAMA',
   'ĐẦU TƯ VÀO BÁN DẪN',
-  'TV MÀU VÀ KOREA SEMICONDUCTOR',
-  'BÁN DẪN THÀNH NĂNG LỰC CỐT LÕI',
+  'TV MÀU VÀ BÁN DẪN',
+  'BÁN DẪN THÀNH TRỤ CỘT',
 ] as const;
 export const SAMSUNG_SUBTITLES = [
   'Từ cá khô, rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ',
