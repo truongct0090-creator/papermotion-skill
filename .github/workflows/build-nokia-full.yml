@@ -10,6 +10,7 @@ on:
       - 'stories/002-nokia/**'
       - 'scripts/preflight-nokia.ts'
       - 'scripts/browser.ts'
+      - 'scripts/generate_voiceover.py'
       - 'examples/catalog.ts'
       - 'src/**'
   workflow_dispatch:
