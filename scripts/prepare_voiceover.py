@@ -17,7 +17,7 @@ def wav_duration(path: Path) -> float:
 
 
 def split_sentences(text: str) -> list[str]:
-    parts = re.split(r"(?<=[.!?])\\s+", text.strip())
+    parts = re.split(r"(?<=[.!?])\s+", text.strip())
     return [part.strip() for part in parts if part.strip()]
 
 
@@ -81,7 +81,7 @@ def main() -> None:
 
     total = round(previous_end + 1.25, 4)
     timing = {"lines": timing_lines, "duration_sec": total}
-    (clips_dir / "timing.json").write_text(json.dumps(timing, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    (clips_dir / "timing.json").write_text(json.dumps(timing, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     module = Path(args.timing_module)
     module.parent.mkdir(parents=True, exist_ok=True)
     module.write_text(
