@@ -8,9 +8,7 @@ on:
       - 'examples/rooftops/Cat.ts'
       - 'scripts/generate_voiceover.py'
       - 'scripts/prepare_voiceover.py'
-      - '.github/workflows/test-nokia-pilot.yml'
       - 'examples/catalog.ts'
-      - '.github/workflows/test-nokia-pilot.yml'
   workflow_dispatch:
 
 permissions:
