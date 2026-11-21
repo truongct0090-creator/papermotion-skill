@@ -69,11 +69,13 @@ jobs:
           THUMBNAIL_OUTPUT_NAME: ${{ inputs.output_name }}
         shell: bash
         run: |
-          node scripts/create-thumbnail.ts \
+          node scripts/create-thumbnail.ts --output out/paper-underlay.png
+          python3 scripts/create_thumbnail.py \
             --title "$THUMBNAIL_TITLE" \
             --kicker "$THUMBNAIL_KICKER" \
             --subtitle "$THUMBNAIL_SUBTITLE" \
             --image-url "$THUMBNAIL_IMAGE_URL" \
+            --paper-underlay out/paper-underlay.png \
             --output "out/$THUMBNAIL_OUTPUT_NAME.png"
       - name: Upload thumbnail
         uses: actions/upload-artifact@v4
