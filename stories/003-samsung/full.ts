@@ -11,7 +11,7 @@ const W = 1920, H = 1080, DURATION = STORY_TIMING.duration_sec;
 const TEXT_SAFE_ZONE = { left: 80, right: 780, top: 70, bottom: 440 };
 const PROP_SAFE_LEFT = TEXT_SAFE_ZONE.right + 20;
 const CAT_BLINKS = Array.from({ length: 110 }, (_, i) => 1.1 + i * 5.1 + (i % 4) * 0.65);
-const SCENE_LINE_INDEX = [0, ...Array.from({ length: 27 }, (_, i) => i + 2)] as const;
+const SCENE_LINE_INDEX = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,28] as const;
 
 function sceneStart(index: number): number {
   return STORY_TIMING.lines[SCENE_LINE_INDEX[index]]?.start_sec ?? DURATION;
@@ -25,64 +25,60 @@ function sceneIndexAt(t: number): number {
   return index;
 }
 export const SAMSUNG_TITLES = [
-  "CÁ KHÔ VÀ GÃ KHỔNG LỒ",
-  "SAMSUNG BẮT ĐẦU Ở DAEGU",
-  "MẠNG LƯỚI THƯƠNG MẠI",
-  "MỞ RỘNG SAU CHIẾN TRANH",
-  "BƯỚC VÀO NGÀNH ĐIỆN TỬ",
-  "TV ĐEN TRẮNG ĐẦU TIÊN",
-  "XUẤT KHẨU ĐẾN PANAMA",
-  "ĐẦU TƯ VÀO BÁN DẪN",
-  "TV MÀU VÀ BÁN DẪN",
-  "BÁN DẪN THÀNH TRỤ CỘT",
-  "DRAM VÀO CUỘC ĐUA TOÀN CẦU",
-  "BƯỚC TIẾN 256K DRAM",
-  "CHIP 1M DRAM",
-  "4M DRAM VÀO NĂM 1988",
-  "64M DRAM – DẤU MỐC 1992",
-  "NEW MANAGEMENT 1993",
-  "VƯỢT QUA KHỦNG HOẢNG 1997",
-  "CHẤT LƯỢNG LÀ ƯU TIÊN",
-  "THƯƠNG HIỆU TOÀN CẦU",
-  "KỶ NGUYÊN TV MÀN HÌNH PHẲNG",
-  "GALAXY S MỞ RA CHƯƠNG MỚI",
-  "GALAXY NOTE VÀ MÀN HÌNH LỚN",
-  "HỆ SINH THÁI GALAXY",
-  "OLED VÀ ĐIỆN THOẠI GẬP",
-  "BÁN DẪN CHO KỶ NGUYÊN AI",
-  "SAMSUNG HÔM NAY VÀ NGÀY MAI",
-  "MỌT MỌT HỎI BẠN",
-  "HẸN GẶP LẠI"
+  "BẠN SẼ KHÔNG TIN SAMSUNG BẮT ĐẦU TỪ ĐÂU",
+  "BA NGÔI SAO",
+  "SAMSUNG KHÔNG MUỐN MÃI BÁN CÁ KHÔ",
+  "MỘT QUYẾT ĐỊNH CÓ VẺ ĐIÊN RỒ",
+  "CHIẾC TIVI MỞ RA TƯƠNG LAI",
+  "NHỮNG CHIẾC TIVI CHƯA ĐỦ",
+  "MỘT QUYẾT ĐỊNH ĐỐT TIỀN",
+  "KẺ ĐI SAU MUỐN ĐUỔI KỊP",
+  "CON CHIP NHỎ, BƯỚC NGOẶT LỚN",
+  "THAY ĐỔI HOẶC BỊ BỎ LẠI",
+  "THAM VỌNG BẮT ĐẦU THÀNH HIỆN THỰC",
+  "SAMSUNG CŨNG MUỐN LÀM ĐIỆN THOẠI",
+  "KHI NHỮNG ÔNG LỚN ĐÃ CÓ CHỖ ĐỨNG",
+  "SAMSUNG BẮT ĐẦU CHƠI KHÁC",
+  "MỘT CHIẾC ĐIỆN THOẠI ĐỔI CUỘC CHƠI",
+  "SAMSUNG TUNG RA QUÂN BÀI",
+  "CUỘC CHIẾN KHÔNG KHOAN NHƯỢNG",
+  "MỘT Ý TƯỞNG TỪNG BỊ CHÊ CƯỜI",
+  "KHI KẺ BỊ CHÊ LẠI TẠO XU HƯỚNG",
+  "CHIẾN THẮNG KHÔNG KÉO DÀI MÃI",
+  "CÚ NGÃ MANG TÊN NOTE 7",
+  "SAMSUNG PHẢI GIÀNH LẠI NIỀM TIN",
+  "BÍ MẬT PHÍA SAU NHỮNG CHIẾC ĐIỆN THOẠI",
+  "LẠI MỘT LẦN THỬ THÁCH GIỚI HẠN",
+  "ĐIỀU GÌ TẠO NÊN MỘT ĐẾ CHẾ",
+  "CÂU CHUYỆN CHƯA KẾT THÚC"
 ] as const;
 export const SAMSUNG_SUBTITLES = [
-  "Từ cá khô, rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ",
-  "Daegu, Hàn Quốc • ngày 1/3/1938\nLee Byung-chul lập Samsung Sanghoe",
-  "Những chuyến hàng mở rộng giao thương\nSamsung là doanh nghiệp thương mại",
-  "Thực phẩm, dệt may, bảo hiểm, bán lẻ\nMở rộng sau chiến tranh Triều Tiên",
-  "Samsung Electronics ra đời năm 1969\nBước đi mới vào ngành điện tử",
-  "TV đen trắng P-3202 ra đời năm 1970\nSamsung-Sanyo vào ngành TV gia dụng",
-  "TV Samsung đến Panama năm 1971\nHàng Hàn Quốc vươn ra thế giới",
-  "Samsung mua 50% Korea Semiconductor\nBước đầu tư vào công nghệ bán dẫn",
-  "Samsung hoàn tất mua lại năm 1977\nBắt đầu sản xuất TV màu và xuất khẩu",
-  "Bán dẫn được hợp nhất vào năm 1980\nGia nhập hệ thống Samsung Electronics",
-  "Samsung phát triển DRAM 64K năm 1983\nBắt đầu cuộc đua bộ nhớ tiên tiến",
-  "Tiến lên DRAM 256K năm 1984\nTự chủ công nghệ và sản xuất",
-  "DRAM 1 megabit năm 1986\nNăng lực nghiên cứu tăng tốc",
-  "DRAM 4 megabit năm 1988\nTiến gần nhóm dẫn đầu thế giới",
-  "DRAM 64 megabit năm 1992\nBán dẫn thành lợi thế chiến lược",
-  "Lee Kun-hee khởi xướng New Management\nChất lượng và đổi mới là trọng tâm",
-  "Khủng hoảng tài chính châu Á năm 1997\nTái cấu trúc để tồn tại và cạnh tranh",
-  "Chuyển từ số lượng sang chất lượng\nThiết kế và độ tin cậy được ưu tiên",
-  "TV, màn hình, điện thoại và linh kiện\nSamsung vươn thành thương hiệu toàn cầu",
-  "LCD và công nghệ hiển thị mới\nTV màn hình phẳng bước vào gia đình",
-  "Bước ngoặt smartphone năm 2010\nGalaxy S mở chương mới",
-  "Galaxy Note ra mắt năm 2011\nMàn hình lớn, bút S Pen",
-  "Điện thoại, đồng hồ, tablet, tai nghe\nKết nối trong một hệ sinh thái",
-  "Galaxy Fold ra mắt năm 2019\nMở ra hướng đi cho điện thoại gập",
-  "DRAM, NAND và bộ nhớ HBM\nNền tảng cho trung tâm dữ liệu, AI",
-  "Từ thiết bị đến bán dẫn và kết nối\nSamsung tiếp tục đổi mới",
-  "Bạn từng dùng Galaxy hay TV Samsung?\nKể Mọt Mọt nghe kỷ niệm của bạn",
-  "Cảm ơn bạn đã theo dõi câu chuyện\nHẹn gặp lại ở tập tiếp theo"
+  "Daegu, Hàn Quốc • 1938\nCá khô, rau củ và hàng tạp hóa",
+  "Samsung nghĩa là ba ngôi sao\nTham vọng lớn hơn một cửa hàng",
+  "Dệt may, bảo hiểm và thương mại\nTừ buôn bán sang tự sản xuất",
+  "Samsung Electronics ra đời năm 1969\nBước vào ngành điện tử cạnh tranh",
+  "Tivi đen trắng • 1970\nNền móng của đế chế điện tử",
+  "Tivi, tủ lạnh và máy giặt\nKhông thể mãi phụ thuộc công nghệ ngoài",
+  "Đầu tư vào ngành bán dẫn\nCuộc chơi tốn kém và rủi ro",
+  "Tuyển kỹ sư • tiếp nhận công nghệ\nNghiên cứu để đuổi kịp",
+  "64K DRAM • 1983\nBước tiến trong công nghệ bộ nhớ",
+  "Lee Kun-hee • New Management 1993\nChất lượng thay vì chỉ số lượng",
+  "Nghiên cứu • chip • công nghệ điện tử\nTham vọng cạnh tranh toàn cầu",
+  "Điện thoại Samsung đầu tiên tại Hàn Quốc\n1988 • thị trường còn non trẻ",
+  "Nokia và Motorola đã có vị thế\nSamsung cần một khác biệt",
+  "Điện thoại gập • trượt • nhiều màu sắc\nThiết bị trở thành cá tính",
+  "iPhone • 2007\nĐiện thoại bước sang kỷ nguyên mới",
+  "Galaxy S • 2010\nSamsung bước vào cuộc đua smartphone",
+  "Apple và Samsung\nHai chiến lược trong một cuộc đua",
+  "Galaxy Note • 2011\nMàn hình lớn và bút S Pen",
+  "Từ bị chê quá khổ đến được yêu thích\nMột phân khúc khách hàng mới",
+  "Galaxy Note 7 • 2016\nMột khủng hoảng không ngờ tới",
+  "Sự cố pin và chương trình thu hồi\nAn toàn là giới hạn không thể thỏa hiệp",
+  "Galaxy S8 và kiểm định chất lượng\nGiành lại niềm tin khách hàng",
+  "Bán dẫn • bộ nhớ • màn hình\nLinh kiện phía sau thiết bị",
+  "Galaxy Fold • 2019\nMở ra hướng đi cho điện thoại gập",
+  "Từ cửa hàng cá khô đến tập đoàn công nghệ\nĐầu tư • thay đổi • dám thử thách",
+  "Gần một thế kỷ thăng trầm\nSau vấp ngã, tiếp tục bước đi"
 ] as const;
 const PALETTES: [string, string][] = [
   ['#25364a', '#d2a77d'],
@@ -114,9 +110,9 @@ const PALETTES: [string, string][] = [
   ['#e6d9c7', '#a88f79'],
   ['#202c40', '#5d7180']
 ];
-if (STORY_TIMING.lines.length !== 29 || SAMSUNG_TITLES.length !== 28 ||
-    SAMSUNG_SUBTITLES.length !== 28 || SCENE_LINE_INDEX.length !== 28 || PALETTES.length !== 28) {
-  throw new Error('Samsung Full requires 29 measured voice lines mapped to exactly 28 layouts (26 story scenes + 2 mascot scenes).');
+if (STORY_TIMING.lines.length !== 29 || SAMSUNG_TITLES.length !== 26 ||
+    SAMSUNG_SUBTITLES.length !== 26 || SCENE_LINE_INDEX.length !== 26 || PALETTES.length < 26) {
+  throw new Error('Samsung Full v2 requires 29 measured voice lines mapped to exactly 26 story scenes.');
 }
 
 function wrapText(paper: Paper, value: string, size: number, maxWidth: number): string[] {
