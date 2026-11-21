@@ -228,65 +228,88 @@ function drawExtendedSamsungProp(paper: Paper, index: number): void {
     outlinedText(paper, label, x + 24, y + size * 0.57, Math.min(30, size / 5), false, size - 48);
     paper.piece(circlePoly({x:x+size-30,y:y+30},8,12),'#e6c27f',{seed,tear:1,shadow:1});
   };
-  if (index >= 10 && index <= 14) {
-    paper.piece(circlePoly({x:1270,y:500},235,72),'#829b9b',{seed:9600+index,tear:3,shadow:12,texture:0.5});
-    paper.piece(circlePoly({x:1270,y:500},202,72),'#c2d2c9',{seed:9610+index,tear:2,shadow:5,texture:0.4});
-    const n = index === 10 ? 3 : index === 11 ? 4 : index === 12 ? 5 : index === 13 ? 6 : 7;
-    for (let i=0;i<n;i++) for (let j=0;j<n;j++) {
-      const size = index >= 13 ? 28 : 34;
-      rounded(paper, 1120+i*(index>=13?42:50), 350+j*(index>=13?42:50), size, size, 4,
-        ['#607f86','#8ca99c','#b9a17b','#728fa0'][(i+j+index)%4]);
-    }
-    chip(1430,650,155, index===10?'64K':index===11?'256K':index===12?'1M':index===13?'4M':'64M', 9620+index, '#9fb9aa');
+  if (index === 10) {
+    // Research investment and technology ambition.
+    chip(1120,390,300,'R&D',9620,'#9fb9aa');
+    for(let i=0;i<5;i++) paper.line([{x:980+i*125,y:760},{x:1630,y:760-i*35}],'#b8c9bd',7);
+    outlinedText(paper,'ĐẦU TƯ DÀI HẠN',1080,830,36,false,460);
+  } else if (index === 11) {
+    // First-generation mobile handset.
+    rounded(paper,1160,290,270,510,40,'#343e45','#9ba8a0');
+    rounded(paper,1190,335,210,300,18,'#c6d1c9','#788c88');
+    rounded(paper,1230,660,130,92,14,'#9aab9e','#d6e0d8');
+    outlinedText(paper,'1988',1220,855,44,false,180);
+  } else if (index === 12) {
+    // Two established competitors.
+    rounded(paper,1010,330,250,470,35,'#34434a','#a5b3aa');
+    rounded(paper,1040,370,190,300,14,'#9caea3');
+    for(let i=0;i<3;i++) rounded(paper,1060+i*48,690,34,28,5,'#d7d9c8');
+    rounded(paper,1370,330,250,470,35,'#343e49','#a5b3aa');
+    rounded(paper,1400,370,190,300,14,'#8da7a4');
+    outlinedText(paper,'NOKIA',1055,850,32,false,180);
+    outlinedText(paper,'MOTOROLA',1375,850,27,false,230);
+  } else if (index === 13) {
+    // Foldable and slider designs.
+    rounded(paper,1000,340,245,430,34,'#38464a','#aab7ad');
+    rounded(paper,1025,370,195,350,22,'#8fa9a1');
+    paper.line([{x:1122,y:350},{x:1122,y:760}],'#d8e4da',7);
+    rounded(paper,1360,340,245,430,34,'#38464a','#aab7ad');
+    rounded(paper,1385,370,195,350,22,'#a2b6a8');
+    rounded(paper,1385,545,195,145,12,'#6f8e8a');
+    outlinedText(paper,'GẬP',1050,835,34,false,150);
+    outlinedText(paper,'TRƯỢT',1390,835,34,false,180);
+  } else if (index === 14) {
+    // Touchscreen shift.
+    galaxyPhone(paper,1130,260,1.38);
+    for(let i=0;i<3;i++) paper.piece(circlePoly({x:1000+i*520,y:760},38,24),'#e5c47f',{seed:9630+i,tear:2,shadow:5});
+    outlinedText(paper,'MÀN HÌNH CẢM ỨNG',1010,865,34,false,650);
   } else if (index === 15) {
-    paper.piece([{x:950,y:730},{x:1640,y:730},{x:1580,y:470},{x:1010,y:470}],'#c8d4d0',{seed:9630,tear:3,shadow:10});
-    for(let i=0;i<5;i++) rounded(paper,1010+i*118,540,90,180,4,['#8d9d9a','#b6a58c','#849ba0'][i%3]);
-    rounded(paper,1110,370,390,90,12,'#5e7479');
-    outlinedText(paper,'NEW MANAGEMENT',1140,430,31,false,330);
+    galaxyPhone(paper,1130,260,1.38);
+    outlinedText(paper,'GALAXY S • 2010',1110,850,36,false,420);
   } else if (index === 16) {
-    rounded(paper,920,330,700,420,18,'#d7ded9','#6f7e7b');
-    for(let i=0;i<6;i++) { const h=[210,260,170,120,80,55][i]; rounded(paper,1010+i*92,690-h,58,h,6,i<3?'#8ca59a':'#bd806b'); }
-    paper.line([{x:980,y:420},{x:1570,y:690}],'#b95f58',12);
-    outlinedText(paper,'1997',1170,810,46,false,200);
-  } else if (index === 17) {
-    rounded(paper,1030,330,500,420,30,'#718b84','#d8e4d9');
-    paper.piece(circlePoly({x:1280,y:500},150,48),'#e4c78c',{seed:9640,tear:3,shadow:8});
-    paper.piece([{x:1280,y:390},{x:1380,y:500},{x:1280,y:610},{x:1180,y:500}],'#a1b8a5',{seed:9641,tear:2,shadow:5});
-    outlinedText(paper,'QUALITY',1160,790,42,false,260);
-  } else if (index === 18) {
-    paper.piece(circlePoly({x:1270,y:520},220,64),'#8ba8a1',{seed:9650,tear:3,shadow:12});
-    ctx.save();ctx.strokeStyle='#f0d7a6';ctx.lineWidth=8;ctx.beginPath();ctx.ellipse(1270,520,300,105,-0.35,0,Math.PI*2);ctx.stroke();ctx.restore();
-    for(let i=0;i<5;i++) paper.piece(circlePoly({x:1130+i*68,y:470+(i%2)*90},24,20),'#d9e5d9',{seed:9651+i,tear:1.5,shadow:3});
-    outlinedText(paper,'GLOBAL',1160,800,40,false,260);
+    galaxyPhone(paper,980,330,1.0);
+    galaxyPhone(paper,1400,330,1.0);
+    outlinedText(paper,'ANDROID',1000,830,30,false,220);
+    outlinedText(paper,'HỆ SINH THÁI RIÊNG',1370,830,28,false,300);
+  } else if (index === 17 || index === 18) {
+    galaxyPhone(paper,1110,270,1.38);
+    paper.line([{x:1510,y:370},{x:1610,y:650}],'#c6a16f',9);
+    outlinedText(paper,index===17?'S PEN • 2011':'GHI CHÚ • SÁNG TẠO',1460,760,28,false,240);
   } else if (index === 19) {
-    rounded(paper,930,330,700,430,32,'#303b42','#89999a'); rounded(paper,970,370,620,340,12,'#82a9ad','#d9e1d8');
-    paper.piece([{x:970,y:600},{x:1150,y:480},{x:1300,y:580},{x:1450,y:450},{x:1590,y:600},{x:1590,y:710},{x:970,y:710}],'#5c8586',{seed:9660,tear:2.5,shadow:3});
-    rounded(paper,1180,760,210,35,10,'#8c765f'); outlinedText(paper,'FLAT DISPLAY',1090,830,34,false,400);
-  } else if (index === 20 || index === 21) {
-    galaxyPhone(paper,1110,270,index===20?1.45:1.28);
-    if(index===21) { paper.line([{x:1500,y:360},{x:1600,y:650}],'#c6a16f',9); outlinedText(paper,'S PEN',1480,760,32,false,160); }
+    galaxyPhone(paper,1130,260,1.35);
+    paper.piece(circlePoly({x:1510,y:380},72,36),'#d8b46d',{seed:9640,tear:2,shadow:8});
+    outlinedText(paper,'NOTE 7',1450,520,34,false,180);
+  } else if (index === 20) {
+    rounded(paper,1110,300,360,500,34,'#333e46','#aab7ad');
+    rounded(paper,1140,335,300,430,20,'#a9b7ad','#dce4da');
+    paper.piece(circlePoly({x:1280,y:535},100,48),'#c27c65',{seed:9641,tear:2.8,shadow:8});
+    outlinedText(paper,'THU HỒI',1160,855,38,false,260);
+  } else if (index === 21) {
+    rounded(paper,1010,370,620,360,20,'#d7e1d9','#718981');
+    for(let i=0;i<5;i++) {
+      rounded(paper,1050+i*112,470,82,145,10,['#8ca79c','#a7b7aa','#b5a58b'][i%3]);
+      paper.piece(circlePoly({x:1091+i*112,y:445},18,16),'#e5c57f',{seed:9650+i,tear:1.5,shadow:3});
+    }
+    outlinedText(paper,'KIỂM ĐỊNH • AN TOÀN',1050,810,36,false,540);
   } else if (index === 22) {
-    const nodes=[[1120,390],[1430,390],[1275,650],[970,650],[1580,650]];
-    nodes.forEach(([x,y],i)=>paper.piece(circlePoly({x,y},74,36),['#839f9a','#b6a27e','#7998a8','#9e8da4','#8da98d'][i],{seed:9680+i,tear:2.2,shadow:8}));
-    nodes.slice(1).forEach(([x,y])=>paper.line([{x:1275,y:520},{x,y}],'#f2e4c8',6));
-    outlinedText(paper,'GALAXY',1150,820,40,false,260);
+    chip(1100,390,250,'DRAM',9660,'#9fb9aa');
+    chip(1430,440,210,'NAND',9661,'#8fae9f');
+    outlinedText(paper,'BỘ NHỚ • MÀN HÌNH',1040,820,36,false,600);
   } else if (index === 23) {
     rounded(paper,1050,330,260,470,34,'#27323c','#899ba0'); rounded(paper,1080,360,200,390,20,'#7b9fa6');
     rounded(paper,1310,330,260,470,34,'#27323c','#899ba0'); rounded(paper,1340,360,200,390,20,'#8fb4b0');
-    paper.line([{x:1300,y:360},{x:1300,y:770}],'#d9e2da',8); outlinedText(paper,'FOLD',1180,850,38,false,220);
+    paper.line([{x:1300,y:360},{x:1300,y:770}],'#d9e2da',8); outlinedText(paper,'FOLD • 2019',1160,850,38,false,300);
   } else if (index === 24) {
-    for(let i=0;i<5;i++) rounded(paper,1000+i*125,610-i*44,110,150,8,['#718f9b','#8ca79e','#a99a80'][i%3],'#d4dfd7');
-    rounded(paper,1070,320,500,90,12,'#33495a'); outlinedText(paper,'HBM',1220,380,42,false,180);
-    for(let i=0;i<6;i++) paper.line([{x:1040+i*95,y:790},{x:1040+i*95,y:850}],'#d1bd92',5);
-  } else if (index === 25) {
-    chip(1110,390,300,'AI',9690,'#819f9b');
-    for(let i=0;i<4;i++) { paper.line([{x:1410,y:450+i*75},{x:1580,y:380+i*75}],'#d7c59f',7); paper.piece(circlePoly({x:1590,y:375+i*75},25,20),'#9ab4a6',{seed:9691+i,tear:1.5,shadow:4}); }
-  } else if (index === 26) {
-    paper.piece([{x:930,y:360},{x:1640,y:360},{x:1640,y:690},{x:1280,y:690},{x:1190,y:790},{x:1200,y:690},{x:930,y:690}],'#f2e6d1',{seed:9700,tear:4,shadow:13,texture:0.45});
-    outlinedText(paper,'BẠN TỪNG DÙNG SAMSUNG?',1010,510,39,false,550); outlinedText(paper,'KỂ MỌT MỌT NGHE!',1100,590,32,false,450);
+    // Visual bridge from the small shop to modern technology.
+    cargoCrate(paper,930,560,210,150,'CÁ KHÔ','#a7794f',9670);
+    chip(1280,420,180,'CHIP',9671,'#9fb9aa');
+    galaxyPhone(paper,1500,390,0.72);
+    paper.line([{x:1140,y:630},{x:1280,y:520},{x:1500,y:520}],'#d5c29b',8);
   } else {
-    galaxyPhone(paper,1170,310,1.12); paper.piece(circlePoly({x:1510,y:390},62,32),'#e7c77f',{seed:9710,tear:2,shadow:8});
-    outlinedText(paper,'CẢM ƠN BẠN!',1100,820,40,false,360);
+    // Closing image leaves room for the mascot and final brand mark.
+    paper.piece([{x:950,y:380},{x:1640,y:380},{x:1640,y:690},{x:1280,y:690},{x:1190,y:790},{x:1200,y:690},{x:950,y:690}],'#f2e6d1',{seed:9700,tear:4,shadow:13,texture:0.45});
+    outlinedText(paper,'CÂU CHUYỆN CHƯA KẾT THÚC',1000,510,37,false,590);
+    outlinedText(paper,'MỌT MỌT STUDIO',1110,590,32,false,420);
   }
 }
 
