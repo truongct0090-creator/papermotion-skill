@@ -1,7 +1,7 @@
 # Tập 01 — Nokia: Từ ông vua điện thoại đến kẻ tụt lại
 
 ## Trạng thái sản xuất
-- Pilot 10 cảnh, tổng 100 giây, 30 fps, 16:9; render thẳng bản cuối 1920×1080, không tạo draft. Nhịp cắt 9,2 giây khớp khoảng cách cue voiceover; cảnh cuối bắt đầu ở 82,8 giây và được giữ đến hết 100 giây để dành chỗ cho lời kết.
+- Pilot 10 cảnh, 30 fps, 16:9; thời lượng được tính từ WAV giọng đọc thực tế, không cố định 100 giây. Trước khi render, VieNeu tạo clip theo từng câu và đo thời điểm bắt đầu/kết thúc; cảnh chuyển đúng tại đầu câu thoại tiếp theo, cảnh cuối giữ thêm 1,25 giây sau câu kết.
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
 - Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
 - Mèo mauve là mascot dẫn chuyện xuyên suốt, dùng rig và chuyển động chuẩn từ Rooftops; các đạo cụ lịch sử riêng của Nokia được thiết kế theo bối cảnh từng cảnh.
@@ -17,16 +17,16 @@ Mỗi cảnh bắt đầu theo mốc thoại thực tế; chuyển cảnh không
 
 | Cảnh | Mốc hình ảnh | Hình ảnh | Giọng |
 |---:|---:|---|---|
-| 1 | 00:00–00:10 | Cửa hàng điện thoại, nhiều mẫu Nokia; mở bằng nghịch lý Nokia từng thống trị nhưng mất vị trí dẫn đầu | Adam |
-| 2 | 00:10–00:20 | Nokia trong ký ức gia đình Việt Nam, Snake và điện thoại bền bỉ | Mỹ Duyên |
-| 3 | 00:20–00:30 | Nhà máy, sản phẩm và quy mô Nokia năm 2007 | Adam |
-| 4 | 00:30–00:40 | iPhone đầu tiên xuất hiện, mở ra cách tương tác mới | Adam |
-| 5 | 00:40–00:50 | Android mở rộng, cuộc cạnh tranh chuyển sang hệ sinh thái | Adam |
-| 6 | 00:50–01:00 | Symbian và độ phức tạp phần mềm | Adam |
-| 7 | 01:00–01:10 | Phòng họp, Nokia đứng trước lựa chọn chiến lược | Mỹ Duyên |
-| 8 | 01:10–01:20 | Quyết định chọn Windows Phone và sự xuất hiện của Lumia | Adam |
-| 9 | 01:20–01:30 | Thương vụ Microsoft mua mảng thiết bị và dịch vụ | Adam |
-| 10 | 01:30–01:40 | Những chiếc Nokia cũ như ký ức; Nokia tiếp tục tồn tại trong lĩnh vực khác | Adam |
+| 1 | Cue thoại 1 | Cửa hàng điện thoại, nhiều mẫu Nokia; mở bằng nghịch lý Nokia từng thống trị nhưng mất vị trí dẫn đầu | Adam |
+| 2 | Cue thoại 2 | Nokia trong ký ức gia đình Việt Nam, Snake và điện thoại bền bỉ | Mỹ Duyên |
+| 3 | Cue thoại 3 | Nhà máy, sản phẩm và quy mô Nokia năm 2007 | Adam |
+| 4 | Cue thoại 4 | iPhone đầu tiên xuất hiện, mở ra cách tương tác mới | Adam |
+| 5 | Cue thoại 5 | Android mở rộng, cuộc cạnh tranh chuyển sang hệ sinh thái | Adam |
+| 6 | Cue thoại 6 | Symbian và độ phức tạp phần mềm | Adam |
+| 7 | Cue thoại 7 | Phòng họp, Nokia đứng trước lựa chọn chiến lược | Mỹ Duyên |
+| 8 | Cue thoại 8 | Quyết định chọn Windows Phone và sự xuất hiện của Lumia | Adam |
+| 9 | Cue thoại 9 | Thương vụ Microsoft mua mảng thiết bị và dịch vụ | Adam |
+| 10 | Cue thoại 10 | Những chiếc Nokia cũ như ký ức; Nokia tiếp tục tồn tại trong lĩnh vực khác | Adam |
 
 Lời thoại và mốc thu âm chính xác nằm trong [voiceover.json](./voiceover.json).
 
