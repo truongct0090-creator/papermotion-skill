@@ -15,7 +15,7 @@
 
 Mỗi cảnh bắt đầu theo mốc thoại thực tế; chuyển cảnh không được cắt lời. Script đo từng câu thoại trước khi render, dùng cùng timeline cho hoạt ảnh và audio, sau đó giữ hình cuối thêm 1,25 giây.
 
-| Cảnh | Thời gian | Hình ảnh | Giọng |
+| Cảnh | Mốc hình ảnh | Hình ảnh | Giọng |
 |---:|---:|---|---|
 | 1 | 00:00–00:10 | Cửa hàng điện thoại, nhiều mẫu Nokia; mở bằng nghịch lý Nokia từng thống trị nhưng mất vị trí dẫn đầu | Adam |
 | 2 | 00:10–00:20 | Nokia trong ký ức gia đình Việt Nam, Snake và điện thoại bền bỉ | Mỹ Duyên |
