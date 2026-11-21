@@ -25,7 +25,7 @@ export const EXAMPLES: Record<string, () => Promise<MakeStage>> = {
     return canvas => new SamsungPilotScene(canvas);
   },
   'samsung-full': async () => {
-    const { SamsungPilotScene: SamsungFullScene } = await import('../stories/003-samsung/full');
+    const { SamsungFullScene } = await import('../stories/003-samsung/full');
     return canvas => new SamsungFullScene(canvas);
   },
   hands: async () => {
