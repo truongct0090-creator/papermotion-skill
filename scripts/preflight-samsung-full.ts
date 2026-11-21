@@ -8,6 +8,8 @@ import { load, open } from './browser.ts';
 interface Timing {
   duration_sec: number;
   max_inter_line_gap_sec: number;
+  max_intra_scene_gap_sec: number;
+  max_inter_scene_gap_sec: number;
   scene_line_indices: number[];
   scene_durations_sec: number[];
   scene_starts_sec: number[];
