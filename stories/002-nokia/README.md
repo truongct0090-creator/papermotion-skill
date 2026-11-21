@@ -5,15 +5,15 @@
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
 - Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
 - Mèo mauve là mascot dẫn chuyện xuyên suốt, dùng rig và chuyển động chuẩn từ Rooftops; các đạo cụ lịch sử riêng của Nokia được thiết kế theo bối cảnh từng cảnh.
-- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề tự xuống dòng trong vùng an toàn góc trái (x=110–764). Đạo cụ phụ chỉ được bố trí từ x≥800, không được che chữ ở bất kỳ frame nào; bóng và mép giấy cũng không được lấn vào vùng chữ.
-- Lời thoại giữ khoảng nghỉ mục tiêu 0,32 giây giữa câu; cue được tự lùi nếu câu trước dài để không chồng tiếng. Nhịp đổi cảnh dùng cùng bước 9,2 giây với cue voiceover để hình không đổi cảnh trước khi câu kể tương ứng bắt đầu.
-- Đạo cụ được hé lộ theo từng cụm đúng mốc lời thoại bằng mép giấy xé cục bộ, có bóng và sợi giấy; khi đã xuất hiện, đạo cụ tiếp tục tồn tại đến hết cảnh. Các cụm đạo cụ được chia nhịp, không xuất hiện đồng loạt.
+- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề cùng nằm trong một vùng an toàn bên trái (x=80–780, y=70–440). Đạo cụ, tờ giấy đang bay, sợi giấy rách và bóng đổ đều bị giới hạn bên phải x=800; vùng này được clip cứng trong suốt hiệu ứng.
+- Lời thoại được chia theo từng câu để đo thời lượng TTS thực tế; khoảng nghỉ giữa câu trong cùng lượt nói là 0,10 giây, giữa hai lượt thoại là 0,18 giây. Mốc chuyển cảnh và mốc xuất hiện đạo cụ lấy trực tiếp từ các clip thoại đã đo, không dùng nhịp 9,2 giây ước lượng.
+- Đạo cụ được hé lộ ở đầu từng câu thoại liên quan bằng tờ giấy xé bay vào; các nhóm tiếp theo có thể bung từ trái/phải hoặc trên/dưới, ghép từ mảnh giấy và có sợi giấy bay theo. Hướng bay được chọn ngẫu nhiên có kiểm soát theo seed để đa dạng nhưng không đổi giữa các lần render. Khi đã xuất hiện, đạo cụ tiếp tục tồn tại đến hết cảnh.
 - Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7.
 - Cảnh đêm dùng bầu trời sao và mặt trăng theo demo Rooftops; cảnh ban ngày dùng mây và môi trường giấy từ shared environment.
 
 ## Pilot 10 cảnh
 
-Mỗi cảnh có nhịp nền khoảng 10 giây; chuyển cảnh không được cắt lời. Script đo độ dài giọng đọc thực tế và giữ hình cuối thêm thời gian cần thiết để câu cuối kết thúc trọn vẹn.
+Mỗi cảnh bắt đầu theo mốc thoại thực tế; chuyển cảnh không được cắt lời. Script đo từng câu thoại trước khi render, dùng cùng timeline cho hoạt ảnh và audio, sau đó giữ hình cuối thêm 1,25 giây.
 
 | Cảnh | Thời gian | Hình ảnh | Giọng |
 |---:|---:|---|---|
