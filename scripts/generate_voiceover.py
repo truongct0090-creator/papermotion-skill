@@ -161,7 +161,7 @@ def mix_clips(args, clip_entries, video_duration: float, has_audio: bool) -> Non
             "video_duration_sec": round(video_duration, 3),
             "voice_end_sec": round(max(voice_ends, default=0.0), 3),
             "lines": timing_records,
-        }, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Voiceover mixed into {args.output} ({len(clip_entries)} sentence clips, final duration {required_duration:.2f}s).")
 
 
