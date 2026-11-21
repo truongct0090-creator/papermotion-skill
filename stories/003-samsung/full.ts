@@ -36,7 +36,7 @@ export const SAMSUNG_TITLES = [
   "TV MÀU VÀ BÁN DẪN",
   "BÁN DẪN THÀNH TRỤ CỘT",
   "DRAM VÀO CUỘC ĐUA TOÀN CẦU",
-  "BƯỚC TIẾN 64K DRAM",
+  "BƯỚC TIẾN 256K DRAM",
   "CHIP 1M DRAM",
   "4M DRAM VÀO NĂM 1988",
   "64M DRAM – DẤU MỐC 1992",
