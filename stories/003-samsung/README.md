@@ -14,13 +14,13 @@
 | 1 | 00:00–00:12 | Galaxy hiện đại lướt vào khung hình; Mọt Mọt chạy qua chiếc điện thoại, nhảy về phía cửa hàng cá khô năm 1938. Cú đối lập hiện tại/quá khứ mở hook. | Adam + Mỹ Duyên |
 | 2 | 00:12–00:24 | Camera tiến vào Daegu; biển hiệu Samsung Sanghoe, thùng cá khô, gạo, trái cây và sổ hàng bung mở thành các lớp giấy. Mọt Mọt né thùng hàng rồi leo lên quầy. | Adam |
 | 3 | 00:24–00:36 | Các kiện hàng trượt qua bến cảng; tàu giấy mở buồm, hàng hóa được kéo lên tàu. Mọt Mọt chạy dọc cầu cảng, nhảy qua dây neo. | Adam |
-| 4 | 00:36–00:48 | Cửa xưởng điện tử mở ra; bảng hiệu Samsung Electronics bật lên, dây chuyền và linh kiện lần lượt lắp ráp. Mọt Mọt kéo cần khởi động băng chuyền. | Adam |
-| 5 | 00:48–01:00 | TV đen trắng P-3202 xoay ra từ quầy gỗ; màn hình sáng lên bằng hiệu ứng giấy mở lớp. Mọt Mọt chạm núm chỉnh rồi giật mình khi hình ảnh xuất hiện. | Adam |
-| 6 | 01:00–01:12 | Thùng TV đóng nắp, trượt lên tàu hướng Panama; cánh buồm giấy bung ra. Mọt Mọt bám theo kiện hàng và nhảy qua mạn tàu. | Adam |
-| 7 | 01:12–01:24 | Wafer bán dẫn xoay vào khung hình, hợp đồng mua cổ phần mở ra cạnh nhà máy. Mọt Mọt đẩy một con chip vào đúng vị trí. | Adam |
-| 8 | 01:24–01:36 | TV màu lần lượt bật lên trên dây chuyền; các mảng màu bật ra khác nhịp, không dùng một hiệu ứng lặp. Mọt Mọt chạy giữa các màn hình. | Adam + Mỹ Duyên |
-| 9 | 01:36–01:48 | Các lớp chip, bảng mạch và nhà máy nhập thành một hệ thống; đường dẫn giấy nối về Samsung Electronics. Mọt Mọt kéo một dải mạch chạy xuyên khung hình. | Adam |
-| 10 | 01:48–02:00 | Điện thoại di động SH-100 xuất hiện trên bệ trưng bày; Mọt Mọt chạy tới, nhảy qua chiếc ống nghe cỡ lớn rồi camera hướng về hành trình di động tiếp theo. | Adam |
+| 4 | 00:36–00:48 | Các cơ sở chế biến thực phẩm, xưởng dệt và quầy thương mại mở ra thành một chuỗi ngành nghề. Mọt Mọt kéo sợi vải làm dải chuyển cảnh. | Adam |
+| 5 | 00:48–01:00 | Cửa xưởng điện tử mở ra; bảng hiệu Samsung Electronics bật lên, dây chuyền và linh kiện lần lượt lắp ráp. Mọt Mọt kéo cần khởi động băng chuyền. | Adam |
+| 6 | 01:00–01:12 | TV đen trắng P-3202 xoay ra từ quầy gỗ; màn hình sáng lên bằng hiệu ứng giấy mở lớp. Mọt Mọt chạm núm chỉnh rồi giật mình khi hình ảnh xuất hiện. | Adam |
+| 7 | 01:12–01:24 | Thùng TV đóng nắp, trượt lên tàu hướng Panama; cánh buồm giấy bung ra. Mọt Mọt bám theo kiện hàng và nhảy qua mạn tàu. | Adam |
+| 8 | 01:24–01:36 | Wafer bán dẫn xoay vào khung hình, hợp đồng mua cổ phần mở ra cạnh nhà máy. Mọt Mọt đẩy một con chip vào đúng vị trí. | Adam |
+| 9 | 01:36–01:48 | TV màu lần lượt bật lên trên dây chuyền; các mảng màu bật ra khác nhịp, không dùng một hiệu ứng lặp. Mọt Mọt chạy giữa các màn hình. | Adam |
+| 10 | 01:48–02:00 | Các lớp chip, bảng mạch và nhà máy nhập thành một hệ thống; đường dẫn giấy nối về Samsung Electronics. Mọt Mọt kéo một dải mạch chạy xuyên khung hình. | Adam |
 
 Lời thoại pilot và thời điểm bắt đầu từng đoạn nằm trong [voiceover.json](./voiceover.json).
 
