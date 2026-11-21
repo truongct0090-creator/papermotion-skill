@@ -23,6 +23,7 @@ def main():
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--clips-dir", help="Reuse clips prepared before render.")
     args = parser.parse_args()
 
     manifest_path = Path(args.manifest)
@@ -38,7 +39,12 @@ def main():
         if not isinstance(line.get("text"), str) or not line["text"].strip():
             raise SystemExit(f"Line {i}: text is required.")
 
-    tts = Vieneu()  # Open-source v3 Turbo; automatically uses CPU/ONNX when no CUDA GPU exists.
+    tts = None if args.clips_dir else Vieneu()  # Reuse prepared clips when supplied.
+    prepared_timing = None
+    if args.clips_dir:
+        prepared_timing = json.loads((Path(args.clips_dir) / "timing.json").read_text(encoding="utf-8"))
+        if len(prepared_timing.get("lines", [])) != len(lines):
+            raise SystemExit("Prepared timing does not match voiceover manifest line count.")
     probe = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
          "-show_entries", "format=duration", "-of", "json", args.input],
@@ -64,12 +70,18 @@ def main():
         previous_end = 0.0
         inter_line_gap = float(data.get('inter_line_gap_sec', 0.32))
         for i, line in enumerate(lines):
-            clip = temp / f"line_{i:03d}.wav"
-            audio = tts.infer(line["text"], voice=VOICES[line["speaker"]])
-            tts.save(audio, str(clip))
+            if args.clips_dir:
+                clip = Path(args.clips_dir) / f"line_{i:03d}.wav"
+                if not clip.exists():
+                    raise SystemExit(f"Prepared voice clip is missing: {clip}")
+                start_sec = float(prepared_timing["lines"][i]["start_sec"])
+            else:
+                clip = temp / f"line_{i:03d}.wav"
+                audio = tts.infer(line["text"], voice=VOICES[line["speaker"]])
+                tts.save(audio, str(clip))
+                requested_start = float(line["start_sec"])
+                start_sec = requested_start if i == 0 else max(requested_start, previous_end + inter_line_gap)
             inputs += ["-i", str(clip)]
-            requested_start = float(line["start_sec"])
-            start_sec = requested_start if i == 0 else max(requested_start, previous_end + inter_line_gap)
             clip_duration = media_duration(clip)
             previous_end = start_sec + clip_duration
             voice_ends.append(previous_end)
