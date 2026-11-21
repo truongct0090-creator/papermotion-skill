@@ -7,6 +7,8 @@ on:
       - 'stories/shared/environment/**'
       - 'examples/rooftops/Cat.ts'
       - 'scripts/generate_voiceover.py'
+      - 'scripts/prepare_voiceover.py'
+      - '.github/workflows/test-nokia-pilot.yml'
       - 'examples/catalog.ts'
       - '.github/workflows/test-nokia-pilot.yml'
   workflow_dispatch:
@@ -46,9 +48,6 @@ jobs:
       - name: Install Chromium
         run: pnpm exec playwright-core install --with-deps chromium
 
-      - name: Render final-resolution 10-scene pilot
-        run: pnpm render nokia-pilot --jobs 1
-
       - name: Set up Python for Vietnamese voiceover
         uses: actions/setup-python@v5
         with:
@@ -57,10 +56,21 @@ jobs:
       - name: Install free VieNeu-TTS
         run: python -m pip install --upgrade pip vieneu
 
+      - name: Generate voice clips and measure exact narration timeline
+        run: |
+          python scripts/prepare_voiceover.py \
+            --manifest stories/002-nokia/voiceover.json \
+            --clips-dir out/nokia-voice-clips \
+            --timing-module stories/002-nokia/voiceoverTiming.ts
+
+      - name: Render final-resolution 10-scene pilot to measured voice timeline
+        run: pnpm render nokia-pilot --jobs 1
+
       - name: Generate Adam and My Duyen voiceover
         run: |
           python scripts/generate_voiceover.py \
             --manifest stories/002-nokia/voiceover.json \
+            --clips-dir out/nokia-voice-clips \
             --input out/nokia-pilot.mp4 \
             --output out/nokia-pilot-final.mp4
 
@@ -75,11 +85,13 @@ jobs:
           streams=p['streams']
           video=next(s for s in streams if s.get('codec_type')=='video')
           audio=any(s.get('codec_type')=='audio' for s in streams)
-          assert duration >= 99.5, f'video is shorter than the 100s story: {duration}'
+          timing=json.load(open('out/nokia-voice-clips/timing.json'))
+          expected=float(timing['duration_sec'])
+          assert duration >= expected - 0.1, f'video is shorter than measured voiceover timeline: {duration} < {expected}'
           assert (video.get('width'),video.get('height'))==(1920,1080), video
           assert video.get('r_frame_rate')=='30/1', video
           assert audio, 'missing audio stream'
-          print(f'PASS: {duration:.2f}s, 1920x1080, 30fps, audio present')
+          print(f'PASS: {duration:.2f}s (measured story {expected:.2f}s), 1920x1080, 30fps, audio present')
           PY
 
       - name: Upload final Nokia pilot only
