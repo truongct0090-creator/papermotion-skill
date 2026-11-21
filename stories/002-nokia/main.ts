@@ -295,12 +295,12 @@ export class NokiaFullScene extends Stage {
     this.world.ground=()=>890;
     this.world.wind=meadowWind(8101,0.22);
     this.cat=new Cat(this.world,470,890,SIGNATURE_CAT_LOOK);
-    this.dayEnvironment=createGrassland(8102,-1600,6200,()=>890,{
+    this.dayEnvironment=createGrassland(8102,-1600,52000,()=>890,{
       sky:'#9fc5dc',cloud:'#fff8ec',cloudShade:'#d6e4e8',farHill:'#91a9a0',midHill:'#748f7c',nearHill:'#526c58',ground:'#465b42',
       grass:[['#435b3d','#7d9556'],['#536d43','#9eaa63']],treeTrunk:'#6a503e',treeLeaves:['#607b4d','#7f995c','#a2ad69'],treeLight:'#f6d9a1',
       flowers:['#fff4df','#f3d8a4','#e6a56e'],rock:['#a99a82','#8f8779'],
     });
-    this.nightEnvironment=createGrassland(8112,-1600,6200,()=>890,{
+    this.nightEnvironment=createGrassland(8112,-1600,52000,()=>890,{
       sky:'#111a31',cloud:'#35415b',cloudShade:'#202b43',farHill:'#29334b',midHill:'#202b40',nearHill:'#182338',ground:'#111a2a',
       grass:[['#172238','#29334a'],['#1d2a3d','#354157']],treeTrunk:'#242b3d',treeLeaves:['#26334a','#303b52','#3a4358'],treeLight:'#69758a',
       flowers:['#8d91a7','#727e9b','#a18e9c'],rock:['#30394b','#252f42'],
