@@ -1,9 +1,9 @@
 import {
   Mixer, Stage, Camera, fillGradient, tearWipe, ramp, vignette, grain, circlePoly,
-  instrument, note, triad, drawProps, drawRidge, drawSward, drawSky, blink,
+  instrument, note, triad, drawProps, drawRidge, drawSward, drawSky, drawRain, blink,
   type Paper, type RidgeSpec, type Stereo,
 } from '../../src';
-import { createCitySkyline, createGrassland, meadowWind, nightSky } from '../shared/environment';
+import { createCitySkyline, createGrassland, meadowWind, nightSky, rainfall } from '../shared/environment';
 import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
 import { STORY_TIMING } from './voiceoverTiming';
 
@@ -365,6 +365,7 @@ export class SamsungFullScene extends Stage {
   private readonly dayEnvironment: ReturnType<typeof createGrassland>;
   private readonly nightEnvironment: ReturnType<typeof createGrassland>;
   private readonly stars = nightSky(8100, { x: 960, y: 620 });
+  private readonly crisisRain = rainfall(8130, 'light');
   private lastScene = 0;
 
   constructor(canvas: HTMLCanvasElement) {
@@ -476,6 +477,9 @@ export class SamsungFullScene extends Stage {
       this.camera.layer(paper, 0.94, v => drawProps(paper, environment.details, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
       this.camera.layer(paper, 1.08, v => drawSward(paper, environment.sward, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
     }
+
+    // A brief light shower underscores the 1997 crisis; it is a reusable, deterministic repo weather layer.
+    if (index === 16) this.camera.layer(paper, 1.1, v => drawRain(paper.context, this.crisisRain, v, t, () => 890));
 
     singleLineTitle(paper, SAMSUNG_TITLES[index], 110, 142, 50, 650);
     const subtitleLines = outlinedText(paper, SAMSUNG_SUBTITLES[index], 114, 220, 25, true, 650);
