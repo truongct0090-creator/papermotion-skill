@@ -2,6 +2,7 @@
 """Mix pre-rendered sentence-level Vietnamese narration into the rendered MP4."""
 import argparse
 import json
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -20,6 +21,14 @@ def media_duration(path: Path) -> float:
     return float(probe.stdout.strip())
 
 
+def render_text(manifest: dict, text: str) -> str:
+    for key, value in manifest.get("variables", {}).items():
+        text = text.replace("{{" + str(key) + "}}", str(value))
+    unresolved = re.findall(r"{{\\s*([a-zA-Z0-9_]+)\\s*}}", text)
+    if unresolved:
+        raise SystemExit("Unresolved voiceover template variables: " + ", ".join(unresolved))
+    return text
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
@@ -37,6 +46,7 @@ def main() -> None:
             raise SystemExit(f"Line {i}: unsupported speaker {line.get('speaker')!r}")
         if not isinstance(line.get("text"), str) or not line["text"].strip():
             raise SystemExit(f"Line {i}: text is required.")
+        render_text(manifest, line["text"])
 
     probe = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
@@ -68,7 +78,7 @@ def main() -> None:
             temp = Path(tmp)
             for i, line in enumerate(lines):
                 clip = temp / f"line_{i:03d}.wav"
-                tts.save(tts.infer(line["text"], voice=VOICES[line["speaker"]]), str(clip))
+                tts.save(tts.infer(render_text(manifest, line["text"]), voice=VOICES[line["speaker"]]), str(clip))
                 start = float(line.get("start_sec", 0)) if i == 0 else max(float(line.get("start_sec", 0)), previous_end + gap)
                 previous_end = start + media_duration(clip)
                 clip_entries.append((clip, start))
