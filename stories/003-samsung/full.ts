@@ -75,14 +75,14 @@ export const SAMSUNG_SUBTITLES = [
   "Chuyển từ số lượng sang chất lượng\nThiết kế và độ tin cậy được ưu tiên",
   "TV, màn hình, điện thoại và linh kiện\nSamsung vươn thành thương hiệu toàn cầu",
   "LCD và công nghệ hiển thị mới\nTV màn hình phẳng bước vào gia đình",
-  "Galaxy S ra mắt năm 2010\nSamsung tăng tốc trong kỷ nguyên smartphone",
-  "Galaxy Note ra mắt năm 2011\nMàn hình lớn và bút S Pen tạo khác biệt",
-  "Điện thoại, đồng hồ, tablet, tai nghe\nMột hệ sinh thái kết nối nhiều thiết bị",
-  "Galaxy Fold thương mại hóa năm 2019\nMở ra hướng đi cho điện thoại gập",
-  "DRAM, NAND và bộ nhớ băng thông cao\nChip trở thành hạ tầng của AI",
-  "Từ thiết bị đến bán dẫn và kết nối\nMột tập đoàn đa ngành không ngừng đổi mới",
-  "Bạn từng dùng Galaxy hay TV Samsung nào?\nKể kỷ niệm của bạn với Mọt Mọt nhé",
-  "Cảm ơn bạn đã theo dõi câu chuyện\nHẹn gặp lại trong tập tiếp theo"
+  "Bước ngoặt smartphone năm 2010\nGalaxy S mở chương mới",
+  "Galaxy Note ra mắt năm 2011\nMàn hình lớn, bút S Pen",
+  "Điện thoại, đồng hồ, tablet, tai nghe\nKết nối trong một hệ sinh thái",
+  "Galaxy Fold ra mắt năm 2019\nMở ra hướng đi cho điện thoại gập",
+  "DRAM, NAND và bộ nhớ HBM\nNền tảng cho trung tâm dữ liệu, AI",
+  "Từ thiết bị đến bán dẫn và kết nối\nSamsung tiếp tục đổi mới",
+  "Bạn từng dùng Galaxy hay TV Samsung?\nKể Mọt Mọt nghe kỷ niệm của bạn",
+  "Cảm ơn bạn đã theo dõi câu chuyện\nHẹn gặp lại ở tập tiếp theo"
 ] as const;
 const PALETTES: [string, string][] = [
   ['#25364a', '#d2a77d'],
