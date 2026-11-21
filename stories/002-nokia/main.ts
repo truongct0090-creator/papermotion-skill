@@ -24,6 +24,11 @@ const TITLES = [
   'RỒI IPHONE XUẤT HIỆN','ANDROID THAY ĐỔI CUỘC CHƠI','SYMBIAN BẮT ĐẦU CHẬM LẠI',
   'NOKIA ĐỨNG TRƯỚC LỰA CHỌN','CANH BẠC WINDOWS PHONE','MỘT THƯƠNG VỤ KHÉP LẠI KỶ NGUYÊN',
   'NOKIA KHÔNG BIẾN MẤT',
+  'NHỮNG NỖ LỰC CUỐI CÙNG',
+  'BỘ MÁY BÊN TRONG CHẬM LẠI',
+  'ĐỐI THỦ TĂNG TỐC',
+  'THAY ĐỔI TỪ TRÊN ĐỈNH',
+  'LỜI CẢNH BÁO CUỐI CÙNG',
 ];
 const SUBTITLES = [
   'Từ biểu tượng điện thoại đến cú trượt dài trong kỷ nguyên smartphone',
@@ -35,12 +40,18 @@ const SUBTITLES = [
   'Năm 2011, Nokia phải chọn một con đường mới',
   'Lumia đẹp, nhưng ứng dụng và hệ sinh thái là bài toán khác',
   'Microsoft hoàn tất thương vụ vào tháng 4 năm 2014',
-  'Một công ty có thể đổi hướng, nhưng ký ức thì còn ở lại',
+  'N97 và N8 cho thấy nỗ lực đổi mới phần cứng của Nokia',
+  'Cấu trúc phát triển phức tạp khiến quyết định đến chậm',
+  'Apple và Android liên tục mở rộng khoảng cách',
+  'Stephen Elop tiếp quản Nokia trong giai đoạn khó khăn',
+  'Burning Platform cảnh báo một cuộc khủng hoảng chiến lược',
 ];
 const PALETTES: [string,string][] = [
   ['#23344a','#d2a77d'],['#e7d7bd','#b7c9c3'],['#d8e2df','#a9b9aa'],['#111827','#34425c'],
   ['#d8eadc','#8eb6a0'],['#d9d7c9','#8b9aa4'],['#342d38','#d27c50'],['#c9d8e4','#7d9bb3'],
   ['#d6d2ca','#818c9c'],['#e8dfd0','#aab7ad'],
+  ['#c8d6d2','#758c8b'],['#d4d0c4','#8c8178'],['#d7e1e7','#899eae'],
+  ['#d7c9b9','#9a8d85'],['#3a3540','#b16c4e'],
 ];
 
 
@@ -231,7 +242,7 @@ export class NokiaPilotScene extends Stage {
       far:['#aab4b0','#a0aca8'],mid:['#788b88','#82918c'],near:['#53696b','#5e7472'],
       farWindow:'#e8d4a7',midWindow:'#e8c78b',nearWindow:'#f0d49a',
     });
-    const earth=['#b7a38a','#b9a18a','#9ca9a0','#29374b','#8eaa9a','#a9aaa0','#9d8270','#8fa7b8','#9da7a5','#b5a58f'];
+    const earth=['#b7a38a','#b9a18a','#9ca9a0','#29374b','#8eaa9a','#a9aaa0','#9d8270','#8fa7b8','#9da7a5','#b5a58f','#9ba99f','#a99b8c','#8ea3ad','#a99b91','#473e49'];
     this.ridges=earth.map((color,i)=>({seed:6200+i,base:835,amp:32,freq:0.0018+i*0.00003,color,tear:3,shadow:8}));
   }
 
