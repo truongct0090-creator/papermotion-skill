@@ -57,5 +57,6 @@
     }
   ],
   "schedule_mode": "anchored",
-  "gap_sec": 0.4
+  "inter_line_gap_sec": 0.18,
+  "inter_sentence_gap_sec": 0.1
 }
