@@ -1,38 +1,39 @@
 # Reusable YouTube thumbnail generator
 
-One locked thumbnail composition for PaperMotion stories and future topics.
+One fixed brand composition, reusable for any topic.
 
 ## Run it
 
 1. Open **Actions → Create reusable YouTube thumbnail → Run workflow**.
-2. Enter the headline, category label, optional supporting line, and optionally a direct HTTPS hero-image URL.
-3. Download the generated PNG from the workflow artifact.
-
-The first preset is Nokia:
-- Headline: **NOKIA ĐÃ THUA NHƯ THẾ NÀO?**
-- Kicker: **CÂU CHUYỆN CÔNG NGHỆ**
-- Supporting line: optional
-- The default right-side composition pairs a recognizable classic Nokia candy-bar phone with a shadowy, question-mark iPhone silhouette to create a curiosity hook.
+2. Enter the headline, category label and optional supporting line.
+3. For a precise topic-specific subject, provide a direct **HTTPS image URL** in `image_url`. The image is clipped into a layered paper collage on the right. If omitted, the renderer creates an abstract collage with a word derived from the headline; it does not insert Nokia or iPhone artwork.
+4. Download the generated 4K PNG from the workflow artifact.
 
 ## Locked visual system
 
 - Canvas: **3840 × 2160 (16:9, 4K PNG)**.
-- Background: muted rose **#B08088**, with subtle paper grain and no outer frame.
-- Left zone: larger kicker and headline at fixed anchors; optional subtitle stays in its lower-left safe zone.
-- Right zone: Nokia phone plus a dark, deliberately mysterious iPhone silhouette with a large question mark.
-- Typography: Noto Sans with Vietnamese glyph support; high-contrast cream text and dark red accents.
-- Paper-cut collage shapes and the overall left-text/right-visual balance stay consistent.
+- Background: dusty rose **#B08088**, with subtle grain and no outer border.
+- Left zone: fixed headline and kicker anchors; each text line sits on its own torn-paper sheet.
+- Subtitle: separate paper strips in the protected lower-left safe zone.
+- Right zone: topic-specific image collage, or an abstract topic-derived collage when no image URL is supplied.
+- Rendering: the repository's actual `src/paper/Paper.ts` engine provides torn edges, fiber texture, shadows, rim light and layered sheets.
+- Typography: Noto Sans with Vietnamese glyph support.
+- Existing workflow inputs remain unchanged: `title`, `kicker`, `subtitle`, `image_url`, `output_name`.
 
-Only the words and optional supporting hero image change between topics. Keep the title anchors, safe zones, color palette, and object balance fixed when adding a topic. The output is a 4K PNG; file size depends on image complexity and does not by itself determine sharpness.
+The default text remains the Nokia pilot for convenience, but the renderer is no longer hard-coded to Nokia or iPhone.
 
 ## Local render
 
+Requires Node 22.18+, pnpm and a Playwright Chromium installation.
+
 ```bash
-python -m pip install pillow
-python scripts/create_thumbnail.py \
+pnpm install
+pnpm exec playwright-core install chromium
+node scripts/create-thumbnail.ts \
   --title "NOKIA ĐÃ THUA NHƯ THẾ NÀO?" \
   --kicker "CÂU CHUYỆN CÔNG NGHỆ" \
+  --subtitle "Từ người dẫn đầu đến cú trượt dài" \
   --output out/nokia-thumbnail.png
 ```
 
-To use another subject image, add `--image-url 'https://…'` with a direct image URL.
+To use a subject image, add `--image-url "https://example.com/subject.jpg"`.
