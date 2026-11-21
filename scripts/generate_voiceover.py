@@ -42,6 +42,8 @@ def main() -> None:
     lines = manifest.get("lines", [])
     if not lines:
         raise SystemExit("Voiceover manifest has no lines.")
+    args.timing_schedule_mode = "prepared" if args.clips_dir else "anchored"
+    args.timing_gap_sec = None
     for i, line in enumerate(lines):
         if line.get("speaker") not in VOICES:
             raise SystemExit(f"Line {i}: unsupported speaker {line.get('speaker')!r}")
@@ -74,14 +76,31 @@ def main() -> None:
         # Compatibility path for older workflows: synthesize each complete dialogue line.
         tts = Vieneu()
         previous_end = 0.0
-        gap = float(manifest.get("inter_line_gap_sec", 0.18))
+        schedule_mode = manifest.get("schedule_mode", "anchored")
+        if schedule_mode not in ("anchored", "fixed"):
+            raise SystemExit("schedule_mode must be 'anchored' or 'fixed'.")
+        gap = float(manifest.get("gap_sec", manifest.get("inter_line_gap_sec", 0.35)))
+        if gap < 0:
+            raise SystemExit("gap_sec must be non-negative.")
+        args.timing_schedule_mode = schedule_mode
+        args.timing_gap_sec = gap
         with tempfile.TemporaryDirectory(prefix="papermotion-voice-") as tmp:
             temp = Path(tmp)
             for i, line in enumerate(lines):
                 clip = temp / f"line_{i:03d}.wav"
                 spoken_text = render_text(manifest, line["text"])
                 tts.save(tts.infer(spoken_text, voice=VOICES[line["speaker"]]), str(clip))
-                start = float(line.get("start_sec", 0)) if i == 0 else max(float(line.get("start_sec", 0)), previous_end + gap)
+                requested_start = line.get("start_sec", 0)
+                if not isinstance(requested_start, (int, float)) or requested_start < 0:
+                    raise SystemExit(f"Line {i}: start_sec must be a non-negative number.")
+                if schedule_mode == "anchored":
+                    start = requested_start if i == 0 else max(requested_start, previous_end + gap)
+                else:
+                    start = requested_start
+                    if i and start < previous_end - 0.001:
+                        raise SystemExit(
+                            f"Voice overlap: line {i} starts at {start:.2f}s before the previous line ends at {previous_end:.2f}s."
+                        )
                 previous_end = start + media_duration(clip)
                 clip_entries.append((clip, start, line["speaker"], spoken_text))
             mix_clips(args, clip_entries, video_duration, has_audio)
@@ -156,8 +175,8 @@ def mix_clips(args, clip_entries, video_duration: float, has_audio: bool) -> Non
         timing_path = Path(args.timing_output)
         timing_path.parent.mkdir(parents=True, exist_ok=True)
         timing_path.write_text(json.dumps({
-            "schedule_mode": "measured",
-            "gap_sec": None,
+            "schedule_mode": args.timing_schedule_mode,
+            "gap_sec": args.timing_gap_sec,
             "video_duration_sec": round(video_duration, 3),
             "voice_end_sec": round(max(voice_ends, default=0.0), 3),
             "lines": timing_records,

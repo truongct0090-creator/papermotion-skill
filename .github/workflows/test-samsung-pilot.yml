@@ -76,6 +76,8 @@ jobs:
           python - <<'PY'
           import json
           p=json.load(open('out/samsung-pilot-voice-timing.json'))
+          assert p['schedule_mode']=='anchored', p
+          assert abs(p['gap_sec']-0.4)<0.001, p
           lines=p['lines']
           for previous,current in zip(lines,lines[1:]):
               assert current['start_sec'] >= previous['end_sec'], (previous,current)
