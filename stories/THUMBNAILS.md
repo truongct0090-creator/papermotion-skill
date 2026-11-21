@@ -12,18 +12,18 @@ The first preset is Nokia:
 - Headline: **NOKIA ĐÃ THUA NHƯ THẾ NÀO?**
 - Kicker: **CÂU CHUYỆN CÔNG NGHỆ**
 - Supporting line: optional
-- If no image URL is supplied, the generator draws a classic Nokia-style candy-bar phone illustration.
+- The default right-side composition pairs a recognizable classic Nokia candy-bar phone with a shadowy, question-mark iPhone silhouette to create a curiosity hook.
 
 ## Locked visual system
 
-- Canvas: **2560 × 1440 (16:9, 2K QHD)**.
-- Left zone: kicker at a fixed anchor, large headline beneath it, optional subtitle in a separate lower-left safe zone.
-- Right zone: hero visual on a fixed paper-collage panel; it does not enter the headline zone.
-- Palette: deep navy, aged-paper cream, muted red.
-- Typography: Noto Sans with Vietnamese glyph support.
-- Paper texture, torn-paper silhouette, offset print shadow and framing stay consistent.
+- Canvas: **3840 × 2160 (16:9, 4K PNG)**.
+- Background: muted rose **#B08088**, with subtle paper grain and no outer frame.
+- Left zone: larger kicker and headline at fixed anchors; optional subtitle stays in its lower-left safe zone.
+- Right zone: Nokia phone plus a dark, deliberately mysterious iPhone silhouette with a large question mark.
+- Typography: Noto Sans with Vietnamese glyph support; high-contrast cream text and dark red accents.
+- Paper-cut collage shapes and the overall left-text/right-visual balance stay consistent.
 
-Only the words and right-side hero image change between topics. Do not move the title anchors, resize the safe zones, or change the palette when adding a topic.
+Only the words and optional supporting hero image change between topics. Keep the title anchors, safe zones, color palette, and object balance fixed when adding a topic. The output is a 4K PNG; file size depends on image complexity and does not by itself determine sharpness.
 
 ## Local render
 
