@@ -498,7 +498,7 @@ export class SamsungFullScene extends Stage {
     }
 
     // A brief light shower underscores the 1997 crisis; it is a reusable, deterministic repo weather layer.
-    if (index === 16) this.camera.layer(paper, 1.1, v => drawRain(paper.context, this.crisisRain, v, t, () => 890));
+    if (index === 20) this.camera.layer(paper, 1.1, v => drawRain(paper.context, this.crisisRain, v, t, () => 890));
 
     singleLineTitle(paper, SAMSUNG_TITLES[index], 110, 142, 50, 650);
     const subtitleLines = outlinedText(paper, SAMSUNG_SUBTITLES[index], 114, 220, 25, true, 650);
