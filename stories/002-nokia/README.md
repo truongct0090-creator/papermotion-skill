@@ -1,12 +1,13 @@
 # Tập 01 — Nokia: Từ ông vua điện thoại đến kẻ tụt lại
 
 ## Trạng thái sản xuất
-- Pilot 10 cảnh, tối thiểu 100 giây, 30 fps, 16:9; render thẳng bản cuối 1920×1080, không tạo draft. Cảnh cuối tự kéo dài nếu lời thoại cần thêm thời gian.
+- Pilot 10 cảnh, tổng 100 giây, 30 fps, 16:9; render thẳng bản cuối 1920×1080, không tạo draft. Nhịp cắt 9,2 giây khớp khoảng cách cue voiceover; cảnh cuối bắt đầu ở 82,8 giây và được giữ đến hết 100 giây để dành chỗ cho lời kết.
 - Bản đầy đủ dự kiến 26 cảnh, khoảng 8 phút 30 giây; chưa render full.
 - Mỹ thuật bắt buộc: PaperMotion cut-paper, mép giấy xé, texture sợi giấy, bóng đổ, rim/core shadow và phân lớp parallax; dùng shared environment kit cho cảnh quan.
 - Mèo mauve là mascot dẫn chuyện xuyên suốt, dùng rig và chuyển động chuẩn từ Rooftops; các đạo cụ lịch sử riêng của Nokia được thiết kế theo bối cảnh từng cảnh.
-- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề tự xuống dòng theo bề rộng an toàn ở góc trái, tránh vùng đạo cụ chính để không bị điện thoại, nhà cửa hoặc nhân vật che khuất.
-- Lời thoại giữ khoảng nghỉ mục tiêu 0,32 giây giữa câu; cue được tự lùi nếu câu trước dài để không chồng tiếng.
+- Typography dùng Be Vietnam Pro đậm, viền đen rõ; không dùng hiệu ứng chữ 3D. Tiêu đề và phụ đề tự xuống dòng trong vùng an toàn góc trái (x=110–764). Đạo cụ phụ chỉ được bố trí từ x≥800, không được che chữ ở bất kỳ frame nào; bóng và mép giấy cũng không được lấn vào vùng chữ.
+- Lời thoại giữ khoảng nghỉ mục tiêu 0,32 giây giữa câu; cue được tự lùi nếu câu trước dài để không chồng tiếng. Nhịp đổi cảnh dùng cùng bước 9,2 giây với cue voiceover để hình không đổi cảnh trước khi câu kể tương ứng bắt đầu.
+- Đạo cụ được hé lộ theo từng cụm đúng mốc lời thoại bằng mép giấy xé cục bộ, có bóng và sợi giấy; khi đã xuất hiện, đạo cụ tiếp tục tồn tại đến hết cảnh. Các cụm đạo cụ được chia nhịp, không xuất hiện đồng loạt.
 - Adam kể chính; Mỹ Duyên xuất hiện ở cảnh 2 và 7.
 - Cảnh đêm dùng bầu trời sao và mặt trăng theo demo Rooftops; cảnh ban ngày dùng mây và môi trường giấy từ shared environment.
 
