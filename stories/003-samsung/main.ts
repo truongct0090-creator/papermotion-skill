@@ -286,7 +286,7 @@ export class SamsungPilotScene extends Stage {
   probe(): Record<string, unknown> {
     const i = sceneIndexAt(this.time);
     return { ...super.probe(), story: 'samsung-nokia-full-pilot', scene: i + 1, sceneTitle: SAMSUNG_TITLES[i],
-      cat: [Math.round(this.cat.x), Math.round(this.cat.y)], airborne: this.cat.airborne,
+      cat: [Math.round(this.cat.x), Math.round(this.cat.root.y)], airborne: this.cat.airborne,
       cameraX: Math.round(this.camera.x), zoom: this.camera.zoom };
   }
 
