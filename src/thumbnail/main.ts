@@ -45,11 +45,12 @@ function drawHeadline(title:string,kicker:string,subtitle:string):void {
   let size=196, lines:string[]=[];
   while(size>=126){const f=`800 ${size}px "Noto Sans", sans-serif`; lines=wrapTitle(title,f,maxWidth); if(lines.length<=4 && lines.length*size*1.22<=1040) break; size-=4;}
   const font=`800 ${size}px "Noto Sans", sans-serif`;
-  const lineH=Math.round(size*1.22); let y=650;
-  lines.slice(0,4).forEach((line,i)=>{tornStrip(left,y,line,font,i===0?INK:RED,100+i,44,24);y+=lineH;});
+  const titleLines=lines.slice(0,4);
+  drawTitleSheet(titleLines,font,size);
+  const lineH=Math.round(size*1.22); const y=690+Math.max(0,titleLines.length-1)*lineH+size*.55;
   if(subtitle.trim()){
     const sf='600 48px "Noto Sans", sans-serif'; const subs=wrapTitle(subtitle,sf,1370).slice(0,2);
-    let sy=Math.min(Math.max(y+46,1590),1850);
+    let sy=Math.min(Math.max(y+110,1590),1850);
     subs.forEach((line,i)=>{tornStrip(left+12,sy,line,sf,INK,310+i,34,18);sy+=76;});
   }
 }
@@ -57,6 +58,64 @@ function coverRect(img:HTMLImageElement,x:number,y:number,w:number,h:number):voi
   const scale=Math.max(w/img.width,h/img.height), sw=img.width*scale, sh=img.height*scale;
   ctx.drawImage(img,x+(w-sw)/2,y+(h-sh)/2,sw,sh);
 }
+
+function drawTitleSheet(lines:string[],font:string,size:number):void {
+  const padX=58, padY=54, lineH=Math.round(size*1.22), left=180, firstBaseline=690;
+  ctx.save();ctx.font=font;
+  const widths=lines.map(line=>ctx.measureText(line).width);
+  ctx.restore();
+  const maxW=Math.max(...widths), top=firstBaseline-size-padY, bottom=firstBaseline+(lines.length-1)*lineH+48+padY;
+  const right=left+maxW+padX*2;
+  // One merged silhouette for the COMPLETE headline, including the final punctuation.
+  paper.sheet({shadow:28,texture:.34,edge:true,rim:{color:'rgba(255,255,255,.52)',width:5},shade:{color:'rgba(50,20,35,.24)',width:7}},()=>{
+    paper.blob(polygon([[left-14,top+24],[left+maxW*.24,top+4],[left+maxW*.68,top+12],[right-18,top],[right+8,top+38],[right-4,bottom-24],[right-34,bottom+6],[left+maxW*.72,bottom-2],[left+maxW*.31,bottom+10],[left-18,bottom-12],[left-30,firstBaseline+lineH*.35]]),PAPER,{seed:401,tear:7,shadow:0,texture:.22,edge:true});
+    lines.forEach((line,i)=>{
+      const y=firstBaseline+i*lineH;
+      const color=i===0?'#FFD15C':'#542B3C';
+      // Layered offset lettering creates a visible extruded 3D edge, not just a flat drop shadow.
+      paper.text(line,{x:left+padX+18,y:y+18},{font,color:'#321B2A'});
+      paper.text(line,{x:left+padX+12,y:y+12},{font,color:'#713B49'});
+      paper.text(line,{x:left+padX+6,y:y+6},{font,color:'#A34F55'});
+      ctx.save();ctx.font=font;ctx.textBaseline='alphabetic';ctx.textAlign='left';
+      ctx.lineJoin='round';ctx.lineWidth=Math.max(7,size*.035);ctx.strokeStyle='rgba(61,27,42,.95)';ctx.strokeText(line,left+padX,y);
+      ctx.restore();
+      paper.text(line,{x:left+padX,y},{font,color});
+    });
+  });
+}
+function drawNokiaComparison():void {
+  // Left: recognizable classic Nokia candybar handset with screen, navigation key and physical keypad.
+  paper.sheet({shadow:34,texture:.28,edge:true,rim:{color:'rgba(255,255,255,.42)',width:5},shade:{color:'rgba(5,12,18,.35)',width:8}},()=>{
+    paper.blob(polygon([[2160,570],[2280,500],[2630,530],[2720,650],[2690,1460],[2580,1580],[2210,1550],[2110,1440],[2110,700]]),'#27323A',{seed:801,tear:5,shadow:0,texture:.22});
+    paper.blob(polygon([[2205,660],[2610,650],[2620,1000],[2195,1010]]),'#AAB4A7',{seed:802,tear:3,shadow:0,texture:.12});
+    paper.blob(polygon([[2235,695],[2580,690],[2585,955],[2225,960]]),'#8DA58F',{seed:803,tear:2,shadow:0,texture:.08});
+    paper.blob(polygon([[2260,1050],[2580,1040],[2600,1430],[2240,1440]]),'#35434A',{seed:804,tear:4,shadow:0,texture:.18});
+  });
+  ctx.save();
+  // Screen details and the classic physical keypad.
+  ctx.fillStyle='rgba(25,48,43,.9)';ctx.font='700 54px "Noto Sans",sans-serif';ctx.textAlign='center';ctx.fillText('NOKIA',2405,790);
+  ctx.fillStyle='rgba(230,240,211,.9)';ctx.font='500 28px "Noto Sans",sans-serif';ctx.fillText('Connecting people',2405,842);
+  ctx.fillStyle='#C9D0C5';ctx.beginPath();ctx.roundRect(2310,1015,190,78,22);ctx.fill();ctx.fillStyle='#25313A';ctx.beginPath();ctx.arc(2405,1054,30,0,Math.PI*2);ctx.fill();
+  for(let row=0;row<4;row++)for(let col=0;col<3;col++){
+    const x=2265+col*105,y=1140+row*78;ctx.fillStyle='#9DA7A2';ctx.beginPath();ctx.roundRect(x,y,82,54,16);ctx.fill();
+    ctx.fillStyle='#27323A';ctx.font='700 27px "Noto Sans",sans-serif';ctx.textAlign='center';ctx.fillText(String(row*3+col+1),x+41,y+36);
+  }
+  ctx.restore();
+  // Right: intentionally anonymous, almost-black modern phone. Defocus and low contrast conceal its identity.
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.72)';ctx.shadowBlur=48;ctx.shadowOffsetY=30;
+  const grad=ctx.createLinearGradient(2920,520,3450,1580);grad.addColorStop(0,'#17191D');grad.addColorStop(.5,'#08090C');grad.addColorStop(1,'#202126');
+  ctx.fillStyle=grad;ctx.globalAlpha=.88;ctx.beginPath();ctx.roundRect(2940,520,520,1080,82);ctx.fill();ctx.restore();
+  ctx.save();ctx.filter='blur(11px)';ctx.globalAlpha=.35;
+  ctx.fillStyle='#565A62';ctx.beginPath();ctx.roundRect(2990,570,165,170,34);ctx.fill();
+  for(const [x,y] of [[3035,615],[3110,615],[3035,685]]){ctx.fillStyle='#0A0B0E';ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();}
+  ctx.restore();
+  // Large question mark is the only crisp clue on the obscured phone.
+  ctx.save();ctx.shadowColor='rgba(255,210,100,.75)';ctx.shadowBlur=42;ctx.fillStyle='#F7E7C8';
+  ctx.font='900 390px "Noto Sans",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',3200,1080);ctx.restore();
+  blob([[2800,1630],[3500,1590],[3610,1710],[3490,1840],[2860,1810]],'#D5B3A7',805,20,7);
+  ctx.save();ctx.font='700 48px "Noto Sans",sans-serif';ctx.fillStyle='#542B3C';ctx.textAlign='center';ctx.fillText('QUÁ KHỨ',2400,1790);ctx.fillText('TƯƠNG LAI?',3200,1790);ctx.restore();
+}
+
 function drawPhoto(img:HTMLImageElement):void {
   const cut=polygon([[2050,360],[3320,275],[3540,440],[3485,1510],[3260,1690],[2110,1580],[1940,1360],[1980,560]]);
   blob([[1900,300],[3340,220],[3650,480],[3550,1610],[3290,1800],[1930,1670],[1770,1380],[1820,480]],'#E8D6BF',501,32,8);
@@ -96,7 +155,8 @@ function drawBackground():void {
 async function render(input:Input):Promise<string>{
   canvas.width=W;canvas.height=H;ctx.setTransform(1,0,0,1,0,0);paper.setFrame(0);
   drawBackground();
-  if(input.imageDataUrl){
+  if(/\\bNOKIA\\b/i.test(input.title)) drawNokiaComparison();
+  else if(input.imageDataUrl){
     const img=new Image();img.src=input.imageDataUrl;await img.decode();drawPhoto(img);
   }else drawAbstract(input.title);
   // Layered paper scraps and a quiet paper label anchor the right composition.
