@@ -159,6 +159,9 @@ function paperFlyIn(
   });
   ctx.save();
   ctx.beginPath();
+  ctx.rect(PROP_SAFE_LEFT, 0, W - PROP_SAFE_LEFT, H);
+  ctx.clip();
+  ctx.beginPath();
   if (!vertical && !reverse) {
     ctx.moveTo(x - 18, y - 18); ctx.lineTo(edge[0].x, edge[0].y);
     for (let i = 1; i < edge.length; i++) ctx.lineTo(edge[i].x, edge[i].y);
@@ -179,7 +182,7 @@ function paperFlyIn(
   ctx.closePath(); ctx.clip(); draw(); ctx.restore();
   const flapDistance = (1 - progress) * 64 + 8;
   const flap = edge.map(p => ({
-    x: p.x + (vertical ? 0 : reverse ? flapDistance : -flapDistance),
+    x: Math.max(PROP_SAFE_LEFT + 4, p.x + (vertical ? 0 : reverse ? flapDistance : -flapDistance)),
     y: p.y + (vertical ? reverse ? -flapDistance : flapDistance : 0),
   }));
   paper.piece([...edge, ...flap.reverse()], '#f3ecdf', { seed, tear: 3.6, shadow: 12, texture: 0.48 });
@@ -187,7 +190,7 @@ function paperFlyIn(
     for (let i = 0; i < 2; i++) {
       const p = edge[Math.min(15, 3 + i * 9)];
       const drift = (1 - progress) * (34 + i * 16);
-      const cx = p.x + (vertical ? (i ? 1 : -1) * drift : reverse ? drift : -drift);
+      const cx = Math.max(PROP_SAFE_LEFT + 16, p.x + (vertical ? (i ? 1 : -1) * drift : reverse ? drift : -drift));
       const cy = p.y + (vertical ? reverse ? -drift : drift : (i ? 1 : -1) * drift * 0.45);
       paper.piece([{ x: cx - 14, y: cy - 5 }, { x: cx + 13, y: cy - 9 }, { x: cx + 9, y: cy + 8 }, { x: cx - 11, y: cy + 6 }], '#eee5d6', { seed: seed + i + 1, tear: 3.2, shadow: 7, texture: 0.5 });
     }
