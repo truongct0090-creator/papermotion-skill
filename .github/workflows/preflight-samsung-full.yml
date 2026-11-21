@@ -79,13 +79,24 @@ jobs:
           timing=json.load(open(root/'timing.json'))
           lines=timing['lines']
           assert len(lines)==29, f'expected 29 lines, got {len(lines)}'
-          gaps=[b['start_sec']-a['end_sec'] for a,b in zip(lines,lines[1:])]
-          assert all(-0.001 <= g <= 0.5 for g in gaps), f'inter-line gaps: {gaps}'
+          scene_indices=timing['scene_line_indices']
+          scene_durations=timing['scene_durations_sec']
+          scene_starts=timing['scene_starts_sec']
+          assert len(scene_indices)==len(scene_durations)==len(scene_starts)==26
+          assert abs(timing['duration_sec']-450)<0.02, f"timeline is {timing['duration_sec']:.2f}s, expected 450s"
+          for i in range(1,len(lines)):
+              gap=lines[i]['start_sec']-lines[i-1]['end_sec']
+              assert gap>=-0.001, f'narration overlap at line {i+1}: {gap:.3f}s'
+              if i in scene_indices:
+                  scene=scene_indices.index(i)
+                  assert abs(lines[i]['start_sec']-scene_starts[scene])<0.02, f'scene {scene+1} start drifted'
+              else:
+                  assert gap<=0.5, f'unintended silence inside scene at line {i+1}: {gap:.3f}s'
           segments=[seg for line in lines for seg in line['segments']]
           assert len(segments)>=29, f'expected at least 29 sentence clips, got {len(segments)}'
           assert all((root/seg['clip']).is_file() for seg in segments), 'missing WAV clip'
           assert all(seg['duration_sec']>0.2 for seg in segments), 'suspiciously short WAV clip'
-          print(f"PASS: {len(lines)} lines / {len(segments)} WAV segments; max inter-line gap {max(gaps):.3f}s; timeline {timing['duration_sec']:.2f}s")
+          print(f"PASS: {len(lines)} lines / {len(segments)} WAV segments; 26 scene boundaries; runtime {timing['duration_sec']:.2f}s; max intentional scene hold {timing['max_inter_scene_gap_sec']:.2f}s")
           PY
 
       - name: Preflight all 26 scene entrances and voice cues without full render
