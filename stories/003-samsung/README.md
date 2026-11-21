@@ -7,7 +7,7 @@
 - Trim im lặng chỉ ở đầu/cuối clip thoại, giữ lại 35 ms đầu và 60 ms cuối làm đệm tự nhiên.
 - Khoảng nghỉ giữa câu mặc định 0,16 giây; giữa câu con trong cùng một line là 0,08 giây.
 - Mục tiêu xuất bản: 1920×1080, 30 FPS; workflow xác minh MP4 bằng ffprobe.
-- Nokia Full không bị thay đổi; bản pilot 10 cảnh gốc vẫn được giữ tại main.ts.
+- Nokia Full không bị thay đổi. Mã nguồn pilot 10 cảnh cũ vẫn được giữ tại main.ts làm tài liệu tham chiếu; render target chính thức mới là samsung-full.
 
 ## Kế thừa PaperMotion gốc
 
