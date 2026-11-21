@@ -65,6 +65,7 @@ def main() -> None:
     line_gap = float(data.get("inter_line_gap_sec", 0.18))
     sentence_gap = float(data.get("inter_sentence_gap_sec", 0.10))
     schedule_mode = data.get("schedule_mode", "anchored")
+    trim_silence = bool(data.get("trim_silence", False))
     if schedule_mode not in ("anchored", "sequential"):
         raise SystemExit("schedule_mode must be 'anchored' or 'sequential'.")
     if not (0 <= line_gap <= 0.5 and 0 <= sentence_gap <= 0.5):
@@ -90,7 +91,8 @@ def main() -> None:
             clip = clips_dir / f"line_{i:03d}_seg_{j:02d}.wav"
             audio = tts.infer(sentence, voice=VOICES[line["speaker"]])
             tts.save(audio, str(clip))
-            trim_wav_silence(clip)
+            if trim_silence:
+                trim_wav_silence(clip)
             duration = wav_duration(clip)
             end = cursor + duration
             segments.append({
