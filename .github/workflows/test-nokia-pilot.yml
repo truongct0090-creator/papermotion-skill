@@ -1,4 +1,4 @@
-name: Test Nokia 15-scene pilot
+name: Build full Nokia 28-scene film
 
 on:
   push:
@@ -15,11 +15,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: nokia-pilot-test-${{ github.run_id }}
+  group: nokia-full-build-${{ github.run_id }}
   cancel-in-progress: false
 
 jobs:
-  render-nokia-pilot:
+  render-nokia-full:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -61,7 +61,7 @@ jobs:
             --clips-dir out/nokia-voice-clips \
             --timing-module stories/002-nokia/voiceoverTiming.ts
 
-      - name: Render final-resolution 15-scene pilot to measured voice timeline
+      - name: Render full 28-scene one-shot film to measured voice timeline
         run: pnpm render nokia-pilot --jobs 1
 
       - name: Generate Adam and My Duyen voiceover
@@ -92,10 +92,10 @@ jobs:
           print(f'PASS: {duration:.2f}s (measured story {expected:.2f}s), 1920x1080, 30fps, audio present')
           PY
 
-      - name: Upload final Nokia pilot only
+      - name: Upload final full Nokia film
         uses: actions/upload-artifact@v4
         with:
-          name: nokia-15-scenes-final
+          name: nokia-28-scenes-full
           path: |
             out/nokia-pilot-final.mp4
             out/nokia-pilot-probe.json
