@@ -52,7 +52,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y fonts-noto-core
           python -m pip install --upgrade pip pillow
-      - name: Render fixed-layout 2K thumbnail
+      - name: Render fixed-layout 4K thumbnail
         env:
           THUMBNAIL_TITLE: ${{ inputs.title }}
           THUMBNAIL_KICKER: ${{ inputs.kicker }}
@@ -76,9 +76,9 @@ jobs:
           from PIL import Image
           path = f"out/{os.environ['THUMBNAIL_OUTPUT_NAME']}.png"
           image = Image.open(path)
-          assert image.size == (2560, 1440), image.size
+          assert image.size == (3840, 2160), image.size
           assert image.format == "PNG", image.format
-          print("PASS: 2560x1440 PNG thumbnail")
+          print("PASS: 3840x2160 4K PNG thumbnail")
           PY
       - name: Upload thumbnail
         uses: actions/upload-artifact@v4
