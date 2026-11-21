@@ -316,7 +316,7 @@ export class NokiaPilotScene extends Stage {
 
   protected update(t:number,dt:number):void {
     const scene=sceneIndexAt(t);
-    Object.assign(this.cat.intent,CAT_REST,{speed:scene===27?0:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+220,y:560}});
+    Object.assign(this.cat.intent,CAT_REST,{speed:scene===27?0:82,tail:0.82,blink:blink(t,[1.1,4.8,8.5,13.2,18.7,24.1,31.5,38.4,47.2,56.8,65.3,74.6,83.1,92.2]),look:{x:this.cat.x+(scene===0||scene===27?120:220),y:scene===0||scene===27?470:560}});
     if(scene!==this.lastScene){
       if(!this.cat.airborne)this.cat.jump({x:this.cat.x+265,y:890},145);
       this.lastScene=scene;
@@ -326,7 +326,7 @@ export class NokiaPilotScene extends Stage {
   }
 
   protected lateUpdate(t:number,dt:number):void {
-    const scene=sceneIndexAt(t); this.camera.zoom=scene===0?1.75:scene===27?1.28:1.15; this.camera.update(this.cat.x+500,dt,t,610);
+    const scene=sceneIndexAt(t); this.camera.zoom=scene===0?1.75:scene===27?1.28:1.15; const followOffset=scene===0?260:scene===27?360:500; this.camera.update(this.cat.x+followOffset,dt,t,610);
   }
 
   probe():Record<string,unknown>{
@@ -577,14 +577,11 @@ export class NokiaPilotScene extends Stage {
     const fly=(segment:number,within:number,duration:number,bounds:{x:number;y:number;w:number;h:number},draw:()=>void,seed:number)=>paperFlyIn(paper,sceneLocal,beat(segment,within),duration,bounds,draw,seed);
     if(visualIndex===15){
       fly(0,0.08,0.85,{x:900,y:245,w:760,h:570},()=>{
-        paper.piece(circlePoly({x:1280,y:505},220,48),'#b08088',{seed:8610,tear:4,shadow:18,texture:0.55});
-        paper.piece(circlePoly({x:1200,y:470},48,28),'#f4eee4',{seed:8611,tear:2,shadow:6});
-        paper.piece(circlePoly({x:1360,y:470},48,28),'#f4eee4',{seed:8612,tear:2,shadow:6});
-        paper.piece(circlePoly({x:1208,y:475},17,20),'#25252a',{seed:8613,tear:1,shadow:2});
-        paper.piece(circlePoly({x:1368,y:475},17,20),'#25252a',{seed:8614,tear:1,shadow:2});
-        paper.piece(circlePoly({x:1285,y:555},18,18),'#3a2c30',{seed:8615,tear:1,shadow:2});
-        ctx.save();ctx.strokeStyle='#4b3439';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(1240,580);ctx.quadraticCurveTo(1280,610,1325,580);ctx.stroke();ctx.restore();
-        for(let i=0;i<6;i++)paper.piece([{x:1030+i*95,y:300},{x:1050+i*95,y:265},{x:1075+i*95,y:300}],'#e8c48e',{seed:8620+i,tear:2,shadow:5});
+        paper.piece([{x:980,y:520},{x:1040,y:300},{x:1120,y:440},{x:1220,y:255},{x:1320,y:440},{x:1440,y:290},{x:1530,y:520},{x:1450,y:730},{x:1060,y:730}],'#d9b58b',{seed:8610,tear:4,shadow:16,texture:0.5});
+        rounded(paper,1260,360,330,175,28,'#f5eee2','#9d8a75');
+        paper.piece([{x:1320,y:535},{x:1360,y:535},{x:1330,y:585}],'#f5eee2',{seed:8611,tear:2,shadow:4});
+        outlinedText(paper,'NOKIA?',1320,465,48);
+        for(let i=0;i<5;i++)paper.piece([{x:1030+i*100,y:285},{x:1050+i*100,y:245},{x:1075+i*100,y:285}],'#e8c48e',{seed:8620+i,tear:2,shadow:5});
       },8619);
       fly(1,0.18,0.7,{x:900,y:850,w:740,h:80},()=>outlinedText(paper,'CHUYỆN VỀ NOKIA',1080,905,38),8630);
     } else if(visualIndex===16){
