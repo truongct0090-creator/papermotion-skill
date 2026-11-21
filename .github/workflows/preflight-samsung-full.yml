@@ -1,4 +1,4 @@
-name: Preflight Samsung Full narration and 28 scenes
+name: Preflight Samsung v2 narration and 26 scenes
 
 on:
   push:
@@ -83,7 +83,7 @@ jobs:
           print(f"PASS: {len(lines)} lines / {len(segments)} WAV segments; max inter-line gap {max(gaps):.3f}s; timeline {timing['duration_sec']:.2f}s")
           PY
 
-      - name: Preflight all scene entrances and voice cues without full render
+      - name: Preflight all 26 scene entrances and voice cues without full render
         run: pnpm exec node scripts/preflight-samsung-full.ts samsung-full
 
       - name: Upload Samsung Full preflight report
