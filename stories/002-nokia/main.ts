@@ -6,7 +6,7 @@ import {
 import { createCitySkyline, createGrassland, meadowWind, nightSky } from '../shared/environment';
 import { CAT_REST, SIGNATURE_CAT_LOOK, Cat } from '../../examples/rooftops/Cat';
 
-const W = 1920, H = 1080, SCENE_SECONDS = 10, DURATION = 100;
+const W = 1920, H = 1080, SCENE_SECONDS = 9.2, DURATION = 100;
 const TITLES = [
   'MỘT THỜI NOKIA THỐNG TRỊ','CHIẾC ĐIỆN THOẠI QUỐC DÂN','NGƯỜI KHỔNG LỒ TRÊN ĐỈNH CAO',
   'RỒI IPHONE XUẤT HIỆN','ANDROID THAY ĐỔI CUỘC CHƠI','SYMBIAN BẮT ĐẦU CHẬM LẠI',
@@ -322,25 +322,25 @@ export class NokiaPilotScene extends Stage {
         outlinedText(paper,'LUMIA',1160,900,52);rounded(paper,870,790,760,18,8,'#657d8a');
       },8471);
     } else if(index===8){
-      tornReveal(paper,t,84.0,0.9,{x:885,y:310,w:810,h:490},()=>{
+      tornReveal(paper,t,75.0,0.9,{x:885,y:310,w:810,h:490},()=>{
         rounded(paper,900,330,360,440,20,'#d8dedb','#667a82');
         rounded(paper,1320,330,360,440,20,'#d8dedb','#667a82');
       },8480);
-      tornReveal(paper,t,86.5,0.7,{x:960,y:450,w:680,h:100},()=>{
+      tornReveal(paper,t,77.5,0.7,{x:960,y:450,w:680,h:100},()=>{
         outlinedText(paper,'NOKIA',980,490,46);outlinedText(paper,'MICROSOFT',1350,490,38);
       },8481);
-      tornReveal(paper,t,88.2,0.7,{x:1160,y:580,w:270,h:300},()=>{
+      tornReveal(paper,t,79.2,0.7,{x:1160,y:580,w:270,h:300},()=>{
         ctx.strokeStyle='#8a684e';ctx.lineWidth=34;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(1170,610);ctx.lineTo(1380,610);ctx.stroke();
         outlinedText(paper,'2014',1190,850,36);
       },8482);
     } else {
-      tornReveal(paper,t,90.0,0.9,{x:835,y:335,w:930,h:480},()=>{
+      tornReveal(paper,t,84.0,0.9,{x:835,y:335,w:930,h:480},()=>{
         rounded(paper,850,355,900,440,28,'#e9e4d9','#8c938b');
       },8490);
-      tornReveal(paper,t,91.0,1.0,{x:885,y:390,w:840,h:410},()=>{
+      tornReveal(paper,t,85.0,1.0,{x:885,y:390,w:840,h:410},()=>{
         for(let i=0;i<4;i++)phone(paper,900+i*205,410,0.7,['#394a50','#4d6261','#7d7c70','#46596c'][i]);
       },8491);
-      tornReveal(paper,t,93.0,0.7,{x:930,y:820,w:620,h:90},()=>outlinedText(paper,'A PART OF OUR HISTORY',950,850,36),8492);
+      tornReveal(paper,t,87.0,0.7,{x:930,y:820,w:620,h:90},()=>outlinedText(paper,'A PART OF OUR HISTORY',950,850,36),8492);
     }
     this.camera.layer(paper,1,()=>this.cat.draw(paper));
   }
@@ -360,15 +360,16 @@ export class NokiaPilotScene extends Stage {
       .bus('ambience',{gain:0.22,reverb:0.16});
     const roots=[note('C4'),note('A3'),note('F3'),note('G3')];
     for(let s=0;s<10;s++){
+      const sceneDuration=s===9?DURATION-s*SCENE_SECONDS:SCENE_SECONDS;
       const root=roots[Math.floor(s/3)%roots.length];
       for(const [i,n] of triad(root,'major',0).entries()){
-        mix.add('music',s*SCENE_SECONDS,instrument.pad(n-12,SCENE_SECONDS,sampleRate,{
+        mix.add('music',s*SCENE_SECONDS,instrument.pad(n-12,sceneDuration,sampleRate,{
           seed:2400+s*7+i,cutoff:s>=6?560:920,attack:0.9,release:1.1,
         }),{gain:0.12,pan:(i-1)*0.32});
       }
       mix.add('music',s*SCENE_SECONDS+0.7,instrument.harp(root+12,sampleRate,{seed:2600+s,decay:1.05}),{gain:0.11,pan:s%2?0.25:-0.25});
       mix.add('music',s*SCENE_SECONDS+4.2,instrument.harp(root+19,sampleRate,{seed:2700+s,decay:0.72}),{gain:0.065,pan:s%2?-0.2:0.2});
-      mix.add('ambience',s*SCENE_SECONDS,instrument.pad(root-24,SCENE_SECONDS,sampleRate,{seed:2800+s,cutoff:420,attack:0.8,release:0.8}),{gain:0.075});
+      mix.add('ambience',s*SCENE_SECONDS,instrument.pad(root-24,sceneDuration,sampleRate,{seed:2800+s,cutoff:420,attack:0.8,release:0.8}),{gain:0.075});
       if(s===0||s===1||s===3||s===6||s===7||s===9)mix.add('ambience',s*SCENE_SECONDS+0.18,instrument.chime(root+24,sampleRate),{gain:0.09,pan:0.2});
     }
     return mix.render({reverb:{room:0.58,damp:0.62},master:-2,ceiling:-1,fadeIn:0.8,fadeOut:1.5});
