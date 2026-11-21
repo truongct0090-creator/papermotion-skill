@@ -31,7 +31,7 @@ const TITLES = [
   'LỜI CẢNH BÁO CUỐI CÙNG',
 ];
 const SUBTITLES = [
-  'Từ biểu tượng điện thoại đến cú trượt dài\\ntrong kỷ nguyên smartphone',
+  'Từ biểu tượng điện thoại đến cú trượt dài\ntrong kỷ nguyên smartphone',
   '3310, 1110, 1200 — ký ức của cả một thế hệ',
   'Năm 2007: khoảng 437 triệu thiết bị di động được bán ra',
   'Năm 2007, chiếc iPhone đầu tiên mở ra một cách dùng điện thoại mới',
@@ -61,8 +61,8 @@ function wrapText(paper: Paper, value: string, size: number, maxWidth: number): 
   ctx.save();
   ctx.font = `800 ${size}px "Be Vietnam Pro", sans-serif`;
   const lines: string[] = [];
-  for (const paragraph of value.split(/\\r?\\n/)) {
-    const words = paragraph.split(/\\s+/).filter(Boolean);
+  for (const paragraph of value.split(/\r?\n/)) {
+    const words = paragraph.split(/\s+/).filter(Boolean);
     let line = '';
     for (const word of words) {
       const candidate = line ? `${line} ${word}` : word;
