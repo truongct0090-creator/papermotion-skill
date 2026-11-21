@@ -30,7 +30,7 @@ for run in runs:
 if not chosen:
     if EVENT_RUN_ID:
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-            f.write("skip=true\\n")
+            f.write("skip=true\n")
         print("This successful render was a draft or has no full artifact; skipping SEO.")
         raise SystemExit(0)
     if RUN_ID:
