@@ -101,11 +101,11 @@ export class SamsungPilotScene extends Stage {
   protected draw(t:number,frame:number):void{
     const index=Math.min(9,Math.floor(t/SCENE_SECONDS)),local=t-index*SCENE_SECONDS;
     if(index>0&&local<0.9){
-      this.drawScene(index-1,t);
-      tearWipe(this.ctx,ramp(local,0,0.9),()=>this.drawScene(index,t),{
+      this.drawScene(index-1);
+      tearWipe(this.ctx,ramp(local,0,0.9),()=>this.drawScene(index),{
         seed:3800+index*23,angle:index%2?Math.PI/2:0,tear:32,paper:'#f0e7d6',
       });
-    }else this.drawScene(index,t);
+    }else this.drawScene(index);
     const ctx=this.ctx;
     ctx.textAlign='left';ctx.font='bold 48px "Noto Sans", Arial, sans-serif';
     ctx.fillStyle='rgba(28,38,44,.34)';ctx.fillText(TITLES[index],103,131,1720);
@@ -115,7 +115,7 @@ export class SamsungPilotScene extends Stage {
     vignette(ctx,[35,28,20],0.16,0.5);grain(ctx,frame,0.045);
   }
 
-  private drawScene(index:number,t:number):void{
+  private drawScene(index:number):void{
     const ctx=this.ctx,[top,bottom]=PALETTES[index];
     fillGradient(ctx,[[0,top],[1,bottom]]);
     ctx.fillStyle='rgba(35,48,56,.10)';ctx.fillRect(0,870,W,210);
