@@ -176,9 +176,17 @@ export class Cat {
 
   private poseTail(): void {
     const i = this.intent, n = TAIL_UP.length;
+    // The tail keeps a gentle counter-sway while walking, even when the body is not wiggling.
+    const stride = clamp(Math.abs(i.speed) / 120, 0, 1);
+    const activity = Math.max(i.wiggle, stride * 0.72, this.leap ? 0.58 : 0);
     this.tail.rest = TAIL_UP.map((up, k) => {
-      const twitch = Math.sin(this.clock * 9 - k * 0.6) * 7 * i.wiggle * (k / n);
-      return { x: lerp(TAIL_LOW[k].x, up.x, i.tail) + twitch, y: lerp(TAIL_LOW[k].y, up.y, i.tail) };
+      const phase = this.clock * (8.5 + stride * 5.5) - k * 0.72;
+      const twitch = Math.sin(phase) * (7 + stride * 14) * activity * (k / n);
+      const sway = Math.cos(phase * 0.72) * (5 + stride * 9) * activity * (k / n);
+      return {
+        x: lerp(TAIL_LOW[k].x, up.x, i.tail) + twitch,
+        y: lerp(TAIL_LOW[k].y, up.y, i.tail) + sway,
+      };
     });
   }
 

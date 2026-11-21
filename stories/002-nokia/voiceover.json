@@ -1,54 +1,121 @@
 {
+  "variables": {
+    "topic": "Nokia"
+  },
+  "inter_line_gap_sec": 0.18,
+  "inter_sentence_gap_sec": 0.1,
   "lines": [
     {
-      "start_sec": 0.6,
       "speaker": "adam",
-      "text": "Có một thời, cứ nhắc đến điện thoại di động là người ta nghĩ ngay đến Nokia. Nhưng rồi, người khổng lồ ấy đã đánh mất vị trí dẫn đầu như thế nào?"
+      "text": "Xin chào! Mình là Mọt Mọt. Bạn có biết một thương hiệu từng nổi tiếng đến mức gần như ai cũng biết tên, nhưng rồi lại đánh mất vị trí dẫn đầu? Tập hôm nay, chúng ta sẽ khám phá câu chuyện về {{topic}}."
     },
     {
-      "start_sec": 12.6,
+      "speaker": "adam",
+      "text": "Có một thời, cứ nhắc đến điện thoại di động là người ta nghĩ ngay đến Nokia. Nhưng chỉ trong vài năm, người khổng lồ ấy lại tụt khỏi vị trí dẫn đầu. Điều gì đã khiến một thương hiệu mạnh đến vậy không theo kịp cuộc cách mạng smartphone?"
+    },
+    {
       "speaker": "my_duyen",
-      "text": "Ngày trước, nhà nào có Nokia là quý lắm! Pin bền, rơi xuống đất vẫn dùng. Sao một thương hiệu được yêu thích như vậy lại có ngày thất thế?"
+      "text": "Ngày trước, nhà nào có Nokia là quý lắm! Đi đâu cũng mang theo, pin dùng được lâu, rơi xuống đất nhiều khi vẫn chạy tốt. Còn trò Snake thì gần như ai cũng từng chơi. Một thương hiệu thân thuộc như vậy, tại sao lại có ngày thất thế?"
     },
     {
-      "start_sec": 24.6,
       "speaker": "adam",
-      "text": "Đầu những năm hai nghìn, Nokia phủ khắp thế giới. Năm 2007, hãng công bố bán khoảng 437 triệu thiết bị di động, chiếm gần 38 phần trăm thị trường."
+      "text": "Nokia không chỉ nổi tiếng ở một vài quốc gia. Từ một doanh nghiệp công nghiệp Phần Lan, hãng vươn lên thành thương hiệu điện thoại toàn cầu, xây dựng mạng lưới sản xuất, phân phối và nghiên cứu trên khắp thế giới. Trong nhiều năm, Nokia gần như là cái tên mặc định khi người ta nghĩ đến điện thoại di động."
     },
     {
-      "start_sec": 36.6,
       "speaker": "adam",
-      "text": "Rồi iPhone xuất hiện năm 2007. Màn hình cảm ứng và trải nghiệm ứng dụng khiến điện thoại bắt đầu thay đổi tận gốc."
+      "text": "Năm 2007, Nokia công bố đã bán khoảng 437 triệu thiết bị di động, tương đương gần 38 phần trăm thị trường theo số liệu hãng công bố. Hãy hình dung quy mô ấy: cứ khoảng ba chiếc điện thoại được bán ra trên thế giới thì có hơn một chiếc mang thương hiệu Nokia. Đó là đỉnh cao rất khó tưởng tượng ngày nay."
     },
     {
-      "start_sec": 48.6,
       "speaker": "adam",
-      "text": "Android nhanh chóng mở rộng sang nhiều hãng. Cuộc đua không còn chỉ là ai làm điện thoại đẹp hơn, mà là ai xây được hệ sinh thái tốt hơn."
+      "text": "Thành công ấy đến từ những điều rất gần gũi. Nokia có nhiều mức giá, dễ sử dụng, pin lâu, sóng ổn định và những tính năng thiết thực. SMS giúp mọi người giữ liên lạc, Snake khiến thời gian chờ xe buýt bớt nhàm chán, còn những chiếc máy bền bỉ trở thành vật dụng gắn bó với cả một thế hệ."
     },
     {
-      "start_sec": 60.6,
       "speaker": "adam",
-      "text": "Nokia vẫn dựa vào Symbian, nền tảng từng rất thành công. Nhưng phần mềm ngày càng khó phát triển, cập nhật và thu hút lập trình viên."
+      "text": "Nhưng năm 2007 cũng là lúc một đối thủ mở ra chương mới. Apple giới thiệu chiếc iPhone đầu tiên, với màn hình cảm ứng đa điểm và cách tương tác gần như chưa từng có trên điện thoại phổ thông. Điện thoại không còn chỉ là thiết bị có thêm vài chức năng, mà đang trở thành một chiếc máy tính nhỏ trong túi."
     },
     {
-      "start_sec": 72.6,
+      "speaker": "adam",
+      "text": "Thói quen của người dùng bắt đầu thay đổi. Họ muốn phóng to bản đồ bằng hai ngón tay, xem trang web dễ dàng, chụp ảnh rồi chia sẻ, tải thêm ứng dụng cho mọi nhu cầu. Bàn phím vật lý và danh sách tính năng không còn là tiêu chí duy nhất. Trải nghiệm phần mềm dần trở thành trung tâm."
+    },
+    {
+      "speaker": "adam",
+      "text": "Android tạo thêm sức ép bằng một cách tiếp cận khác. Nền tảng này được nhiều nhà sản xuất sử dụng, từ Samsung, HTC đến các hãng mới nổi. Nhiều mức giá và kiểu dáng cùng xuất hiện, giúp smartphone tiếp cận thêm nhiều người. Cuộc cạnh tranh chuyển từ từng chiếc máy sang cả nền tảng và hệ sinh thái."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nokia vẫn có Symbian, hệ điều hành từng làm nên thành công của hãng. Nhưng nền tảng này được xây dựng trong một thời kỳ khác, với nhiều lớp công nghệ và cách tương tác cũ. Khi smartphone cần cập nhật nhanh, giao diện linh hoạt và dịch vụ trực tuyến, việc cải tiến Symbian ngày càng trở nên khó khăn."
+    },
+    {
+      "speaker": "adam",
+      "text": "Sự phân mảnh khiến bài toán phức tạp hơn. Nhiều phiên bản phần mềm, cấu hình thiết bị và công cụ phát triển khác nhau làm tăng công sức của lập trình viên. Trong khi đó, đối thủ xây dựng môi trường phát triển và cửa hàng ứng dụng hấp dẫn hơn. Người dùng bắt đầu chọn điện thoại dựa trên những ứng dụng họ có thể sử dụng."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nokia không đứng yên. Hãng tung ra N97 với bàn phím trượt và màn hình cảm ứng, rồi N8 với camera được đầu tư mạnh. Đây là những nỗ lực thực sự để cạnh tranh. Nhưng phần cứng tốt không thể tự giải quyết mọi vấn đề nếu nền tảng phần mềm, ứng dụng và trải nghiệm tổng thể chưa theo kịp."
+    },
+    {
+      "speaker": "adam",
+      "text": "Những nghiên cứu về Nokia cũng chỉ ra khó khăn trong tổ chức và phối hợp nội bộ. Các nhóm phần cứng, phần mềm, sản phẩm và lãnh đạo phải làm việc qua nhiều tầng quyết định. Khi thông tin không thông suốt và mục tiêu chưa thống nhất, những thay đổi cần thiết có thể đến chậm, dù nhiều người bên trong đã nhìn thấy vấn đề."
+    },
+    {
+      "speaker": "adam",
+      "text": "Trong lúc Nokia tìm cách điều chỉnh, Apple liên tục hoàn thiện iPhone, còn Android lan rộng qua nhiều nhà sản xuất. Đối thủ tăng tốc đồng thời ở phần mềm, ứng dụng, dịch vụ và nhịp ra sản phẩm. Nokia không còn đối đầu với một mẫu điện thoại riêng lẻ, mà với những hệ sinh thái ngày càng hoàn chỉnh."
+    },
+    {
+      "speaker": "adam",
+      "text": "Tháng 9 năm 2010, Stephen Elop trở thành CEO Nokia. Ông tiếp nhận một công ty có thương hiệu mạnh, đội ngũ kỹ sư giàu kinh nghiệm và nhiều tài sản công nghệ. Nhưng công ty cũng đang chịu sức ép lớn từ thị trường smartphone, cùng những vấn đề chiến lược và tổ chức đã tích tụ trong nhiều năm."
+    },
+    {
+      "speaker": "adam",
+      "text": "Đầu năm 2011, bức thư nổi tiếng mang tên Burning Platform mô tả Nokia như người đang đứng trên một giàn khoan bốc cháy. Hình ảnh ấy truyền đi thông điệp khẩn cấp: tiếp tục đứng yên cũng nguy hiểm, nhưng nhảy xuống làn nước lạnh cũng đầy rủi ro. Nokia cần đưa ra một lựa chọn lớn."
+    },
+    {
       "speaker": "my_duyen",
-      "text": "Nokia đã có công nghệ riêng rồi, tại sao lại đổi hướng? Liệu đặt cược vào một hệ điều hành khác có cứu được họ không?"
+      "text": "Nhưng thay đổi bằng cách nào? Tiếp tục đầu tư vào Symbian, đặt cược vào MeeGo, hay bắt tay với một đối tác để làm lại từ đầu? Đây không chỉ là quyết định kỹ thuật. Nó sẽ ảnh hưởng đến sản phẩm, nhân viên, nhà phát triển và tương lai của cả công ty."
     },
     {
-      "start_sec": 84.6,
       "speaker": "adam",
-      "text": "Năm 2011, Nokia chọn Windows Phone làm nền tảng smartphone chính, còn Symbian và MeeGo dần rời khỏi trung tâm chiến lược."
+      "text": "Ngày 11 tháng 2 năm 2011, Nokia và Microsoft công bố hợp tác chiến lược. Windows Phone sẽ trở thành nền tảng smartphone chính của Nokia. Hai bên kỳ vọng kết hợp năng lực phần cứng, thiết kế và phân phối của Nokia với phần mềm, dịch vụ và hệ sinh thái của Microsoft. Đó là một canh bạc lớn."
     },
     {
-      "start_sec": 96.6,
       "speaker": "adam",
-      "text": "Lumia có thiết kế đẹp, nhưng Windows Phone thiếu ứng dụng và sức hút của một hệ sinh thái lớn. Cuộc đua ngày càng khó."
+      "text": "Lựa chọn mới cũng khiến Symbian và MeeGo không còn giữ vị trí trung tâm trong chiến lược smartphone. Symbian tiếp tục được hỗ trợ trong giai đoạn chuyển tiếp, còn MeeGo chỉ có một sản phẩm thương mại nổi bật là N9. Nguồn lực và sự chú ý của công ty dần tập trung vào con đường Windows Phone."
     },
     {
-      "start_sec": 108.6,
       "speaker": "adam",
-      "text": "Năm 2014, Microsoft hoàn tất mua lại mảng thiết bị và dịch vụ của Nokia. Nokia không biến mất, nhưng một thời đại điện thoại đã khép lại."
+      "text": "Những chiếc Lumia đầu tiên xuất hiện với thiết kế khác biệt, màu sắc nổi bật và giao diện Live Tiles. Chúng cho thấy Nokia vẫn có khả năng tạo ra sản phẩm dễ nhận diện. Nhưng thị trường không chỉ nhìn vào kiểu dáng. Người mua còn cân nhắc ứng dụng, dịch vụ, khả năng tương thích và những gì bạn bè của họ đang sử dụng."
+    },
+    {
+      "speaker": "adam",
+      "text": "Windows Phone có giao diện riêng và nhiều điểm đáng khen, nhưng hệ sinh thái ứng dụng vẫn khó cạnh tranh với iOS và Android. Một số ứng dụng phổ biến xuất hiện chậm hoặc không có mặt. Nhà phát triển lại muốn tiếp cận lượng người dùng lớn. Đây là vòng lặp khó phá vỡ khi nền tảng đã đi sau."
+    },
+    {
+      "speaker": "adam",
+      "text": "Trong lúc chuyển đổi, vị thế Nokia tiếp tục suy giảm. Symbian mất đà, còn Lumia phải xây dựng chỗ đứng trong một thị trường đã định hình bởi hai hệ sinh thái lớn. Những mẫu máy mới có thể nhận được sự chú ý, nhưng chưa đủ để đảo ngược xu hướng thị phần và niềm tin của thị trường."
+    },
+    {
+      "speaker": "adam",
+      "text": "Ngày 3 tháng 9 năm 2013, Nokia và Microsoft công bố thỏa thuận Microsoft sẽ mua phần lớn mảng Devices and Services của Nokia, cùng những thỏa thuận liên quan đến bằng sáng chế và bản đồ. Giá trị công bố là 5,44 tỷ euro. Thông báo này đánh dấu bước ngoặt lớn của thương hiệu điện thoại từng thống trị thế giới."
+    },
+    {
+      "speaker": "adam",
+      "text": "Thương vụ được hoàn tất ngày 25 tháng 4 năm 2014. Phần lớn hoạt động kinh doanh thiết bị và dịch vụ được chuyển sang Microsoft. Nhưng cần nói chính xác: Nokia không bán toàn bộ công ty. Những hoạt động kinh doanh khác, trong đó có hạ tầng mạng và công nghệ, vẫn tiếp tục thuộc về Nokia."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nokia không biến mất sau thương vụ. Công ty tiếp tục phát triển trong lĩnh vực hạ tầng viễn thông, công nghệ mạng và các giải pháp kết nối. Cái tên Nokia vẫn hiện diện trong ngành công nghệ, dù không còn giữ vai trò quen thuộc trong túi áo của hàng trăm triệu người dùng như trước."
+    },
+    {
+      "speaker": "adam",
+      "text": "Vậy vì sao Nokia thất thế? Không có một nguyên nhân duy nhất. Đó là sự kết hợp của những giới hạn phần mềm, khó khăn tổ chức, lựa chọn nền tảng, tốc độ đổi mới, hệ sinh thái ứng dụng và sức ép từ đối thủ. Mỗi yếu tố góp một phần, và chúng tác động qua lại trong một giai đoạn rất ngắn."
+    },
+    {
+      "speaker": "adam",
+      "text": "Nokia từng hiểu rất rõ người dùng cần gì. Nhưng thị trường đã thay đổi nhanh hơn khả năng thích nghi của công ty. Những lợi thế từng tạo nên thành công không còn đủ để bảo đảm vị trí dẫn đầu. Bài học lớn nhất có lẽ là: điều nguy hiểm không chỉ là đi chậm, mà là không nhận ra thế giới đã đổi hướng."
+    },
+    {
+      "speaker": "adam",
+      "text": "Còn bạn thì sao? Bạn từng sử dụng chiếc điện thoại {{topic}} nào, hoặc mẫu điện thoại nào gắn với ký ức của mình? Kể cho Mọt Mọt nghe ở phần bình luận nhé. Hẹn gặp lại bạn trong câu chuyện tiếp theo!"
     }
   ]
 }
