@@ -18,6 +18,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
+      - name: Compile free SEO assistant scripts
+        run: python -m py_compile scripts/resolve_render_artifact.py scripts/youtube_seo.py
       - run: pnpm test
 
   template:
