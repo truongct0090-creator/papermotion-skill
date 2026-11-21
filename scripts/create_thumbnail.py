@@ -68,11 +68,16 @@ def mystery_iphone(canvas):
     d.text((int(2185*S-qw/2),int(660*S-qh/2)),"?",font=qf,fill=(248,231,207,245),stroke_width=6,stroke_fill=(15,12,18,230))
     canvas.paste(layer,(0,0),layer)
 
-def hero_panel(canvas,hero):
+def hero_panel(canvas,hero,paper_underlay=None):
     backing=Image.new("RGBA",(W,H)); d=ImageDraw.Draw(backing)
     d.ellipse(xy((1390,190,2490,1280)),fill=(116,61,76,255))
     d.polygon([tuple(round(v*S) for v in p) for p in [(1350,330),(2240,175),(2490,1190),(1450,1300)]],fill=(236,211,190,255))
     canvas.paste(backing,(0,0),backing)
+    # PaperMotion's torn-paper sheets sit above the backing and below the
+    # original hero image and both phone illustrations. The phones are never
+    # textured or masked by the paper layer.
+    if paper_underlay is not None:
+        canvas.paste(paper_underlay,(0,0),paper_underlay)
     if hero is not None:
         crop=ImageEnhance.Contrast(ImageEnhance.Color(cover(hero,(round(950*S),round(900*S)))).enhance(.72)).enhance(1.05)
         mask=Image.new("L",crop.size); md=ImageDraw.Draw(mask)
@@ -118,12 +123,12 @@ def main():
     p.add_argument("--subtitle",default=""); p.add_argument("--image-url",default="")
     p.add_argument("--paper-underlay",default=""); p.add_argument("--output",default="out/thumbnail.png"); a=p.parse_args()
     canvas=background()
+    underlay=None
     if a.paper_underlay.strip():
         underlay=Image.open(a.paper_underlay).convert("RGBA")
         if underlay.size != (W,H): raise ValueError(f"PaperMotion underlay must be {W}x{H}, got {underlay.size}")
-        canvas.paste(underlay,(0,0),underlay)
     hero=fetch(a.image_url) if a.image_url.strip() else None
-    hero_panel(canvas,hero); text_layer(canvas,a.title.strip(),a.kicker.strip(),a.subtitle.strip())
+    hero_panel(canvas,hero,underlay); text_layer(canvas,a.title.strip(),a.kicker.strip(),a.subtitle.strip())
     out=Path(a.output); out.parent.mkdir(parents=True,exist_ok=True)
     canvas.save(out,"PNG",optimize=True,compress_level=6)
     print(f"Created {out} ({W}x{H}, 16:9, 4K PNG)")
