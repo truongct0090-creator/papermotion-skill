@@ -17,6 +17,8 @@ Samsung Full tái sử dụng rig Mọt Mọt, camera follow, zoom hook/ending, 
 2. Cây lớn, cây thông ở trung cảnh.
 3. Hoa, đá và bụi cây ở lớp gần.
 4. Cỏ uốn theo gió ở tiền cảnh; cỏ và props phản ứng khi Mọt Mọt đi qua.
+5. Mưa nhẹ có hạt rơi, độ nghiêng theo gió và điểm chạm mặt đất được lấy trực tiếp từ `stories/shared/environment/weather.ts` (`rainfall`) + `src/weather/rain.ts` (`drawRain`); chỉ kích hoạt ở phân đoạn khủng hoảng 1997 để tạo nhịp cảm xúc, không phủ mưa lên toàn bộ video.
+6. Các preset tuyết `snowfall`/`drawSnow` của repo vẫn được giữ làm lựa chọn cho bối cảnh mùa đông; không tự ý gắn tuyết vào các mốc lịch sử không có căn cứ thời tiết.
 
 Các lớp được cuộn bằng camera parallax, không dùng ảnh nền tĩnh thay thế.
 
