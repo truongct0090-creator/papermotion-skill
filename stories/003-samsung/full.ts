@@ -213,7 +213,6 @@ function galaxyPhone(paper: Paper, x: number, y: number, scale: number): void {
 
 
 function drawExtendedSamsungProp(paper: Paper, index: number): void {
-  const ctx = paper.context;
   const chip = (x: number, y: number, size: number, label: string, seed: number, color = '#8da7a1') => {
     rounded(paper, x, y, size, size, 12, '#303d4a', '#71858b');
     rounded(paper, x + 18, y + 18, size - 36, size - 36, 6, color, '#d5e0d8');
