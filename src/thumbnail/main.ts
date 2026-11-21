@@ -155,7 +155,7 @@ function drawBackground():void {
 async function render(input:Input):Promise<string>{
   canvas.width=W;canvas.height=H;ctx.setTransform(1,0,0,1,0,0);paper.setFrame(0);
   drawBackground();
-  if(/\\bNOKIA\\b/i.test(input.title)) drawNokiaComparison();
+  if(/\bNOKIA\b/i.test(input.title)) drawNokiaComparison();
   else if(input.imageDataUrl){
     const img=new Image();img.src=input.imageDataUrl;await img.decode();drawPhoto(img);
   }else drawAbstract(input.title);
