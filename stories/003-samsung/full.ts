@@ -427,14 +427,14 @@ export class SamsungPilotScene extends Stage {
   protected update(t: number, dt: number): void {
     const scene = sceneIndexAt(t);
     Object.assign(this.cat.intent, CAT_REST, {
-      speed: scene === 9 ? 0 : 82, tail: 0.82, blink: blink(t, CAT_BLINKS),
-      look: { x: this.cat.x + (scene === 0 || scene === 9 ? 120 : 220), y: scene === 0 || scene === 9 ? 470 : 560 },
+      speed: scene === 27 ? 0 : 82, tail: 0.82, blink: blink(t, CAT_BLINKS),
+      look: { x: this.cat.x + (scene === 0 || scene === 27 ? 120 : 220), y: scene === 0 || scene === 27 ? 470 : 560 },
     });
     if (scene !== this.lastScene) {
       if (!this.cat.airborne) this.cat.jump({ x: this.cat.x + 265, y: 890 }, 145);
       this.lastScene = scene;
     }
-    if (scene === 9) {
+    if (scene === 27) {
       const finalStart = sceneStart(9);
       this.cat.intent.speed = 0;
       this.cat.intent.sit = ramp(t, finalStart + 0.7, finalStart + 3.7);
@@ -445,14 +445,14 @@ export class SamsungPilotScene extends Stage {
 
   protected lateUpdate(t: number, dt: number): void {
     const scene = sceneIndexAt(t);
-    this.camera.zoom = scene === 0 ? 1.75 : scene === 9 ? 1.28 : 1.15;
-    const followOffset = scene === 0 ? 260 : scene === 9 ? 360 : 500;
+    this.camera.zoom = scene === 0 ? 1.75 : scene === 27 ? 1.28 : 1.15;
+    const followOffset = scene === 0 ? 260 : scene === 27 ? 360 : 500;
     this.camera.update(this.cat.x + followOffset, dt, t, 610);
   }
 
   probe(): Record<string, unknown> {
     const i = sceneIndexAt(this.time);
-    return { ...super.probe(), story: 'samsung-nokia-full-pilot', scene: i + 1, sceneTitle: SAMSUNG_TITLES[i],
+    return { ...super.probe(), story: 'samsung-nokia-full', scene: i + 1, sceneTitle: SAMSUNG_TITLES[i],
       cat: [Math.round(this.cat.x), Math.round(this.cat.root.y)], airborne: this.cat.airborne,
       cameraX: Math.round(this.camera.x), zoom: this.camera.zoom };
   }
@@ -478,7 +478,9 @@ export class SamsungPilotScene extends Stage {
       return cue.start_sec - sceneStart(index) + cue.duration_sec * within;
     };
     fillGradient(ctx, [[0, top], [1, bottom]]);
-    const isNight = index === 0 || index === 9;
+    const isNight = index === 0 || index === 27;
+    const environment = isNight ? this.nightEnvironment : this.dayEnvironment;
+    const windAt = (x: number) => this.world.wind(x, 890, t).x;
     if (isNight) {
       drawSky(ctx, this.stars, { t, turn: t * 0.0015, twinkle: 0.38 });
       this.drawMoon(1500, 250);
@@ -490,10 +492,13 @@ export class SamsungPilotScene extends Stage {
     this.camera.layer(paper, 0.14, v => drawProps(paper, this.skyline.far, v.from, v.to, () => 0, t));
     this.camera.layer(paper, 0.4, v => drawProps(paper, this.skyline.mid, v.from, v.to, () => 0, t));
     this.camera.layer(paper, 0.8, v => drawProps(paper, this.skyline.near, v.from, v.to, () => 0, t));
+    this.camera.layer(paper, 0.66, v => drawProps(paper, environment.trees, v.from, v.to, windAt, t));
     this.camera.layer(paper, 1, v => drawRidge(paper, this.ridges[index % this.ridges.length], v.from, v.to, 1120));
     ctx.globalAlpha = 0.22 + 0.02 * Math.sin(t * 1.8);
     ctx.fillStyle = 'rgba(255,255,255,0.24)'; ctx.beginPath(); ctx.arc(1570, 260, 230, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}], 'rgba(35,48,56,0.08)', { seed: 6390 + index, tear: 1.5, shadow: 0, texture: 0.18 });
+    this.camera.layer(paper, 0.94, v => drawProps(paper, environment.details, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
+    this.camera.layer(paper, 1.08, v => drawSward(paper, environment.sward, v.from, v.to, windAt, t, [{x:this.cat.x,y:this.cat.root.y}]));
 
     singleLineTitle(paper, SAMSUNG_TITLES[index], 110, 142, 50, 650);
     const subtitleLines = outlinedText(paper, SAMSUNG_SUBTITLES[index], 114, 220, 25, true, 650);
@@ -639,7 +644,7 @@ export class SamsungPilotScene extends Stage {
       fly(0, 1, 0.35, 0.75, {x: 950, y: 830, w: 700, h: 75}, () => {
         outlinedText(paper, '1977  •  TV MÀU', 1110, 880, 36);
       }, 9499);
-    } else {
+    } else if (index === 9) {
       fly(0, 0, 0.2, 0.95, {x: 850, y: 230, w: 850, h: 620}, () => {
         paper.sheet({shadow:16,rim:{color:'rgba(255,244,224,0.8)',width:3},shade:{color:'rgba(30,24,20,0.32)',width:4},texture:0.5},()=>{
           rounded(paper, 900, 350, 700, 390, 18, '#dce4df', '#6c8586');
@@ -657,6 +662,12 @@ export class SamsungPilotScene extends Stage {
         for (let i = 0; i < 4; i++) rounded(paper, 940 + i*170, 810, 145, 65, 8, ['#7d9b91','#9eaa9b','#b8a083','#718b97'][i]);
         outlinedText(paper, '1980  •  BÁN DẪN', 1080, 900, 34, false, 500);
       }, 9502);
+    } else {
+      fly(0, 0, 0.20, 0.95, {x:850,y:220,w:850,h:620}, () => drawExtendedSamsungProp(paper,index), 9720 + index * 3);
+      fly(0, 1, 0.34, 0.78, {x:870,y:810,w:820,h:90}, () => {
+        const labels = ['1983 • 64K DRAM','1984 • 256K DRAM','1986 • 1M DRAM','1988 • 4M DRAM','1992 • 64M DRAM','1993 • NEW MANAGEMENT','1997 • TÁI CẤU TRÚC','CHẤT LƯỢNG • THIẾT KẾ','THƯƠNG HIỆU TOÀN CẦU','TV MÀN HÌNH PHẲNG','2010 • GALAXY S','2011 • GALAXY NOTE','HỆ SINH THÁI GALAXY','2019 • GALAXY FOLD','BỘ NHỚ CHO AI','CÔNG NGHỆ • CON NGƯỜI','KỂ KỶ NIỆM CỦA BẠN','HẸN GẶP LẠI'];
+        outlinedText(paper, labels[index - 10], 1030, 870, 34, false, 600);
+      }, 9721 + index * 3);
     }
 
     this.camera.layer(paper, 1, () => this.cat.draw(paper));
