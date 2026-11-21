@@ -1,4 +1,4 @@
-name: Build full Samsung 28-scene film
+name: Build full Samsung 26-scene film
 
 on:
   workflow_dispatch:
@@ -93,10 +93,10 @@ jobs:
           print(f"PASS: {len(lines)} lines; max inter-line gap {max(gaps):.3f}s; max sentence gap {max(segment_gaps,default=0):.3f}s; duration {timing['duration_sec']:.2f}s")
           PY
 
-      - name: Preflight all 28 scenes, transitions and voice cues
+      - name: Preflight all 26 scenes, transitions and voice cues
         run: pnpm exec node scripts/preflight-samsung-full.ts samsung-full
 
-      - name: Render full-resolution 28-scene Samsung film
+      - name: Render full-resolution 26-scene Samsung film
         run: pnpm render samsung-full --jobs 1
 
       - name: Mix Adam and My Duyen narration
@@ -130,7 +130,7 @@ jobs:
       - name: Upload Samsung Full film and verification reports
         uses: actions/upload-artifact@v4
         with:
-          name: samsung-28-scenes-full
+          name: samsung-26-scenes-full
           path: |
             out/samsung-full-final.mp4
             out/samsung-full-probe.json
