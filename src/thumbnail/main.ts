@@ -39,7 +39,7 @@ function tornStrip(x:number, baseline:number, text:string, font:string, color:st
 }
 function drawHeadline(title:string,kicker:string,subtitle:string):void {
   const left=180, maxWidth=1435;
-  tornStrip(left+12,354,kicker.toLocaleUpperCase('vi-VN'),'700 48px "Noto Sans", sans-serif',RED,21,42,22);
+  const kickerText=kicker.toLocaleUpperCase('vi-VN'); let kickerSize=48;\n  while(kickerSize>28 && textWidth(kickerText,\`700 \${kickerSize}px "Noto Sans", sans-serif\`)>maxWidth) kickerSize-=2;\n  tornStrip(left+12,354,kickerText,\`700 \${kickerSize}px "Noto Sans", sans-serif\`,RED,21,42,22);
   let size=196, lines:string[]=[];
   while(size>=126){const f=`800 ${size}px "Noto Sans", sans-serif`; lines=wrapTitle(title,f,maxWidth); if(lines.length<=4 && lines.length*size*1.22<=1040) break; size-=4;}
   const font=`800 ${size}px "Noto Sans", sans-serif`;
