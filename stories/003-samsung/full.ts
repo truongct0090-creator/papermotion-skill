@@ -25,92 +25,64 @@ function sceneIndexAt(t: number): number {
   return index;
 }
 export const SAMSUNG_TITLES = [
-  'CÁ KHÔ VÀ GÃ KHỔNG LỒ',
-  'SAMSUNG BẮT ĐẦU Ở DAEGU',
-  'MẠNG LƯỚI THƯƠNG MẠI',
-  'MỞ RỘNG SAU CHIẾN TRANH',
-  'BƯỚC VÀO NGÀNH ĐIỆN TỬ',
-  'TV ĐEN TRẮNG ĐẦU TIÊN',
-  'XUẤT KHẨU ĐẾN PANAMA',
-  'ĐẦU TƯ VÀO BÁN DẪN',
-  'TV MÀU VÀ BÁN DẪN',
-  'BÁN DẪN THÀNH TRỤ CỘT',
-  'DRAM VÀO CUỘC ĐUA TOÀN CẦU',
-  'BƯỚC TIẾN 64K DRAM',
-  'CHIP 1M DRAM',
-  '4M DRAM VÀO NĂM 1988',
-  '64M DRAM – DẤU MỐC 1992',
-  'NEW MANAGEMENT 1993',
-  'VƯỢT QUA KHỦNG HOẢNG 1997',
-  'CHẤT LƯỢNG LÀ ƯU TIÊN',
-  'THƯƠNG HIỆU TOÀN CẦU',
-  'KỶ NGUYÊN TV MÀN HÌNH PHẲNG',
-  'GALAXY S MỞ RA CHƯƠNG MỚI',
-  'GALAXY NOTE VÀ MÀN HÌNH LỚN',
-  'HỆ SINH THÁI GALAXY',
-  'OLED VÀ ĐIỆN THOẠI GẬP',
-  'BÁN DẪN CHO KỶ NGUYÊN AI',
-  'SAMSUNG HÔM NAY VÀ NGÀY MAI',
-  'MỌT MỌT HỎI BẠN',
-  'HẸN GẶP LẠI'
+  "CÁ KHÔ VÀ GÃ KHỔNG LỒ",
+  "SAMSUNG BẮT ĐẦU Ở DAEGU",
+  "MẠNG LƯỚI THƯƠNG MẠI",
+  "MỞ RỘNG SAU CHIẾN TRANH",
+  "BƯỚC VÀO NGÀNH ĐIỆN TỬ",
+  "TV ĐEN TRẮNG ĐẦU TIÊN",
+  "XUẤT KHẨU ĐẾN PANAMA",
+  "ĐẦU TƯ VÀO BÁN DẪN",
+  "TV MÀU VÀ BÁN DẪN",
+  "BÁN DẪN THÀNH TRỤ CỘT",
+  "DRAM VÀO CUỘC ĐUA TOÀN CẦU",
+  "BƯỚC TIẾN 64K DRAM",
+  "CHIP 1M DRAM",
+  "4M DRAM VÀO NĂM 1988",
+  "64M DRAM – DẤU MỐC 1992",
+  "NEW MANAGEMENT 1993",
+  "VƯỢT QUA KHỦNG HOẢNG 1997",
+  "CHẤT LƯỢNG LÀ ƯU TIÊN",
+  "THƯƠNG HIỆU TOÀN CẦU",
+  "KỶ NGUYÊN TV MÀN HÌNH PHẲNG",
+  "GALAXY S MỞ RA CHƯƠNG MỚI",
+  "GALAXY NOTE VÀ MÀN HÌNH LỚN",
+  "HỆ SINH THÁI GALAXY",
+  "OLED VÀ ĐIỆN THOẠI GẬP",
+  "BÁN DẪN CHO KỶ NGUYÊN AI",
+  "SAMSUNG HÔM NAY VÀ NGÀY MAI",
+  "MỌT MỌT HỎI BẠN",
+  "HẸN GẶP LẠI"
 ] as const;
 export const SAMSUNG_SUBTITLES = [
-  'Từ cá khô, rau củ đến công nghệ
-Mọi thứ bắt đầu từ một cửa hàng nhỏ',
-  'Daegu, Hàn Quốc • ngày 1/3/1938
-Lee Byung-chul lập Samsung Sanghoe',
-  'Những chuyến hàng mở rộng giao thương
-Samsung là doanh nghiệp thương mại',
-  'Thực phẩm, dệt may, bảo hiểm, bán lẻ
-Mở rộng sau chiến tranh Triều Tiên',
-  'Samsung Electronics ra đời năm 1969
-Bước đi mới vào ngành điện tử',
-  'TV đen trắng P-3202 ra đời năm 1970
-Samsung-Sanyo vào ngành TV gia dụng',
-  'TV Samsung đến Panama năm 1971
-Hàng Hàn Quốc vươn ra thế giới',
-  'Samsung mua 50% Korea Semiconductor
-Bước đầu tư vào công nghệ bán dẫn',
-  'Samsung hoàn tất mua lại năm 1977
-Bắt đầu sản xuất TV màu và xuất khẩu',
-  'Bán dẫn được hợp nhất vào năm 1980
-Gia nhập hệ thống Samsung Electronics',
-  'Samsung phát triển DRAM 64K năm 1983
-Bắt đầu cuộc đua bộ nhớ tiên tiến',
-  'Tiến lên DRAM 256K năm 1984
-Tự chủ công nghệ và sản xuất',
-  'DRAM 1 megabit năm 1986
-Năng lực nghiên cứu tăng tốc',
-  'DRAM 4 megabit năm 1988
-Tiến gần nhóm dẫn đầu thế giới',
-  'DRAM 64 megabit năm 1992
-Bán dẫn thành lợi thế chiến lược',
-  'Lee Kun-hee khởi xướng New Management
-Chất lượng và đổi mới là trọng tâm',
-  'Khủng hoảng tài chính châu Á năm 1997
-Tái cấu trúc để tồn tại và cạnh tranh',
-  'Chuyển từ số lượng sang chất lượng
-Thiết kế và độ tin cậy được ưu tiên',
-  'TV, màn hình, điện thoại và linh kiện
-Samsung vươn thành thương hiệu toàn cầu',
-  'LCD và công nghệ hiển thị mới
-TV màn hình phẳng bước vào gia đình',
-  'Galaxy S ra mắt năm 2010
-Samsung tăng tốc trong kỷ nguyên smartphone',
-  'Galaxy Note ra mắt năm 2011
-Màn hình lớn và bút S Pen tạo khác biệt',
-  'Điện thoại, đồng hồ, tablet, tai nghe
-Một hệ sinh thái kết nối nhiều thiết bị',
-  'Galaxy Fold thương mại hóa năm 2019
-Mở ra hướng đi cho điện thoại gập',
-  'DRAM, NAND và bộ nhớ băng thông cao
-Chip trở thành hạ tầng của AI',
-  'Từ thiết bị đến bán dẫn và kết nối
-Một tập đoàn đa ngành không ngừng đổi mới',
-  'Bạn từng dùng Galaxy hay TV Samsung nào?
-Kể kỷ niệm của bạn với Mọt Mọt nhé',
-  'Cảm ơn bạn đã theo dõi câu chuyện
-Hẹn gặp lại trong tập tiếp theo'
+  "Từ cá khô, rau củ đến công nghệ\nMọi thứ bắt đầu từ một cửa hàng nhỏ",
+  "Daegu, Hàn Quốc • ngày 1/3/1938\nLee Byung-chul lập Samsung Sanghoe",
+  "Những chuyến hàng mở rộng giao thương\nSamsung là doanh nghiệp thương mại",
+  "Thực phẩm, dệt may, bảo hiểm, bán lẻ\nMở rộng sau chiến tranh Triều Tiên",
+  "Samsung Electronics ra đời năm 1969\nBước đi mới vào ngành điện tử",
+  "TV đen trắng P-3202 ra đời năm 1970\nSamsung-Sanyo vào ngành TV gia dụng",
+  "TV Samsung đến Panama năm 1971\nHàng Hàn Quốc vươn ra thế giới",
+  "Samsung mua 50% Korea Semiconductor\nBước đầu tư vào công nghệ bán dẫn",
+  "Samsung hoàn tất mua lại năm 1977\nBắt đầu sản xuất TV màu và xuất khẩu",
+  "Bán dẫn được hợp nhất vào năm 1980\nGia nhập hệ thống Samsung Electronics",
+  "Samsung phát triển DRAM 64K năm 1983\nBắt đầu cuộc đua bộ nhớ tiên tiến",
+  "Tiến lên DRAM 256K năm 1984\nTự chủ công nghệ và sản xuất",
+  "DRAM 1 megabit năm 1986\nNăng lực nghiên cứu tăng tốc",
+  "DRAM 4 megabit năm 1988\nTiến gần nhóm dẫn đầu thế giới",
+  "DRAM 64 megabit năm 1992\nBán dẫn thành lợi thế chiến lược",
+  "Lee Kun-hee khởi xướng New Management\nChất lượng và đổi mới là trọng tâm",
+  "Khủng hoảng tài chính châu Á năm 1997\nTái cấu trúc để tồn tại và cạnh tranh",
+  "Chuyển từ số lượng sang chất lượng\nThiết kế và độ tin cậy được ưu tiên",
+  "TV, màn hình, điện thoại và linh kiện\nSamsung vươn thành thương hiệu toàn cầu",
+  "LCD và công nghệ hiển thị mới\nTV màn hình phẳng bước vào gia đình",
+  "Galaxy S ra mắt năm 2010\nSamsung tăng tốc trong kỷ nguyên smartphone",
+  "Galaxy Note ra mắt năm 2011\nMàn hình lớn và bút S Pen tạo khác biệt",
+  "Điện thoại, đồng hồ, tablet, tai nghe\nMột hệ sinh thái kết nối nhiều thiết bị",
+  "Galaxy Fold thương mại hóa năm 2019\nMở ra hướng đi cho điện thoại gập",
+  "DRAM, NAND và bộ nhớ băng thông cao\nChip trở thành hạ tầng của AI",
+  "Từ thiết bị đến bán dẫn và kết nối\nMột tập đoàn đa ngành không ngừng đổi mới",
+  "Bạn từng dùng Galaxy hay TV Samsung nào?\nKể kỷ niệm của bạn với Mọt Mọt nhé",
+  "Cảm ơn bạn đã theo dõi câu chuyện\nHẹn gặp lại trong tập tiếp theo"
 ] as const;
 const PALETTES: [string, string][] = [
   ['#25364a', '#d2a77d'],
