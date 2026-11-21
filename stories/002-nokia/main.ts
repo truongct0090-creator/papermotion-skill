@@ -247,6 +247,7 @@ export class NokiaPilotScene extends Stage {
     this.camera.layer(paper,1,v=>drawRidge(paper,this.ridges[index],v.from,v.to,1120));
     ctx.globalAlpha=0.22+0.02*Math.sin(t*1.8);ctx.fillStyle='rgba(255,255,255,0.24)';ctx.beginPath();ctx.arc(1570,260,230,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
     paper.piece([{x:0,y:870},{x:W,y:870},{x:W,y:H+20},{x:0,y:H+20}],'rgba(35,48,56,0.08)',{seed:6390+index,tear:1.5,shadow:0,texture:0.18});
+    if(index===3) paper.piece([{x:0,y:820},{x:W,y:820},{x:W,y:1080},{x:0,y:1080}],'#f8f5ed',{seed:8403,tear:2.5,shadow:0,texture:0.35});
     const titleLines = outlinedText(paper,TITLES[index],110,142,52,false,650);
     outlinedText(paper,SUBTITLES[index],114,142+titleLines*64+10,27,true,650);
 
@@ -281,7 +282,6 @@ export class NokiaPilotScene extends Stage {
       },8421);
     } else if(index===3){
       tornReveal(paper,t,29.0,0.9,{x:1170,y:285,w:430,h:570},()=>{
-        paper.piece([{x:0,y:820},{x:W,y:820},{x:W,y:1080},{x:0,y:1080}],'#f8f5ed',{seed:8403,tear:2.5,shadow:0,texture:0.35});
         rounded(paper,1180,300,390,550,54,'#17191e','#747d8a');
         rounded(paper,1204,340,342,455,28,'#8db1c4');
         outlinedText(paper,'hello',1290,580,44);
@@ -300,7 +300,7 @@ export class NokiaPilotScene extends Stage {
         rounded(paper,1225,345,270,310,8,'#d4ddd5');
         for(let i=0;i<7;i++)rounded(paper,1245,365+i*39,230,29,5,i%2?'#a7b6b1':'#8ea69d');
       },8451);
-      tornReveal(paper,t,52.5,0.7,{x:875,y:790,w:710,h:100},()=>{
+      tornReveal(paper,t,52.5,0.7,{x:875,y:300,w:710,h:600},()=>{
         ctx.strokeStyle='#c16d4e';ctx.lineWidth=12;ctx.beginPath();ctx.moveTo(890,320);ctx.bezierCurveTo(1110,190,1050,780,1560,680);ctx.stroke();
         outlinedText(paper,'TOO COMPLEX?',900,820,40);
       },8452);
@@ -309,7 +309,7 @@ export class NokiaPilotScene extends Stage {
         rounded(paper,860,380,850,380,26,'#423e43');
         for(let i=0;i<5;i++)rounded(paper,920+i*145,500,110,170,10,'#d1c9b9');
       },8460);
-      tornReveal(paper,t,60.0,0.8,{x:1000,y:125,w:260,h:280},()=>{
+      tornReveal(paper,t,60.0,0.8,{x:1000,y:125,w:360,h:280},()=>{
         paper.piece([{x:1020,y:380},{x:1130,y:140},{x:1240,y:380}],'#f2a45f',{seed:8406,tear:3,shadow:9,texture:0.4});
         outlinedText(paper,'2011',1270,285,48);
       },8461);
@@ -318,7 +318,7 @@ export class NokiaPilotScene extends Stage {
       tornReveal(paper,t,66.4,0.9,{x:1000,y:260,w:600,h:550},()=>{
         phone(paper,1020,280,1.18,'#4b5d69',true);phone(paper,1370,340,0.95,'#263f54',true);
       },8470);
-      tornReveal(paper,t,69.2,0.7,{x:1140,y:870,w:390,h:90},()=>{
+      tornReveal(paper,t,69.2,0.7,{x:870,y:770,w:760,h:190},()=>{
         outlinedText(paper,'LUMIA',1160,900,52);rounded(paper,870,790,760,18,8,'#657d8a');
       },8471);
     } else if(index===8){
