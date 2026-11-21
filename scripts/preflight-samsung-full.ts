@@ -1,5 +1,5 @@
 /**
- * Samsung Full runtime preflight: every second, narration cue and all 28 scene entrances.
+ * Samsung Full runtime preflight: every second, narration cue and all 26 scene entrances.
  * Fails before a full-resolution render if timing, scene mapping or runtime drawing is invalid.
  */
 import { readFileSync } from 'node:fs';
@@ -17,9 +17,9 @@ interface Timing {
 }
 const timing = JSON.parse(readFileSync('out/samsung-full-voice-clips/timing.json', 'utf8')) as Timing;
 const name = process.argv[2] ?? 'samsung-full';
-const sceneLineIndex = [0, ...Array.from({ length: 27 }, (_, i) => i + 2)];
-if (timing.lines.length !== 29 || sceneLineIndex.length !== 28) {
-  throw new Error(`Samsung Full timing mismatch: expected 29 voice lines / 28 layouts, got ${timing.lines.length} lines.`);
+const sceneLineIndex = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,22,23,24,25,26,28];
+if (timing.lines.length !== 29 || sceneLineIndex.length !== 26) {
+  throw new Error(`Samsung Full timing mismatch: expected 29 voice lines / 26 scenes, got ${timing.lines.length} lines.`);
 }
 for (let i = 1; i < timing.lines.length; i++) {
   const gap = timing.lines[i].start_sec - timing.lines[i - 1].end_sec;
@@ -67,7 +67,7 @@ try {
       console.log(`Samsung Full preflight: ${i + 1}/${samples.length} checkpoints passed (frame ${samples[i]}/${frames - 1}).`);
     }
   }
-  console.log(`PASS: ${name}; 28 scene entrances; ${samples.length} checkpoints; 29 voice lines; ${frames} frames; max line gap ${timing.max_inter_line_gap_sec.toFixed(3)}s.`);
+  console.log(`PASS: ${name}; 26 scene entrances; ${samples.length} checkpoints; 29 voice lines; ${frames} frames; max line gap ${timing.max_inter_line_gap_sec.toFixed(3)}s.`);
 } finally {
   await session.close();
 }
